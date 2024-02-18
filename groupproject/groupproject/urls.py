@@ -16,8 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from navBar.views import navBar
+from home.views import home
+from register import views as v
+
 
 urlpatterns = [
+    path("register/", v.register, name="register"),
     path("application/qr/", include("application.urls")),
     path("admin/", admin.site.urls),
+    path('', home, name='home'),
+    path("", navBar, name="navBar"),
 ]
