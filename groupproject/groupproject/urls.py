@@ -25,6 +25,7 @@ urlpatterns = [
     path("register/", v.register, name="register"),
     path("application/qr/", include("application.urls")),
     path("admin/", admin.site.urls),
+    path("", v.register, name="register"),
     path('', home, name='home'),
     path("", navBar, name="navBar"),
 ]
