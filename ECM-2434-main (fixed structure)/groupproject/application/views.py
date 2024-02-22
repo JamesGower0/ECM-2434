@@ -20,7 +20,7 @@ def register(response):
         form = forms.RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-            return redirect("/application/qr/")
+            return redirect("/home/")
             #need to redirect to login page or home page?
     else:
         form = forms.RegisterForm()

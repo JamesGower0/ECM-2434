@@ -20,9 +20,9 @@ from application import views
 
 
 urlpatterns = [
-    path("", views.home, name='home'),
-    path("", views.register, name="register"),
-    path("application/qr/", include("application.urls")),
+    path("home/", views.home, name='home'),
+    path("register/", views.register, name="register"),
+    #path("application/qr/", include("application.urls")),
     path("admin/", admin.site.urls),
     path("", views.navBar, name="navBar"),
 ]
