@@ -1,0 +1,51 @@
+<!--Registration page, to register users will require username, email,
+password, password confirmation, and avatar
+
+Authors: Ashley Card, Maryia Fralova -->
+
+{% load static %}
+<html lang="en">
+<!--{% block title %}Create an Account{% endblock %}-->
+	<head>
+		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+		<title>Project</title>
+	</head>
+	{% load crispy_forms_tags %}
+	<body>
+	{% block content %}
+		<div class="top">
+			<h1>PROJECT NAME</h1>
+		</div>
+		
+		<div class="form-inside">
+			<div class="form-header">
+				<h2>Register</h2>
+			</div>
+			<form method="POST" class="form-group" id="register">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<!-- Displaying avatar choice -->
+				<div id="avatar-preview">
+					<img id="selected-avatar-preview" src="{% static 'avatars/plant.png' %}" alt="Selected Avatar Preview">
+				</div>
+				<button type="submit" class="btn btn-success">Register</button>
+			</form>
+		</div>
+		
+
+		<!-- Script for displaying the avatar selection -->
+		<script>
+			function updateAvatarPreview() {
+				const select = document.getElementById('id_avatar_choice');
+				const selectedOption = select.options[select.selectedIndex].value;
+				const selectedAvatarPreview = document.getElementById('selected-avatar-preview');
+				const staticPath = "{% static 'avatars/' %}";
+
+				// Update the image source based on the selected option
+				selectedAvatarPreview.src = `${staticPath}${selectedOption}.png`;
+				// selectedAvatarPreview.style.display = 'block';
+			}
+		</script>
+	{% endblock %}
+	</body>
+</html>
