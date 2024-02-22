@@ -38,12 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-
-    "navBar",
-    "home",
+    #"navBar",
+    #"home",
     "application.apps.ApplicationConfig",
-    "register.apps.RegisterConfig",
+    #"register.apps.RegisterConfig",
     "crispy_forms",
     "crispy_bootstrap4",
 ]
@@ -131,5 +129,5 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIRS = [
-    BASE_DIR / "static"
+    BASE_DIR / "application/static"
 ]
