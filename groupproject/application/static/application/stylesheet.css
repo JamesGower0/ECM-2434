@@ -1,5 +1,5 @@
 body {
-	background: url("sky2.jpg") no-repeat center center fixed;
+	/*background: url("sky2.jpg") no-repeat center center fixed;*/
 	background-size: cover;
 	font-family: 'Lato', sans-serif;
 	margin: 0;
@@ -39,6 +39,7 @@ body {
     font-size: 150%;
     font-weight: 300;
 	text-align: center;
+	margin-bottom: 200px;
 }
 
 .form-inside .form-header {
