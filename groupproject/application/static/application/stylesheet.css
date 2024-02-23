@@ -27,6 +27,8 @@ body {
 	position: relative;
 }
 
+
+/* Specifically for registration/login */
 .form-inside {
     background-color: white;
 	max-width: 50%;
@@ -74,4 +76,16 @@ body {
 .form-inside button:hover {
 	opacity: 0.7;
 	transition: 0.5s;
+}
+
+
+/* Specifically for map.html */
+.map-box{
+	max-width: 80%;
+	margin: 10px auto 100px auto;
+	position: relative;
+}
+
+#map{
+	width: 100%;
 }

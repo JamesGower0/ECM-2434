@@ -24,5 +24,6 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     #path("application/qr/", include("application.urls")),
     path("admin/", admin.site.urls),
+    path("map/", views.map, name="map"),
     path("", views.navBar, name="navBar"),
 ]

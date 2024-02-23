@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% load static %}
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+        <title>Campus map</title>
+    </head>
+
+    <body>
+        {% block content %}
+        <div class="top">
+			<h1>ExeterNest</h1>
+		</div>
+
+        <div class="map-box">
+            <img src="{% static 'application/map_app.png' %}" id="map"> 
+        </div>
+        {% endblock %}
+    </body>
+
+</html>
