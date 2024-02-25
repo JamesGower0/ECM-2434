@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from .models import Score, Quiz
 # Create your views here.
 
 @login_required
@@ -36,3 +37,17 @@ def register(response):
         form = forms.RegisterForm()
 
     return render(response, "register.html", {"form":form})
+
+def leaderboard(request):
+    quizzes = Quiz.objects.all()
+    selected_quiz_id = request.GET.get('quiz')
+    if selected_quiz_id:
+        scores = Score.objects.filter(quiz_id=selected_quiz_id).order_by('-score')[:10]
+    else:
+        scores = Score.objects.all().order_by('-score')[:10]
+
+    context = {
+        'quizzes': quizzes,
+        'scores': scores,
+    }
+    return render(request, 'leaderboard.html', context)

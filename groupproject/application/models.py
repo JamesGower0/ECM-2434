@@ -10,3 +10,18 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile' #show how we want it to be displayed
+
+
+class Quiz(models.Model):
+    title = models.CharField(max_length=100, default='')
+
+    def __str__(self):
+        return self.title
+
+class Score(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='')
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, default='')
+    score = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.user.username}'s score on {self.quiz.title}: {self.score}"
