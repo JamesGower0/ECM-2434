@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <style> 
+        body {
+            margin-top: 10px;
+            margin-right: 0;
+            margin-left: 0;
+            font-family: sans-serif;
+        }
+        .ul-nav {
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        .li-nav {
+            float: left;
+        }
+
+        .li-nav:first-child{
+            margin-left: 20px;
+        }
+
+        .li-nav:last-child{
+            margin-right: 20px;
+        }
+
+        .li-nav a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        .li-nav a:hover {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: #4CAF50;
+        }
+        </style>
+    </head>
+
+    <body>
+        <ul class="ul-nav">
+            {% if user.is_authenticated %}
+            <li class="li-nav" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
+            <li class="li-nav" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
+            {% else %}
+            <li class="li-nav" style="float:right"><a href="{% url 'login' %}">Login</a></li>
+            <li class="li-nav" style="float:right"><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+            <li class="li-nav"><a class="active" href="{% url 'home' %}">Home</a></li>
+            <li class="li-nav"><a href="">Application</a></li> 
+        </ul>
+    </body>
+</html>
