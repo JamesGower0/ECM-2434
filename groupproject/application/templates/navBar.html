@@ -7,26 +7,26 @@
             margin-left: 0;
             font-family: sans-serif;
         }
-        ul {
+        .ul-nav {
             list-style-type: none;
             padding: 0;
             overflow: hidden;
             background-color: #333;
         }
         
-        li {
+        .li-nav {
             float: left;
         }
 
-        li:first-child{
+        .li-nav:first-child{
             margin-left: 20px;
         }
 
-        li:last-child{
+        .li-nav:last-child{
             margin-right: 20px;
         }
 
-        li a {
+        .li-nav a {
             display: block;
             color: white;
             text-align: center;
@@ -34,7 +34,7 @@
             text-decoration: none;
         }
         
-        li a:hover {
+        .li-nav a:hover {
             background-color: #111;
         }
 
@@ -45,16 +45,16 @@
     </head>
 
     <body>
-        <ul>
+        <ul class="ul-nav">
             {% if user.is_authenticated %}
-            <li style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
-            <li style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="li-nav" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
+            <li class="li-nav" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
             {% else %}
-            <li style="float:right"><a href="{% url 'login' %}">Login</a></li>
-            <li style="float:right"><a href="{% url 'register' %}">Register</a></li>
+            <li class="li-nav" style="float:right"><a href="{% url 'login' %}">Login</a></li>
+            <li class="li-nav" style="float:right"><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
-            <li><a class="active" href="{% url 'home' %}">Home</a></li>
-            <li><a href="">Application</a></li> 
+            <li class="li-nav"><a class="active" href="{% url 'home' %}">Home</a></li>
+            <li class="li-nav"><a href="">Application</a></li> 
         </ul>
     </body>
 </html>
