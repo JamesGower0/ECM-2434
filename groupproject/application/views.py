@@ -13,7 +13,7 @@ def profile(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return render(request, 'logout.html')
+    return render(request, 'home.html')
 
 def qr(request):
     return HttpResponse("placeholder for qr functionality")
@@ -30,7 +30,10 @@ def register(response):
     if response.method == "POST":
         form = forms.RegisterForm(response.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.avatar_choice = form.cleaned_data['avatar_choice']
+            print("Avatar Choice:", user.avatar_choice)
+            user.save()
             return redirect("/login/")
             #need to redirect to login page or home page?
     else:

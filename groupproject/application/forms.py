@@ -9,13 +9,14 @@ class RegisterForm(UserCreationForm):
     avatar_choice = forms.ChoiceField(
         choices = avatar_choices,
         widget=forms.Select(attrs={'onchange': 'updateAvatarPreview()'}),
-        initial=avatar_choices[0][0],
-        required=True
+        initial='Avatar 1'
+        #initial=avatar_choices[0][0]
+        #required=True
     )
 
     class Meta:
         model = User
-        fields = ["username", "email", "password1", "password2", "avatar_choice"]
+        fields = ("username", "email", "password1", "password2", "avatar_choice")
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)

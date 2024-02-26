@@ -1,3 +1,37 @@
-{% load crispy_forms_tags %} {% block content %}
-<h1>{{ user.username }}</h1>
-{% endblock content %}
+<!-- Profile page, displays user's bird and score
+
+Authors: Ashley Card, Maryia Fralova -->
+
+<!DOCTYPE html>
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %} 
+
+<html lang="en">
+    <head>
+		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+		<title>Sign up</title>
+	</head>
+    {% block content %}
+    <body>
+        <div class="top">
+			<h1>Your ExeterNest birdie</h1>
+		</div>
+
+        <div class="form-inside">
+            <div class="form-header">
+				<h2>{{ user.username }}</h2>
+                <div id="avatar-preview">
+                    <!-- Debug: {{ user.avatar_choice }} -->
+					<img id="selected-avatar-preview" src="avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview">
+				</div>
+			</div>
+
+        </div>
+       
+    </body>
+    {% endblock content %}
+</html>
