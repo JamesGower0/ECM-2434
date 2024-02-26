@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Leaderboard</title>
+</head>
+<body>
+    <h1>Quiz Leaderboard</h1>
+    
+    <form method="GET">
+        <label for="quiz">Select Quiz:</label>
+        <select name="quiz" id="quiz">
+            <option value="">All Quizzes</option>
+            {% for quiz in quizzes %}
+                <option value="{{ quiz.id }}">{{ quiz.title }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Quiz</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for score in scores %}
+            <tr>
+                <td>{{ score.user.username }}</td>
+                <td>{{ score.quiz.title }}</td>
+                <td>{{ score.score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
