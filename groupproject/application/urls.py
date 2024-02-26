@@ -7,4 +7,5 @@ urlpatterns = [
     path("navBar/", views.navBar, name="navBar"),
     path("register/", views.register, name="register"),
     path("map/", views.map, name="map"),
+    path("leaderboard/", views.leaderboard, name="leaderboard")
 ]
