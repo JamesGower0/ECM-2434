@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
-    avatar_choices=[('plant', 'Avatar 1'), ('water', 'Avatar 2'), ('fire', 'Avatar 3')]
+    avatar_choices=[('robin', 'Avatar 1'), ('seagull', 'Avatar 2'), ('wren', 'Avatar 3')]
     avatar_choice = forms.ChoiceField(
         choices = avatar_choices,
         widget=forms.Select(attrs={'onchange': 'updateAvatarPreview()'}),
