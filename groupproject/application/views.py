@@ -36,3 +36,6 @@ def register(response):
         form = forms.RegisterForm()
 
     return render(response, "register.html", {"form":form})
+
+def map(request):
+    return render(request, "map.html")
