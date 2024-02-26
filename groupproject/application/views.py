@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from .models import Score, Quiz
 # Create your views here.
 
 @login_required
