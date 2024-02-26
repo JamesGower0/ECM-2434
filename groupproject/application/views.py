@@ -39,3 +39,17 @@ def register(response):
 
 def map(request):
     return render(request, "map.html")
+
+def leaderboard(request):
+    quizzes = Quiz.objects.all()
+    selected_quiz_id = request.GET.get('quiz')
+    if selected_quiz_id:
+        scores = Score.objects.filter(quiz_id=selected_quiz_id).order_by('-score')[:10]
+    else:
+        scores = Score.objects.all().order_by('-score')[:10]
+
+    context = {
+        'quizzes': quizzes,
+        'scores': scores,
+    }
+    return render(request, 'leaderboard.html', context)
