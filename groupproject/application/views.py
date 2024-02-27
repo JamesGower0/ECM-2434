@@ -129,3 +129,9 @@ def wrong_answer(request):
 
 def map(request):
     return render(request, "map.html")
+
+def cookiescript(request):
+    return render(request, "cookiescript.html")
+
+def cookiepage(request):
+    return render(request, "cookiepage.html")

@@ -31,4 +31,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name = 'logout'),
     path("leaderboard/", views.leaderboard, name="leaderboard"),
     path("map/", views.map, name="map"),
+    path("cookiescript/", views.cookiescript, name="cookiescript"),
+    path("cookiepage/",views.cookiepage, name="cookiepage"),
 ]

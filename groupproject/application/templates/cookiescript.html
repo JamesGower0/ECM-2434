@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Cookie pop up, provides user with notice that cookies may be used, they are asked to accept or reject this and their input is taken.
+
+Author: Aidan Daniel -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+
+    <!-- styling for cookie pop-up -->
+    <style>
+        #cookies-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #cookies-popup a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        #accept-btn, #reject-btn {
+            margin-top: 10px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        #accept-btn {
+            background-color: #000; /* Black background for the accept button */
+            color: #fff; /* White text for the accept button */
+        }
+
+        #reject-btn {
+            background-color: #333; /* Darker gray background for the reject button */
+            color: #fff; /* White text for the reject button */
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- cookie pop-up container -->
+<div id="cookies-popup">
+    <div>
+        <h3>We use cookies</h3>
+        <p>GDPR Compliancy - We may use cookies to personalize content. <a href="cookiepage.html" target="_blank">Find out more here.</a></p>
+    </div>
+    <!-- Buttons for accepting and rejecting cookies -->
+    <button id="accept-btn">Accept</button>
+    <button id="reject-btn">Reject</button>
+</div>
+
+<!-- handling cookie pop-up functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var cookiesPopup = document.getElementById('cookies-popup');
+        var acceptBtn = document.getElementById('accept-btn');
+        var rejectBtn = document.getElementById('reject-btn');
+
+        // Check if user has already accepted cookies
+        if (localStorage.getItem('cookiesAccepted') !== 'true') {
+            cookiesPopup.style.display = 'block';
+        }
+
+        // event listener for the accept button
+        acceptBtn.addEventListener('click', function () {
+            cookiesPopup.style.display = 'none';
+            // Set a flag in localStorage indicating that the user has accepted cookies
+            localStorage.setItem('cookiesAccepted', 'true');
+        });
+
+        // event listener for the reject button
+        rejectBtn.addEventListener('click', function () {
+            cookiesPopup.style.display = 'none';
+        });
+    });
+</script>
+
+</body>
+</html>
