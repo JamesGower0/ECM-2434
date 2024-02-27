@@ -1,3 +1,8 @@
+"""
+Defines URL patterns for the application
+
+Author: 
+"""
 from django.urls import path
 from . import views
 

@@ -1,3 +1,9 @@
+"""
+Tests of application
+
+Author: Maryia Fralova
+"""
+
 from django.test import TestCase
 from .forms import RegisterForm
 from django.contrib.auth.models import User
@@ -61,3 +67,50 @@ class RegisterFormTest(TestCase):
         form = RegisterForm(data={"username":'testUser', "email":"testEmail@email.com",
                                 "password1":"", "password2":"", "avatar_choice": 'robin'})
         self.assertFalse(form.is_valid())
+
+
+class ResponseTest(TestCase):
+    """
+    Checks the accessebility of the webpages by checking the HTTP response
+    """
+    def setUp(self):
+        # User form
+        form = RegisterForm(data={"username":'testUser', "email":"testEmail@email.com",
+                                "password1":"exeternest!454#a", "password2":"exeternest!454#a",
+                                "avatar_choice": 'robin'})
+        
+    def testLoginView(self):
+        """
+        Test the login view
+        """
+        response = self.client.get('/login/')
+        self.assertEqual(response.status_code,200)
+
+    def testRegistrationView(self):
+        """
+        Test the register view
+        """
+        response = self.client.get('/register/')
+        self.assertEqual(response.status_code,200)
+
+    def testMapView(self):
+        """
+        Test the map view
+        """
+        response = self.client.get('/map/')
+        self.assertEqual(response.status_code,200)
+    
+    def testLeaderboardView(self):
+        """
+        Test the leaderboard view
+        """
+        response = self.client.get('/leaderboard/')
+        self.assertEqual(response.status_code,200)
+    
+    def testHomeView(self):
+        """
+        Test the home view
+        """
+        response = self.client.get('/home/')
+        self.assertEqual(response.status_code,200)
+        

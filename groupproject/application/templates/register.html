@@ -1,7 +1,7 @@
 <!--Registration page, to register users will require username, email,
-password, password confirmation, and avatar
+	password, password confirmation, and avatar
 
-Authors: Ashley Card, Maryia Fralova -->
+	Authors: Ashley Card, Maryia Fralova -->
 
 <!DOCTYPE html>
 {% block navBar%}
@@ -31,8 +31,8 @@ Authors: Ashley Card, Maryia Fralova -->
 				{{ form|crispy }}
 				<!-- Displaying avatar choice -->
 				<div id="avatar-preview">
-					<!--<img id="selected-avatar-preview" src="{% static 'avatars/robin.png' %}" alt="Selected Avatar Preview">-->
-					<img id="selected-avatar-preview" src="" alt="Selected Avatar Preview">
+					<img id="selected-avatar-preview" src="{% static 'avatars/robin.png' %}" alt="Selected Avatar Preview">
+					<!--<img id="selected-avatar-preview" src="" alt="Selected Avatar Preview">-->
 				</div>
 				<button type="submit" class="btn btn-success">Register</button>
 			</form>

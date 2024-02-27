@@ -1,3 +1,9 @@
+"""
+Load HTML webpages, rendering post requests,
+and displaying user specific information
+
+Author:
+"""
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . import forms
@@ -16,7 +22,7 @@ def profile(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return render(request, 'logout.html')
+    return render(request, 'home.html')
 
 def qr(request):
     
