@@ -1,7 +1,3 @@
-<!-- Navigation bar, displayed on every page in the app 
-
-Authors: James Gower -->
-
 <html>
     <head>
         <style> 
@@ -11,26 +7,19 @@ Authors: James Gower -->
             margin-left: 0;
             font-family: sans-serif;
         }
-        .ul-nav {
+
+        .ulNB {
             list-style-type: none;
             padding: 0;
             overflow: hidden;
             background-color: #333;
         }
         
-        .li-nav {
+        .liNB {
             float: left;
         }
 
-        .li-nav:first-child{
-            margin-left: 20px;
-        }
-
-        .li-nav:last-child{
-            margin-right: 20px;
-        }
-
-        .li-nav a {
+        .liNB a {
             display: block;
             color: white;
             text-align: center;
@@ -38,7 +27,7 @@ Authors: James Gower -->
             text-decoration: none;
         }
         
-        .li-nav a:hover {
+        .liNB a:hover {
             background-color: #111;
         }
 
@@ -49,18 +38,18 @@ Authors: James Gower -->
     </head>
 
     <body>
-        <ul class="ul-nav">
+        <ul class="ulNB">
             {% if user.is_authenticated %}
-            <li class="li-nav" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
-            <li class="li-nav" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
             {% else %}
-            <li class="li-nav" style="float:right"><a href="{% url 'login' %}">Login</a></li>
-            <li class="li-nav" style="float:right"><a href="{% url 'register' %}">Register</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'login' %}">Login</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
-            <li class="li-nav"><a class="active" href="{% url 'home' %}">Home</a></li>
-            <li class="li-nav"><a href="">Application</a></li> 
-            <li class="li-nav"><a href="{% url 'map' %}">Map</a></li>
-            <li class="li-nav"><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+            <li class="liNB"><a class="active" href="{% url 'home' %}">Home</a></li>
+            <li class="liNB"><a href="{% url 'map' %}">Map</a></li> 
+            <li class="liNB"><a href="{% url 'scan' %}">QR scanner</a></li> 
+            <li class="liNB"><a href="{% url 'leaderboard' %}">Leaderboard</a></li> 
         </ul>
     </body>
 </html>

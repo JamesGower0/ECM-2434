@@ -1,0 +1,18 @@
+<p>{{question}}</p>
+
+<ul>
+
+<li><a href="/application/qr/correct">{{correct_answer}}</a></li>
+<li><a href="/application/qr/wrong">{{wrong_1}}</a></li>
+<li><a href="/application/qr/wrong">{{wrong_2}}</a></li>
+<li><a href="/application/qr/wrong">{{wrong_3}}</a></li>
+    
+</ul>
+
+<script>
+    var ul = document.querySelector('ul');
+    for (var i = ul.children.length; i >= 0; i--) {
+        ul.appendChild(ul.children[Math.random() * i | 0]);
+    }
+</script>
+

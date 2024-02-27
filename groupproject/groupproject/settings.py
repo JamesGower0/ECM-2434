@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    #"navBar",
-    #"home",
     "application.apps.ApplicationConfig",
-    #"register.apps.RegisterConfig",
     "crispy_forms",
     "crispy_bootstrap4",
 ]

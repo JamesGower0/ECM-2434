@@ -1,0 +1,9 @@
+{% if valid %}
+    <ul>
+
+    <li><a href="/application/qr/{{ question_page_number }}/">Link to questions for this site</a></li>
+    
+    </ul>
+{% else %}
+    <p>No valid qr code detected.</p>
+{% endif %}

@@ -23,12 +23,12 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("home/", views.home, name='home'),
     path("register/", views.register, name="register"),
-    #path("application/qr/", include("application.urls")),
+    path("application/", include("application.urls")),
     path("admin/", admin.site.urls),
-    path("map/", views.map, name="map"),
     path("", views.navBar, name="navBar"),
     path("profile/", views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name = 'login'),
     path('logout/', views.logout_view, name = 'logout'),
-    path('leaderboard/', views.leaderboard, name = 'leaderboard'),
+    path("leaderboard/", views.leaderboard, name="leaderboard"),
+    path("map/", views.map, name="map"),
 ]
