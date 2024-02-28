@@ -5,14 +5,16 @@ Author: James Gower, Tom Evans -->
 <p>{{question}}</p>
 
 <ul>
-
-<li><a href="/application/qr/correct">{{correct_answer}}</a></li>
-<li><a href="/application/qr/wrong">{{wrong_1}}</a></li>
-<li><a href="/application/qr/wrong">{{wrong_2}}</a></li>
-<li><a href="/application/qr/wrong">{{wrong_3}}</a></li>
+    <!-- setting the correct answer to direct the user to the 'correct answer' page,
+    and the other three wrong answers to direct to the 'wrong answer' page -->
+    <li><a href="/application/qr/correct">{{correct_answer}}</a></li>
+    <li><a href="/application/qr/wrong">{{wrong_1}}</a></li>
+    <li><a href="/application/qr/wrong">{{wrong_2}}</a></li>
+    <li><a href="/application/qr/wrong">{{wrong_3}}</a></li>
     
 </ul>
 
+<!-- The following script ensures that the questions are presented in a random order -->
 <script>
     var ul = document.querySelector('ul');
     for (var i = ul.children.length; i >= 0; i--) {
