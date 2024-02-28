@@ -1,10 +1,11 @@
-<!--Leaderbord page, displays best score of users 
+<!-- Leaderbord page, displays best score of users 
     Have options for reordering based on the question or its type
 
     Authors: James Gower -->
 
 <!DOCTYPE html>
 
+<!-- Includes the navigation bar into the leaderboard -->
 {% block navBar%}
 {% include 'navBar.html' %}
 {% endblock %}
@@ -13,8 +14,10 @@
 <head>
 </head>
 <body>
+    <!-- Building the leaderboard table -->
     <table id="table" class="display" style="width: 100%;">
         <thead>
+          <!-- Gives a row for the headers -->
           <tr>
             {% for header in headers %}
             <th>{{ header }}</th>
@@ -22,6 +25,7 @@
           </tr>
         </thead>
         <tbody>
+        <!-- Loops through the csv to input the values for each row in the csv -->
          {% for row in data %}
           <tr>
             {% for val in row.values %}
@@ -35,7 +39,7 @@
 </html>
 
 
-<!--
+<!-- OUT OF USE FOR NOW, BUT WILL BE USED IN THE SECOND SPRINT 
 
 <html lang="en">
 <head>
