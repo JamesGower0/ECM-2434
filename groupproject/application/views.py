@@ -39,7 +39,7 @@ def qr(request):
         if bbox is not None:
             if data:
                 break   
-        cv2.waitKey(1) # i dont know what this line actually does but it is necessary for the code to work
+        cv2.waitKey(1) 
     cap.release()
     cv2.destroyAllWindows()
     
@@ -73,6 +73,7 @@ def register(response):
     return render(response, "register.html", {"form":form})
 
 def leaderboard(request):
+    # THE FOLLOWING CODE WILL BE USED FOR THE SECOND SPRINT, DONT DELETE
     '''quizzes = Quiz.objects.all()
     selected_quiz_id = request.GET.get('quiz')
     if selected_quiz_id:
@@ -85,6 +86,8 @@ def leaderboard(request):
         'scores': scores,
     }
     return render(request, 'leaderboard.html', context)'''
+
+    # Reads scores.csv and is used to output each players scores on the leaderboard
     csv_fp = open(f'scores.csv', 'r')
     reader = csv.DictReader(csv_fp)
     headers = [col for col in reader.fieldnames]
@@ -133,9 +136,11 @@ def questions5(request):
     context = open_file(file_name)
     return render(request,"question_format.html",context)
 
+# Writes the players scores to scores.csv
 def correct_answer(request):
     username = request.user.get_username()
 
+    # checks if the user already has a score, and if so, just adds to their existing score
     with open('scores.csv', 'r') as scores:
         r = csv.reader(open('scores.csv'))
         lines = list(r)
@@ -149,12 +154,13 @@ def correct_answer(request):
                     writer.writerows(lines)
                     return render(request,"correct_answer.html")
 
-
+    #if the user does not have a score already, gives them their first entry
     with open('scores.csv', 'a', newline='') as scores:
         writer = csv.writer(scores)
         writer.writerow({5, username})
     return render(request,"correct_answer.html")
 
+# Getting a question wrong doesnt affect the users score so doesnt edit scores.csv
 def wrong_answer(request):
     return render(request,"wrong_answer.html")
 
