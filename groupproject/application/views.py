@@ -2,7 +2,8 @@
 Load HTML webpages, rendering post requests,
 and displaying user specific information
 
-Author:
+Authors: Maryia Fralova, Ashley Card, James Gower, Aidan Daniel, Tom Evans
+
 """
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
