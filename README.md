@@ -8,6 +8,8 @@ pip install django-crispy-forms
 
 pip install opencv-python
 
+git clone https://github.com/JamesGower0/ECM-2434/
+in terminal
 
 To run the site:
 python manage.py runserver
