@@ -2,7 +2,7 @@
 Load HTML webpages, rendering post requests,
 and displaying user specific information
 
-Author:
+Authors: Maryia Fralova, Ashley Card
 """
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -15,15 +15,40 @@ import random
 
 # Create your views here.
 
+def home(request):
+    template = "home.html"
+    context = {}
+    return render(request, "home.html", context)#
+
+def navBar(request):
+    return render(request, 'navBar.html')
+    
+def map(request):
+    return render(request, "map.html")
+
+# Account views
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+def register(response):
+    if response.method == "POST":
+        form = forms.RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/login/")
+            #need to redirect to login page or home page?
+    else:
+        form = forms.RegisterForm()
+
+    return render(response, "register.html", {"form":form})
 
 @login_required
 def logout_view(request):
     logout(request)
     return render(request, 'home.html')
 
+# QR reading views
 def qr(request):
     
     #reads the qr code
@@ -50,25 +75,7 @@ def qr(request):
     context = {"question_page_number":data,"valid":data in valid_sites}
     return render(request, "qr.html",context)
 
-def navBar(request):
-    return render(request, 'navBar.html')
 
-def home(request):
-    template = "home.html"
-    context = {}
-    return render(request, "home.html", context)
-
-def register(response):
-    if response.method == "POST":
-        form = forms.RegisterForm(response.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("/login/")
-            #need to redirect to login page or home page?
-    else:
-        form = forms.RegisterForm()
-
-    return render(response, "register.html", {"form":form})
 
 def leaderboard(request):
     quizzes = Quiz.objects.all()
@@ -133,9 +140,8 @@ def correct_answer(request):
 def wrong_answer(request):
     return render(request,"wrong_answer.html")
 
-def map(request):
-    return render(request, "map.html")
 
+# Cookie views
 def cookiescript(request):
     return render(request, "cookiescript.html")
 
