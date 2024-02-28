@@ -17,3 +17,7 @@ python manage.py test
 
 
 Scan questions1qrcode.png with a camera on the QR page to access the questions
+
+Existing admin account: 
+username : admin
+password : admin
