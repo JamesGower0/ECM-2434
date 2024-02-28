@@ -4,6 +4,9 @@ Authors: James Gower -->
 
 <html>
     <head>
+        <!-- Adding the css to the navBar, done using style tags rather than
+        an external stylesheet so that it loading propperly when included on
+        other pages -->
         <style> 
         body {
             margin-top: 10px;
@@ -42,6 +45,8 @@ Authors: James Gower -->
     </head>
 
     <body>
+        <!-- adding each of the tabs within the navBar, using conditional statements to determine which
+        tabs are available (depending on if the user is logged in or not -->
         <ul class="ulNB">
             {% if user.is_superuser %}
             <li class="liNB" style="float:right"><a href="{% url 'admin:login' %}">Admin view</a></li>
