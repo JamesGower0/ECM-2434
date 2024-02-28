@@ -1,6 +1,56 @@
 {% block navBar%}
-<!-- including navigation bar to page -->
-{% include 'navBar.html' %}
-{% endblock %}
+    <!-- Authors Theo Smith-->
+    {% include 'navBar.html' %}
+{% endblock%}
 
-<p>this is the wrong answer!</p>
+
+{% block title %} Wrong Answer {% endblock%}
+
+{% block content %}
+    <style>
+        .wrong-answer-container {
+            background-color: #FF5733; /* Red background */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .wrong-answer-container h1 {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .wrong-answer-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .back-to-previous-button {
+            display: inline-block;
+            background-color: #8B0000; /* Dark red button color */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-previous-button:hover {
+            background-color: #5C0000; /* Darker red on hover */
+        }
+    </style>
+
+    <div class="wrong-answer-container">
+        <h1>Oops! That's the wrong answer.</h1>
+        <p>Try again or go back to the previous question.</p>
+
+        <!-- Add a button to go back to the previous question -->
+        <a>
+            Select a new question
+        </a>
+    </div>
+{% endblock%}

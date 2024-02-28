@@ -1,6 +1,57 @@
 {% block navBar%}
-<!-- including navigation bar to page -->
-{% include 'navBar.html' %}
-{% endblock %}
+    <!-- Authors Theo Smith -->
+    {% include 'navBar.html' %}
+{%endblock%}
+{%block title%}
+    Correct Answer
+{% endblock%}
 
-<p>This is the correct answer!</p>
+
+{% block content %}
+    <style>
+        .correct-answer-container {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .correct-answer-container h1 {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .correct-answer-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .next-question-button {
+            display: inline-block;
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .next-question-button:hover {
+            background-color: #005687;
+        }
+    </style>
+
+    <div class="correct-answer-container">
+        <h1>Well done, this is the correct answer!</h1>
+        <p>Congratulations on selecting the right answer.</p>
+
+        <!-- Add a button for the next question -->
+        <a >
+            Next Question
+        </a>
+    </div>
+{% endblock%}
