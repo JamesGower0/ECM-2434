@@ -15,18 +15,20 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile' #show how we want it to be displayed
 
+# Will be used to identify the various different quizes
 class Quiz(models.Model):
     title = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return self.title
 
+# Will be used to link a user, the quiz they did, and the score they got
 class Score(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, default='')
     score = models.IntegerField()
 
     def __str__(self):
-        return f"{self.user.username}'s score on {self.quiz.title}: {self.score}"
+        return f"{self.user.username}'s score on {self.quiz.title}: {self.score}" # will display a users score on a given quiz
     
 
