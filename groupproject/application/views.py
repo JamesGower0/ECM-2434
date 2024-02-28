@@ -3,6 +3,7 @@ Load HTML webpages, rendering post requests,
 and displaying user specific information
 
 Authors: Maryia Fralova, Ashley Card, James Gower, Aidan Daniel, Tom Evans
+
 """
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -12,44 +13,19 @@ from django.contrib.auth import logout
 from .models import Score, Quiz
 import cv2
 import random
+import csv
 
 # Create your views here.
 
-def home(request):
-    template = "home.html"
-    context = {}
-    return render(request, "home.html", context)#
-
-def navBar(request):
-    return render(request, 'navBar.html')
-    
-def map(request):
-    return render(request, "map.html")
-
-# Account views
 @login_required
 def profile(request):
     return render(request, 'profile.html')
-
-def register(response):
-    if response.method == "POST":
-        form = forms.RegisterForm(response.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("/login/")
-            #need to redirect to login page or home page?
-    else:
-        form = forms.RegisterForm()
-
-    return render(response, "register.html", {"form":form})
 
 @login_required
 def logout_view(request):
     logout(request)
     return render(request, 'home.html')
 
-# QR reading views
-@login_required
 def qr(request):
     
     #reads the qr code
@@ -76,10 +52,28 @@ def qr(request):
     context = {"question_page_number":data,"valid":data in valid_sites}
     return render(request, "qr.html",context)
 
+def navBar(request):
+    return render(request, 'navBar.html')
 
+def home(request):
+    template = "home.html"
+    context = {}
+    return render(request, "home.html", context)
+
+def register(response):
+    if response.method == "POST":
+        form = forms.RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/login/")
+            #need to redirect to login page or home page?
+    else:
+        form = forms.RegisterForm()
+
+    return render(response, "register.html", {"form":form})
 
 def leaderboard(request):
-    quizzes = Quiz.objects.all()
+    '''quizzes = Quiz.objects.all()
     selected_quiz_id = request.GET.get('quiz')
     if selected_quiz_id:
         scores = Score.objects.filter(quiz_id=selected_quiz_id).order_by('-score')[:10]
@@ -90,7 +84,12 @@ def leaderboard(request):
         'quizzes': quizzes,
         'scores': scores,
     }
-    return render(request, 'leaderboard.html', context)
+    return render(request, 'leaderboard.html', context)'''
+    csv_fp = open(f'scores.csv', 'r')
+    reader = csv.DictReader(csv_fp)
+    headers = [col for col in reader.fieldnames]
+    out = [row for row in reader]
+    return render(request, 'leaderboard.html', {'data' : out, 'headers' : headers})
 
 def scan(request):
     #This should be the first page of the qr functionality; the one linked to from elsewhere
@@ -135,14 +134,33 @@ def questions5(request):
     return render(request,"question_format.html",context)
 
 def correct_answer(request):
-    #this is where the users' score should be updated
+    username = request.user.get_username()
+
+    with open('scores.csv', 'r') as scores:
+        r = csv.reader(open('scores.csv'))
+        lines = list(r)
+        for i in range(len(lines)):
+            print(lines[i][0], username)
+            print(lines[i][0] == username)
+            if lines[i][0] == username:
+                lines[i][1] = int(lines[i][1]) + 5
+                with open('scores.csv', 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerows(lines)
+                    return render(request,"correct_answer.html")
+
+
+    with open('scores.csv', 'a', newline='') as scores:
+        writer = csv.writer(scores)
+        writer.writerow({5, username})
     return render(request,"correct_answer.html")
 
 def wrong_answer(request):
     return render(request,"wrong_answer.html")
 
+def map(request):
+    return render(request, "map.html")
 
-# Cookie views
 def cookiescript(request):
     return render(request, "cookiescript.html")
 
