@@ -43,12 +43,6 @@ Authors: James Gower -->
 
     <body>
         <ul class="ulNB">
-            {% if user.is_superuser %}
-            <li class="liNB" style="float:right"><a href="{% url 'admin:login' %}">Admin view</a></li>
-            {% endif %}
-            <li class="liNB"><a class="active" href="{% url 'home' %}">Home</a></li>
-            <li class="liNB"><a href="{% url 'map' %}">Map</a></li> 
-            <li class="liNB"><a href="{% url 'leaderboard' %}">Leaderboard</a></li> 
             {% if user.is_authenticated %}
             <li class="liNB" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
             <li class="liNB" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
@@ -57,7 +51,9 @@ Authors: James Gower -->
             <li class="liNB" style="float:right"><a href="{% url 'login' %}">Login</a></li>
             <li class="liNB" style="float:right"><a href="{% url 'register' %}">Register</a></li>
             {% endif %}
-
+            <li class="liNB"><a class="active" href="{% url 'home' %}">Home</a></li>
+            <li class="liNB"><a href="{% url 'map' %}">Map</a></li> 
+            <li class="liNB"><a href="{% url 'leaderboard' %}">Leaderboard</a></li> 
         </ul>
     </body>
 </html>

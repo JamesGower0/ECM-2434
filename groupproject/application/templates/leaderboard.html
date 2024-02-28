@@ -9,6 +9,34 @@
 {% include 'navBar.html' %}
 {% endblock %}
 
+<html>
+<head>
+</head>
+<body>
+    <table id="table" class="display" style="width: 100%;">
+        <thead>
+          <tr>
+            {% for header in headers %}
+            <th>{{ header }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+         {% for row in data %}
+          <tr>
+            {% for val in row.values %}
+            <td>{{ val }}</td>
+            {% endfor %}
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
+</body>
+</html>
+
+
+<!--
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,3 +77,4 @@
     </table>
 </body>
 </html>
+-->

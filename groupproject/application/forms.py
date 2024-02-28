@@ -30,3 +30,4 @@ class RegisterForm(UserCreationForm):
         # This will remove the 'helper' texts that django has by default (password is retained)
         for fieldname in ['username', 'email', 'password2', 'avatar_choice']:
             self.fields[fieldname].help_text = None 
+

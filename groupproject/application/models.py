@@ -1,7 +1,7 @@
 """
 Defines models for the application
 
-Author: James Gower
+Author:
 """
 
 from django.db import models
@@ -28,3 +28,5 @@ class Score(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s score on {self.quiz.title}: {self.score}"
+    
+
