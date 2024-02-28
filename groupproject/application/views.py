@@ -49,6 +49,7 @@ def logout_view(request):
     return render(request, 'home.html')
 
 # QR reading views
+@login_required
 def qr(request):
     
     #reads the qr code
