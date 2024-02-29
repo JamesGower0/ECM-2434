@@ -1,7 +1,7 @@
 """
 Defines models for the application
 
-Author: James Gower
+Author: James Gower, Maryia Fralova
 """
 
 from django.db import models
