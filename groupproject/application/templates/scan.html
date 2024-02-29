@@ -2,15 +2,29 @@
 
 Author: Tom Evans -->
 
+<!DOCTYPE html>
+<!-- Include navigation bar to page -->
 {% block navBar%}
-<!-- including navigation bar to page -->
 {% include 'navBar.html' %}
 {% endblock %}
 
-<p>This is the first page of the qr functionality.</p>
+{% load static %}
+<html lang="en"></html>
+    <head>
+        <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+        <title>Sign up</title>
+    </head>
 
-<ul>
+    <body>
+        <!--<p>This is the first page of the qr functionality.</p>-->
+        <div class="top">
+            <h1>ExeterNest</h1>
+        </div>
 
-<li><a href="/application/qr/">Click here and scan a qr code</a></li>
-    
-</ul>
+        <div class="scanner-link-box">
+            <ulm style="list-style-type: none;">
+                <li><a href="/application/qr/" class="qr-a">Click here and scan a qr code</a></li>
+            </ul>
+        </div>
+    </body>
+</html>

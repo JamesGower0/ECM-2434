@@ -125,3 +125,26 @@ body {
 #selected-avatar-preview{
 	width: 30%;
 }
+
+
+/* Specific for scan.html */
+.scanner-link-box{
+	font-weight: 400;
+	font-size: 2em;
+	letter-spacing: 1px;
+	text-align: center;
+	margin: 50px;
+}
+
+.qr-a:link {color: #4CAF50; text-decoration: none;}
+.qr-a:visited {color: #003c3c; text-decoration: none;}
+.qr-a:hover {text-decoration: underline;}
+
+
+/* Leaderboard specific code */
+#table{
+	text-align: center;
+	font-size: 2em;
+	width: 80%;
+	margin:auto;
+}

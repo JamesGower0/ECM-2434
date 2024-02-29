@@ -10,8 +10,10 @@
 {% include 'navBar.html' %}
 {% endblock %}
 
+{% load static %}
 <html>
 <head>
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
 </head>
 <body>
     <!-- Building the leaderboard table -->
@@ -24,7 +26,7 @@
             {% endfor %}
           </tr>
         </thead>
-        <tbody>
+        <tbody style="background-color: rgba(0, 0, 0, 0.3);">
         <!-- Loops through the csv to input the values for each row in the csv -->
          {% for row in data %}
           <tr>
