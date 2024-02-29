@@ -29,7 +29,7 @@ urlpatterns = [
     path("application/qr/questions2/", views.questions2, name="questions2"),
     path("application/qr/correct/",views.correct_answer,name = "correct"),
     path("application/qr/wrong/",views.wrong_answer,name="wrong"),
-    path("application/qr/", views.qr, name="qr"),
+    path("qr/", views.qr, name="qr"),
     path("qr/scan/",views.scan,name = "scan"),
     path("admin/", admin.site.urls),
     path("", views.navBar, name="navBar"),
@@ -40,4 +40,9 @@ urlpatterns = [
     path("map/", views.map, name="map"),
     path("cookiescript/", views.cookiescript, name="cookiescript"),
     path("cookiepage/",views.cookiepage, name="cookiepage"),
+    path("qr/scan/",views.scan,name = "scan"),
+    path("qr/questions1/", views.questions1, name="questions1"),
+    path("qr/questions2/", views.questions2, name="questions2"),
+    path("qr/correct/",views.correct_answer,name = "correct"),
+    path("qr/wrong/",views.wrong_answer,name="wrong"),
 ]
