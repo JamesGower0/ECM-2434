@@ -7,6 +7,7 @@ Author: Ashley Card, Maryia Fralova
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -16,8 +17,6 @@ class RegisterForm(UserCreationForm):
         choices = avatar_choices,
         widget=forms.Select(attrs={'onchange': 'updateAvatarPreview()'}),
         initial='Avatar 1'
-        #initial=avatar_choices[0][0]
-        #required=True
     )
 
     class Meta:

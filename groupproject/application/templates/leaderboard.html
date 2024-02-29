@@ -27,14 +27,15 @@
           </tr>
         </thead>
         <tbody style="background-color: rgba(0, 0, 0, 0.3);">
-        <!-- Loops through the csv to input the values for each row in the csv -->
-         {% for row in data %}
-          <tr>
-            {% for val in row.values %}
-            <td>{{ val }}</td>
+            {% for user in scores%}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.user.username }}</td>
+                <td>{{ user.score }}</td>
+                
+            </tr>
             {% endfor %}
-          </tr>
-         {% endfor %}
+
         </tbody>
       </table>
 </body>

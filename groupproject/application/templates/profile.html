@@ -26,8 +26,9 @@
 				<h2>{{ user.username }}</h2>
                 <div id="avatar-preview">
                     <!-- Debug: {{ user.avatar_choice }} -->
-					<img id="selected-avatar-preview" src="avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview">
+					<img id="selected-avatar-preview" src="..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
 				</div>
+                <p style="color: white; font-size: 15px;"> Score: {{ user.profile.score }}</p>
 			</div>
 
         </div>
