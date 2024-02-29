@@ -26,12 +26,16 @@ Authors: Ashley Card -->
 
     <div class="form-inside">
       <!-- Sign up form -->
+      <div class="form-header">
+				<h2>Log in</h2>
+			</div>
       <form method="POST">
         {% csrf_token %}
-        <fieldset class="form-group" style="margin-top: 20px;">
-          <legend class="border-bottom mb-4">Log in</legend>
+        <!-- <fieldset class="form-group" style="margin-top: 20px;">  -->
+          <!-- Cannot remove the legend because no fields would be displayed-->
+          <legend class="border-bottom mb-4"></legend>
           {{ form|crispy }}
-        </fieldset>
+       <!--  </fieldset> -->
         <div class="form-group">
           <button class="btn btn-outline-info" type="submit" style="margin-top: 20px;">Login</button>
         </div>

@@ -144,7 +144,41 @@ body {
 /* Leaderboard specific code */
 #table{
 	text-align: center;
-	font-size: 2em;
+	font-size: 1.5em;
 	width: 80%;
 	margin:auto;
+}
+
+
+/* Questions styling */
+.question-box{
+	background-color: white;
+	max-width: 50%;
+	margin: 20px auto 100px auto;
+	position: relative;
+	top: 10%;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 5px 50px rgba(0,0,0,0.4);
+    font-weight: 300;
+}
+
+.question-p{
+	color: #4CAF50;
+	font-size: 150%;
+	text-align: center;
+}
+
+.answers-inside{
+	font-size: 150%;
+}
+
+.answer-a{
+	color: #003c3c; 
+	text-decoration: none;
+}
+
+.answer-a:hover {
+	text-decoration: underline;
+	color: #4CAF50;
 }
