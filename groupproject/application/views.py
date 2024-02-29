@@ -10,7 +10,8 @@ from django.http import HttpResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import Score, Quiz
+#from .models import Score, Quiz
+from .models import Quiz, Profile, User
 import cv2
 import random
 import csv
@@ -64,9 +65,10 @@ def register(response):
     if response.method == "POST":
         form = forms.RegisterForm(response.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.avatar_choice = form.cleaned_data["avatar_choice"]
+            user.save()
             return redirect("/login/")
-            #need to redirect to login page or home page?
     else:
         form = forms.RegisterForm()
 
@@ -74,7 +76,7 @@ def register(response):
 
 def leaderboard(request):
     # THE FOLLOWING CODE WILL BE USED FOR THE SECOND SPRINT, DONT DELETE
-    '''quizzes = Quiz.objects.all()
+    """quizzes = Quiz.objects.all()
     selected_quiz_id = request.GET.get('quiz')
     if selected_quiz_id:
         scores = Score.objects.filter(quiz_id=selected_quiz_id).order_by('-score')[:10]
@@ -85,14 +87,13 @@ def leaderboard(request):
         'quizzes': quizzes,
         'scores': scores,
     }
-    return render(request, 'leaderboard.html', context)'''
+    return render(request, 'leaderboard.html', context)"""
 
-    # Reads scores.csv and is used to output each players scores on the leaderboard
-    csv_fp = open(f'scores.csv', 'r')
-    reader = csv.DictReader(csv_fp)
-    headers = [col for col in reader.fieldnames]
-    out = [row for row in reader]
-    return render(request, 'leaderboard.html', {'data' : out, 'headers' : headers})
+    users = User.objects.all()
+    headers = ["Place", "Bird name", "Username", "Score"]
+    profiles = Profile.objects.order_by('-score')[0:10]
+    
+    return render(request, 'leaderboard.html', {'users': users, 'headers': headers, 'profiles': profiles})
 
 def scan(request):
     #This should be the first page of the qr functionality; the one linked to from elsewhere
@@ -140,24 +141,10 @@ def questions5(request):
 def correct_answer(request):
     username = request.user.get_username()
 
-    # checks if the user already has a score, and if so, just adds to their existing score
-    with open('scores.csv', 'r') as scores:
-        r = csv.reader(open('scores.csv'))
-        lines = list(r)
-        for i in range(len(lines)):
-            print(lines[i][0], username)
-            print(lines[i][0] == username)
-            if lines[i][0] == username:
-                lines[i][1] = int(lines[i][1]) + 5
-                with open('scores.csv', 'w', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerows(lines)
-                    return render(request,"correct_answer.html")
-
-    #if the user does not have a score already, gives them their first entry
-    with open('scores.csv', 'a', newline='') as scores:
-        writer = csv.writer(scores)
-        writer.writerow({5, username})
+    # Updating user's score and saving into the database
+    current_user = request.user
+    current_user.profile.score += 1
+    current_user.save()
     return render(request,"correct_answer.html")
 
 # Getting a question wrong doesnt affect the users score so doesnt edit scores.csv

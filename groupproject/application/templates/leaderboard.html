@@ -1,7 +1,7 @@
 <!-- Leaderbord page, displays best score of users 
     Have options for reordering based on the question or its type
 
-    Authors: James Gower -->
+    Authors: James Gower, Maryia Fralova -->
 
 <!DOCTYPE html>
 
@@ -27,14 +27,16 @@
           </tr>
         </thead>
         <tbody style="background-color: rgba(0, 0, 0, 0.3);">
-        <!-- Loops through the csv to input the values for each row in the csv -->
-         {% for row in data %}
-          <tr>
-            {% for val in row.values %}
-            <td>{{ val }}</td>
+            {% for user in profiles%}
+            <tr style="color: white">
+                <td class="td-leader">{{ forloop.counter }}</td>
+                <td class="td-leader"><img id="leaderboard-bird" src="..\static/avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview"></td>
+                <td class="td-leader">{{ user.user.username }}</td>
+                <td class="td-leader">{{ user.score }}</td>
+                
+            </tr>
             {% endfor %}
-          </tr>
-         {% endfor %}
+
         </tbody>
       </table>
 </body>
