@@ -90,10 +90,10 @@ def leaderboard(request):
     return render(request, 'leaderboard.html', context)"""
 
     users = User.objects.all()
-    headers = ["Place", "Name", "Score"]
-    scores = Profile.objects.order_by('-score')[0:10]
+    headers = ["Place", "Bird name", "Username", "Score"]
+    profiles = Profile.objects.order_by('-score')[0:10]
     
-    return render(request, 'leaderboard.html', {'users': users, 'headers': headers, 'scores': scores})
+    return render(request, 'leaderboard.html', {'users': users, 'headers': headers, 'profiles': profiles})
 
 def scan(request):
     #This should be the first page of the qr functionality; the one linked to from elsewhere

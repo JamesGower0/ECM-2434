@@ -27,11 +27,12 @@
           </tr>
         </thead>
         <tbody style="background-color: rgba(0, 0, 0, 0.3);">
-            {% for user in scores%}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ user.user.username }}</td>
-                <td>{{ user.score }}</td>
+            {% for user in profiles%}
+            <tr style="color: white">
+                <td class="td-leader">{{ forloop.counter }}</td>
+                <td class="td-leader"><img id="leaderboard-bird" src="..\static/avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview"></td>
+                <td class="td-leader">{{ user.user.username }}</td>
+                <td class="td-leader">{{ user.score }}</td>
                 
             </tr>
             {% endfor %}
