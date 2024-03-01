@@ -46,10 +46,7 @@ def qr(request):
     
     #doesn't load page until it gets a qr code; should be accessed from scan page
 
-    #also add more detailed (placeholder) questions page/template
-
-    #data="questions2"
-    valid_sites = ["questions1","questions2"]
+    valid_sites = ["questions1","questions2","questions3","questions4","questions5"]
     context = {"question_page_number":data,"valid":data in valid_sites}
     return render(request, "qr.html",context)
 
