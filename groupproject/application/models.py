@@ -61,8 +61,9 @@ def user_is_created(sender, instance, created, **kwargs):
                         and requires a profile model to be setup
     """
 
-    if created:
+    if created and (instance.is_superuser == 0):
         Profile.objects.create(user=instance, avatar_choice=instance.avatar_choice)
     else:
+        Profile.objects.create(user=instance)
         instance.profile.save()
 
