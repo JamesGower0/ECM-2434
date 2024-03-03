@@ -2,11 +2,11 @@
     <!-- Authors Theo Smith -->
     {% include 'navBar.html' %}
 {%endblock%}
-{%block title%}
-    Correct Answer
-{% endblock%}
+<!--{%block title%}
+    Correct answer
+{% endblock%}-->
 
-
+{% load static %}
 {% block content %}
     <style>
         .correct-answer-container {
@@ -44,7 +44,7 @@
             background-color: #005687;
         }
     </style>
-
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
     <div class="correct-answer-container">
         <h1>Well done, this is the correct answer!</h1>
         <p>Congratulations on selecting the right answer.</p>

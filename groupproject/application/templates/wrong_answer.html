@@ -4,8 +4,9 @@
 {% endblock%}
 
 
-{% block title %} Wrong Answer {% endblock%}
+<!--{% block title %} Wrong Answer {% endblock%}-->
 
+{% load static %}
 {% block content %}
     <style>
         .wrong-answer-container {
@@ -43,7 +44,8 @@
             background-color: #5C0000; /* Darker red on hover */
         }
     </style>
-
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+    
     <div class="wrong-answer-container">
         <h1>Oops! That's the wrong answer.</h1>
         <p>Try again or go back to the previous question.</p>
