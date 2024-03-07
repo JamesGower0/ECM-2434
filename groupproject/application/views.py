@@ -47,8 +47,26 @@ def qr(request):
     #doesn't load page until it gets a qr code; should be accessed from scan page
 
     valid_sites = ["questions1","questions2","questions3","questions4","questions5"]
-    context = {"question_page_number":data,"valid":data in valid_sites}
-    return render(request, "qr.html",context)
+    #obsolete: context = {"question_page_number":data,"valid":data in valid_sites}
+
+    #   !COMBINE WITH QUESTION VIEW!
+    file_name=None
+    if data == "questions1":
+        file_name = 'Biodiversity questions.csv'
+    elif data == "questions2":
+        file_name = 'Construction questions.csv'
+    elif data == "questions3":
+        file_name = 'Exercise questions.csv'
+    elif data == "questions4":
+        file_name = 'Personal impact questions.csv'
+    elif data == "questions5":
+        file_name = 'Research questions.csv'
+    else:
+        return HttpResponse("not a valid qr code")
+    context = open_file(file_name)
+    return render(request,"question_format.html",context)
+
+    #obsolete: return render(request, "qr.html",context)
 
 def navBar(request):
     return render(request, 'navBar.html')
@@ -106,33 +124,6 @@ def open_file(name):
     question = question.split(',')
     context = {"question":question[0],"correct_answer":question[1],"wrong_1":question[2],"wrong_2":question[3],"wrong_3":question[4],}
     return context
-
-def questions1(request):
-    #each of these views should correspond to a different file of questions
-    #in the format of example_questions.csv
-    file_name = 'Biodiversity questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions2(request):
-    file_name = 'Construction questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions3(request):
-    file_name = 'Exercise questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions4(request):
-    file_name = 'Personal impact questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions5(request):
-    file_name = 'Research questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
 
 # Writes the players scores to scores.csv
 def correct_answer(request):
