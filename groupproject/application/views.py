@@ -68,6 +68,8 @@ def qr(request):
 
     #obsolete: return render(request, "qr.html",context)
 
+    #note that the 'qr', 'questions1' and 'questions2' templates are also obsolete and should be deleted 
+
 def navBar(request):
     return render(request, 'navBar.html')
 
