@@ -1,4 +1,4 @@
-<!-- Leaderboard page, displays best score of users 
+<!-- Leaderbord page, displays best score of users 
     Have options for reordering based on the question or its type
 
     Authors: James Gower, Maryia Fralova, Aidan Daniel -->
@@ -148,34 +148,7 @@
 </body>
 </html>
 
-  <!-- Building the leaderboard table -->
-    <table id="table" class="display" style="width: 100%;">
-        <thead>
-          <!-- Gives a row for the headers -->
-          <tr>
-            {% for header in headers %}
-            <th>{{ header }}</th>
-            {% endfor %}
-          </tr>
-        </thead>
-        <tbody style="background-color: rgba(0, 0, 0, 0.3);">
-            {% for user in profiles%}
-            <tr style="color: white">
-                <td class="td-leader">{{ forloop.counter }}</td>
-                <td class="td-leader"><img id="leaderboard-bird" src="..\static/avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview"></td>
-                <td class="td-leader">{{ user.user.username }}</td>
-                <td class="td-leader">{{ user.score }}</td>
-                
-            </tr>
-            {% endfor %}
-
-        </tbody>
-      </table>
-</body>
-</html>
-
-
-<!-- OUT OF USE FOR NOW, BUT WILL BE USED IN THE SECOND SPRINT 
+ <!-- OUT OF USE FOR NOW, BUT WILL BE USED IN THE SECOND SPRINT 
 
 <html lang="en">
 <head>
