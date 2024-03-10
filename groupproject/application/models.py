@@ -48,6 +48,19 @@ class Quiz(models.Model):
         return f"{self.user.username}'s score on {self.quiz.title}: {self.score}" # will display a users score on a given quiz"""
 
 
+class Bird(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE) # Delete profile when user is deleted
+    # Should be created when the user is registered (add to user_is_created function below) 
+    birdType = models.CharField(max_length=20, default='robin')
+    # Changes if no quizzes are solved; Once reaches 0 - health starts to go down
+    mood = models.IntegerField(default=10)
+    # Depends on the correctness of the answers; Can be increased by correct answers
+    health = models.IntegerField(default=100)
+
+    def __str__(self):
+        return f'{self.birdType} Bird'
+
+
 @receiver(post_save, sender = User)
 def user_is_created(sender, instance, created, **kwargs):
     """
@@ -63,9 +76,12 @@ def user_is_created(sender, instance, created, **kwargs):
 
     if created:
         if instance.is_superuser == 1:
+            Bird.objects.create(user=instance, birdType = instance.avatar_choice)
             Profile.objects.create(user=instance)
         else:
             Profile.objects.create(user=instance, avatar_choice=instance.avatar_choice)
+            Bird.objects.create(user=instance, birdType = instance.avatar_choice)
     else:
         instance.profile.save()
+        instance.bird.save()
 

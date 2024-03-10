@@ -14,6 +14,29 @@
     <head>
 		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
 		<title>Sign up</title>
+        <style>
+            .status-bar {
+                width: 80%;
+                height: 20px;
+                border: 1px solid #000;
+                position: relative;
+                margin: auto;
+            }
+
+            .fill-health {
+                background-color: #00ff00;  /* Green */
+            }
+
+            .fill-mood {
+                background-color: #0000ff;  /* Blue */
+            }
+
+            .fill {
+                height: 100%;
+                position: absolute;
+                top: 0;
+            }
+        </style>
 	</head>
     {% block content %}
     <body>
@@ -21,14 +44,28 @@
 			<h1>Your ExeterNest birdie</h1>
 		</div>
 
-        <div class="form-inside">
-            <div class="form-header">
+        <div class="form-inside profile-box">
+            <div class="form-header" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
 				<h2>{{ user.username }}</h2>
 			</div>
             <div id="avatar-preview">
                 <!-- Debug: {{ user.avatar_choice }} -->
                 <img id="selected-avatar-preview" src="..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
             </div>
+
+            <div>
+            <h2>Health</h2>
+                <div class="status-bar health-bar">
+                    <div class="fill fill-health" style="width: {{ bird.health }}%;"></div>
+                </div>
+                <p>{{ bird.health }}</p>
+                <h2>Mood</h2>
+                <div class="status-bar mood-bar">
+                    <div class="fill fill-mood" style="width: {{ mood_width }}%;"></div>
+                </div>
+                <p>{{ bird.mood }}</p>
+            </div>
+
             <p style="color: black; font-size: 15px;"> Score: {{ user.profile.score }}</p>
         </div>
        

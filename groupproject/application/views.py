@@ -11,7 +11,7 @@ from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 #from .models import Score, Quiz
-from .models import Quiz, Profile, User
+from .models import Quiz, Profile, User, Bird
 import cv2
 import random
 import csv
@@ -20,7 +20,10 @@ import csv
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    bird = Bird.objects.filter(user=request.user).first()
+    mood_multiplier = 10
+    mood_width = bird.mood * mood_multiplier
+    return render(request, 'profile.html', {'bird': bird, 'mood_width': mood_width})
 
 @login_required
 def logout_view(request):

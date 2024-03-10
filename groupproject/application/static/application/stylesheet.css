@@ -27,6 +27,7 @@ body {
 	position: relative;
 }
 
+/* home.html */
 .home-box{
 	background-color: rgb(255, 255, 255, 0.7);
 	padding: 20px;
@@ -224,3 +225,24 @@ body {
 	text-decoration: underline;
 	color: #4CAF50;
 }
+
+
+/* profile.html */
+.profile-box{
+	background-color: rgb(255, 255, 255, 0.7);
+	border-radius: 5px;
+	background: linear-gradient(to bottom, #fff 0%, #cdd4ee 100%);
+	font-size: 120%;
+    font-weight: 300;
+	transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+	font-family: 'Roboto', sans-serif;
+	text-align: center; 
+   	line-height: 1.6;
+}
+ 
+ .profile-box:hover {
+	background-color: rgb(255, 255, 255, 0.9);
+	box-shadow: 0 5px 60px rgba(0, 0, 0, 0.6);
+	transform: scale(1.02); 
+ }
