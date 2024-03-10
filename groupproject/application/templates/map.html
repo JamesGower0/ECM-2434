@@ -1,79 +1,75 @@
-<!-- Map page, where users can see the location of qr codes
-    and are able to check if a challenge is available in a certain area
-
-    Authors: Maryia Fralova -->
-
-<!DOCTYPE html> 
+<!doctype html>
 
 {% block navBar%}
 {% include 'navBar.html' %}
 {% endblock %}
 
 {% load static %}
-<html lang="en">
 
-    <head>
-        <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
-        <title>Campus map</title>
-        <script>
-            var challengeNotCompleted = true;
-        </script>
-    </head>
+<html>
+  <head>
+    <title>Campus map</title>
+    <script>
+        var challengeNotCompleted = true;
+    </script>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <body>
-        {% block content %}
-        <div class="top">
+    <link rel="stylesheet" type="text/css" href="../static/application/map.css" />
+    <script type="module" src="../static/application/map.js"></script>
+  </head>
+  <body>
+
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "{{key}}", v: "weekly"});</script>
+
+    {% block content %}
+
+    <div class="top">
 			<h1>ExeterNest</h1>
 		</div>
 
-        <div class="map-box">
-            <img src="{% static 'application/map_app.png' %}" usemap="#image-map" id="map"> 
-            <!--<map name="image-map">
-                <area shape="rect" coords="247,56,547,456" alt="Sports park" onclick="showMessage('Health area Clicked')">
-                <area shape="rect" coords="548,56,797,456" alt="Laver building" onclick="showMessage('Environmental area Clicked')">
-                <area shape="rect" coords="847,56,1047,506" alt="East park" onclick="showMessage('Social area Clicked')">
-                <area shape="rect" coords="247,457,547,696" alt="Reed pond" onclick="showMessage('Biodiversity area Clicked')">
-                <area shape="rect" coords="548,506,797,669" alt="Forum library" onclick="showMessage('Educational area Clicked')">            
-              </map>-->
-        </div>
+    <div id="map"></div>
 
-        <div class="message" id="message-container">Location of today's challenge:</div>
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+      ({key: "{{key}}", v: "weekly"});</script>
 
-        <!-- Button for checking the ecological challenge -->
-        <div style="padding-bottom: 15%; text-align: center">
-              <button class="btn" id= "btn-map" onclick="showLocation()"></button>
-        </div> 
+    <div class="message" id="message-container">Location of today's challenge:</div>
 
-        <!-- Displaying messages based on what area is clicked-->
-        <script>
-            function showMessage(message) {
-                var messageContainer = document.getElementById('message-container');
-                messageContainer.innerText = ''; // Clear previous message
-                messageContainer.innerText = message;
-                messageContainer.style.display = 'block';
-            }
+    <!-- Button for checking the ecological challenge -->
+    <div style="padding-bottom: 15%; text-align: center">
+          <button class="btn" id= "btn-map" onclick="showLocation()"></button>
+    </div> 
 
-            // True for now but will change based on the function that checks challenge completion status
-            var myButton = document.getElementById("btn-map");
-            // Set the message based on the boolean value
-            if (challengeNotCompleted) {
-                myButton.innerText = "Look for today's challenge";
-            } else {
-                myButton.innerText = "Already completed";
-            }
+    <!-- Displaying messages based on what area is clicked-->
+    <script>
+        function showMessage(message) {
+            var messageContainer = document.getElementById('message-container');
+            messageContainer.innerText = ''; // Clear previous message
+            messageContainer.innerText = message;
+            messageContainer.style.display = 'block';
+        }
 
-            // Location of the challenge is specified by the admin every day
-            // Currently location = Sports park
-            let currentLoc = 0;
-            function showLocation(){
-                var messageContainer = document.getElementById('message-container');
-                messageContainer.innerText = ''; // Clear previous message
-                messageContainer.innerText = "Location of today's challenge: Sports park";
-                messageContainer.style.display = 'block';
-            }
+        // True for now but will change based on the function that checks challenge completion status
+        var myButton = document.getElementById("btn-map");
+        // Set the message based on the boolean value
+        if (challengeNotCompleted) {
+            myButton.innerText = "Look for today's challenge";
+        } else {
+            myButton.innerText = "Already completed";
+        }
 
-          </script>
-        {% endblock %}
-    </body>
+        // Location of the challenge is specified by the admin every day
+        // Currently location = Sports park
+        let currentLoc = 0;
+        function showLocation(){
+            var messageContainer = document.getElementById('message-container');
+            messageContainer.innerText = ''; // Clear previous message
+            messageContainer.innerText = "Location of today's challenge: Sports park";
+            messageContainer.style.display = 'block';
+        }
 
+      </script>
+    {% endblock %}
+  </body>
 </html>
