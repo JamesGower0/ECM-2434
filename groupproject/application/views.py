@@ -15,6 +15,8 @@ from .models import Quiz, Profile, User
 import cv2
 import random
 import csv
+import googlemaps
+from django.conf import settings
 
 # Create your views here.
 
@@ -148,11 +150,27 @@ def correct_answer(request):
 def wrong_answer(request):
     return render(request,"wrong_answer.html")
 
-def map(request):
-    return render(request, "map.html")
-
 def cookiescript(request):
     return render(request, "cookiescript.html")
 
 def cookiepage(request):
     return render(request, "cookiepage.html")
+
+def map(request): 
+    Key = settings.GOOGLE_MAPS_API_KEY
+    gmaps = googlemaps.Client(key = Key)
+    result = gmaps.geocode('Stocker Rd, Exeter EX4 4PY')[0]
+
+    # when testing you can hard code latitude and longditude values by commenting the follwoing two lines and manually
+    # defining lat and lng (to show what it would do at specific coords)
+    lat = result.get("geometry", {}).get("location", {}).get("lat", None)
+    lng = result.get("geometry", {}).get("location", {}).get("lng", None)
+
+    context ={
+        'result':result,
+        'lat':lat,
+        'lng':lng,
+        'key':Key
+    }
+
+    return render(request, "map.html", context)
