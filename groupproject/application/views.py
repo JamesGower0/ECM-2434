@@ -157,6 +157,17 @@ def cookiepage(request):
     return render(request, "cookiepage.html")
 
 def map(request): 
+    Key = settings.GOOGLE_MAPS_API_KEY    
+    context ={
+        'key':Key
+    }
+
+    return render(request, "map.html", context)
+
+def location(request):
+    '''
+    Will be used to force a location when testing and demonstrating
+
     Key = settings.GOOGLE_MAPS_API_KEY
     gmaps = googlemaps.Client(key = Key)
     result = gmaps.geocode('Stocker Rd, Exeter EX4 4PY')[0]
@@ -171,6 +182,6 @@ def map(request):
         'lat':lat,
         'lng':lng,
         'key':Key
-    }
+    }'''
 
-    return render(request, "map.html", context)
+    return render(request, "location.html")

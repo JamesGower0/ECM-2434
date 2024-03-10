@@ -1,15 +1,14 @@
+// Author: James Gower
+
 // Initialize and add the map
-let map;
+let map, infoWindow;
 
 async function initMap() {
-  // The location of Uluru
   const position = { lat: 50.73616692515237, lng: -3.5334316093373945 };
   // Request needed libraries.
-  //@ts-ignore
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-  // The map, centered at Uluru
   map = new Map(document.getElementById("map"), {
     zoom: 16,
     center: position,
@@ -74,6 +73,52 @@ async function initMap() {
     position: { lat: 50.73764355152051, lng: -3.527791142400209 },
     content: EastParkTag,
   });
+
+
+infoWindow = new google.maps.InfoWindow();
+
+const locationButton = document.createElement("button");
+
+locationButton.textContent = "Show Current Location";
+locationButton.classList.add("custom-map-control-button");
+map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+locationButton.addEventListener("click", () => {
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent("You are here");
+        infoWindow.open(map);
+        map.setCenter(pos);
+      },
+      () => {
+        handleLocationError(true, infoWindow, map.getCenter());
+      },
+    );
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+});
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation.",
+  );
+  infoWindow.open(map);
 }
+  
+}
+
+window.initMap = initMap;
 
 initMap();
