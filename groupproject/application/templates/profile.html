@@ -15,6 +15,49 @@
 		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
 		<title>Sign up</title>
         <style>
+            .profile-box{
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-rows: repeat(4, 1fr);  
+                max-width: 800px; /* Adjust the max-width as needed */
+                margin-top: 20px;
+                margin-bottom: 40px;        
+            }
+
+            .item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid  #003c3c;
+                box-sizing: border-box;
+                padding: 5px;
+            }
+
+            .item1 {
+                grid-row: 1;
+                grid-column: span 6;
+            }
+
+            .item2 {
+                grid-row: span 3;
+                grid-column: span 4;
+            }
+
+            .item3 {
+                grid-row: span 1;
+                grid-column: span 2;
+            }
+
+            .item4 {
+                grid-row: span 1;
+                grid-column: span 2;
+            }
+
+            .item5 {
+                grid-row: span 1;
+                grid-column: span 2;
+            }
+
             .status-bar {
                 width: 80%;
                 height: 20px;
@@ -44,29 +87,35 @@
 			<h1>Your ExeterNest birdie</h1>
 		</div>
 
-        <div class="form-inside profile-box">
-            <div class="form-header" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
+        <div class="form-inside profile-box" style="padding: 0;">
+            <div class="form-header item item1" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
 				<h2>{{ user.username }}</h2>
 			</div>
-            <div id="avatar-preview">
+            <div id="avatar-preview" class="item item2">
                 <!-- Debug: {{ user.avatar_choice }} -->
                 <img id="selected-avatar-preview" src="..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
             </div>
 
-            <div>
-            <h2>Health</h2>
+            <div class="item item3">
+                <p style="padding-right: 5px;">Health</p>
                 <div class="status-bar health-bar">
                     <div class="fill fill-health" style="width: {{ bird.health }}%;"></div>
                 </div>
-                <p>{{ bird.health }}</p>
-                <h2>Mood</h2>
+                <p style="padding-left: 5px;">{{ bird.health }}</p>
+            </div>
+
+            <div class="item item4">
+                <p style="padding-right: 5px;">Mood</p>
                 <div class="status-bar mood-bar">
                     <div class="fill fill-mood" style="width: {{ mood_width }}%;"></div>
                 </div>
-                <p>{{ bird.mood }}</p>
+                <p style="padding-left: 5px;">{{ bird.mood }}</p>
             </div>
 
-            <p style="color: black; font-size: 15px;"> Score: {{ user.profile.score }}</p>
+            <div class="item item5" style="padding-right: 5px;">
+                <p> Score: {{ user.profile.score }}</p>
+            </div>
+            
         </div>
        
     </body>
