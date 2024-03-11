@@ -32,22 +32,24 @@ def qr(request):
     #reads the qr code
 
     
-    cap = cv2.VideoCapture(0)
-    detector = cv2.QRCodeDetector()
-    while True:
-        _, img = cap.read()
-        data, bbox, _ = detector.detectAndDecode(img)
-        if bbox is not None:
-            if data:
-                break   
-        cv2.waitKey(1) 
-    cap.release()
-    cv2.destroyAllWindows()
+    #cap = cv2.VideoCapture(0)
+    #detector = cv2.QRCodeDetector()
+    #while True:
+     #   _, img = cap.read()
+      #  data, bbox, _ = detector.detectAndDecode(img)
+       # if bbox is not None:
+        #    if data:
+         #       break   
+        #cv2.waitKey(1) 
+    #cap.release()
+    #cv2.destroyAllWindows()
     
     #doesn't load page until it gets a qr code; should be accessed from scan page
 
     valid_sites = ["questions1","questions2","questions3","questions4","questions5"]
     #obsolete: context = {"question_page_number":data,"valid":data in valid_sites}
+
+    data = "questions2"
 
     #   !COMBINE WITH QUESTION VIEW!
     file_name=None
@@ -124,7 +126,29 @@ def open_file(name):
     r = random.randint(0,(len(file)-1))
     question = file[r]
     question = question.split(',')
-    context = {"question":question[0],"correct_answer":question[1],"wrong_1":question[2],"wrong_2":question[3],"wrong_3":question[4],}
+    new_list = []
+    new_list.append(question[0])
+    new_list.append((question[1],"correct"))
+    new_list.append((question[2],"wrong"))
+    new_list.append((question[3],"wrong"))
+    new_list.append((question[4],"wrong"))
+
+    r2 = random.randint(1,4)
+    temp_c = new_list[r2]
+    new_list[r2] = new_list[1]
+    new_list[1] = temp_c
+
+    context = {"question":new_list[0],
+               "answer_1":new_list[1][0],
+               "link_1":new_list[1][1],
+               "answer_2":new_list[2][0],
+               "link_2":new_list[2][1],
+               "answer_3":new_list[3][0],
+               "link_3":new_list[3][1],
+               "answer_4":new_list[4][0],
+               "link_4":new_list[4][1],}
+
+    #context = {"question":question[0],"correct_answer":question[1],"wrong_1":question[2],"wrong_2":question[3],"wrong_3":question[4],}
     return context
 
 # Writes the players scores to scores.csv
