@@ -144,6 +144,7 @@ def correct_answer(request):
     # Updating user's score and saving into the database
     current_user = request.user
     current_user.profile.score += 1
+    current_user.bird.health += 1
     current_user.save()
     return render(request,"correct_answer.html")
 

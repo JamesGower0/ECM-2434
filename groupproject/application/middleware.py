@@ -24,10 +24,16 @@ class BirdMetricsMiddleware:
         now = datetime.now()
         for bird in birds:
             if 6 <= now.hour < 12:  # Morning
-                bird.mood += 1
+                if self.last_update_time != None:
+                    time_difference = datetime.now() - self.last_update_time
+                    bird.health -= int(time_difference.total_seconds() / 3600)
+                else:
+                    bird.health -= 1
             elif 12 <= now.hour < 18:  # Afternoon
-                bird.mood -= 1
+                bird.health -= 1
             else:  # Night
                 bird.health -= 1
+        
+        # Need to add function that decreases mood based on the number of questions answered
 
             bird.save()
