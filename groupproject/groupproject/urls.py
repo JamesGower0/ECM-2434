@@ -37,6 +37,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.navBar, name="navBar"),
     path("profile/", views.profile, name='profile'),
+    path("profile_update/", views.profile_update, name='profile_update'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name = 'login'),
     path('logout/', views.logout_view, name = 'logout'),
     path("leaderboard/", views.leaderboard, name="leaderboard"),
