@@ -32,24 +32,21 @@ def qr(request):
     #reads the qr code
 
     
-    #cap = cv2.VideoCapture(0)
-    #detector = cv2.QRCodeDetector()
-    #while True:
-     #   _, img = cap.read()
-      #  data, bbox, _ = detector.detectAndDecode(img)
-       # if bbox is not None:
-        #    if data:
-         #       break   
-        #cv2.waitKey(1) 
-    #cap.release()
-    #cv2.destroyAllWindows()
+    cap = cv2.VideoCapture(0)
+    detector = cv2.QRCodeDetector()
+    while True:
+        _, img = cap.read()
+        data, bbox, _ = detector.detectAndDecode(img)
+        if bbox is not None:
+            if data:
+                break   
+        cv2.waitKey(1) 
+    cap.release()
+    cv2.destroyAllWindows()
     
     #doesn't load page until it gets a qr code; should be accessed from scan page
 
     valid_sites = ["questions1","questions2","questions3","questions4","questions5"]
-    #obsolete: context = {"question_page_number":data,"valid":data in valid_sites}
-
-    data = "questions2"
 
     #   !COMBINE WITH QUESTION VIEW!
     file_name=None
@@ -68,9 +65,8 @@ def qr(request):
     context = open_file(file_name)
     return render(request,"question_format.html",context)
 
-    #obsolete: return render(request, "qr.html",context)
 
-    #note that the 'qr', 'questions1' and 'questions2' templates are also obsolete and should be deleted
+    #note that the 'qr', 'questions1' and 'questions2' templates are obsolete and should be deleted
 
 def navBar(request):
     return render(request, 'navBar.html')
