@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+{% load static %}
 <html lang="en" dir="ltr">
 {% block navBar%}
 {% include 'navBar.html' %}
@@ -8,6 +10,7 @@
     <meta charset="utf-8">
     <title>Welcome to the Exeter-Nest Mini-game</title>
     <link rel="stylesheet" href="../static/application/style.css">
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../static/application/words.js" defer></script>
     <script src="../static/application//minigame.js" defer></script>
