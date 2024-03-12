@@ -11,7 +11,7 @@ from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 #from .models import Score, Quiz
-from .models import Quiz, Profile, User
+from .models import Quiz, Profile, User, Question
 import cv2
 import random
 import csv
@@ -32,21 +32,25 @@ def qr(request):
     #reads the qr code
 
     
-    cap = cv2.VideoCapture(0)
-    detector = cv2.QRCodeDetector()
-    while True:
-        _, img = cap.read()
-        data, bbox, _ = detector.detectAndDecode(img)
-        if bbox is not None:
-            if data:
-                break   
-        cv2.waitKey(1) 
-    cap.release()
-    cv2.destroyAllWindows()
+    #cap = cv2.VideoCapture(0)
+    #detector = cv2.QRCodeDetector()
+    #while True:
+     #   _, img = cap.read()
+      #  data, bbox, _ = detector.detectAndDecode(img)
+       # if bbox is not None:
+        #    if data:
+         #       break   
+        #cv2.waitKey(1) 
+    #cap.release()
+    #cv2.destroyAllWindows()
     
     #doesn't load page until it gets a qr code; should be accessed from scan page
 
     valid_sites = ["questions1","questions2","questions3","questions4","questions5"]
+
+
+    #the above code is for the qr functionality; the data variable is what should be used to access different questions
+    data = "questions2"
 
     #   !COMBINE WITH QUESTION VIEW!
     file_name=None
@@ -66,7 +70,7 @@ def qr(request):
     return render(request,"question_format.html",context)
 
 
-    #note that the 'qr', 'questions1' and 'questions2' templates are obsolete and should be deleted
+    #note that the 'qr', 'questions1' and 'questions2' templates are also obsolete and should be deleted
 
 def navBar(request):
     return render(request, 'navBar.html')
@@ -116,12 +120,28 @@ def scan(request):
     return render(request,"scan.html")
 
 def open_file(name):
-    file = open('application/'+name,'r')
-    file = file.readlines()
+
+    # !! will be replaced by database model 
+    #file = open('application/'+name,'r')
+    #file = file.readlines()
     #pick a random question from the file
-    r = random.randint(0,(len(file)-1))
-    question = file[r]
-    question = question.split(',')
+    #r = random.randint(0,(len(file)-1))
+    #question = file[r]
+    #question = question.split(',')
+    #!!
+
+    all_question_objects = Question.objects.all()
+    all_questions = []
+
+    for i in range(0,len(all_question_objects)):
+        c_question_object = all_question_objects[i]
+        c_question = c_question_object.return_values()
+        if c_question_object.get_type() == name:
+            all_questions.append(c_question)
+
+    r = random.randint(0,len(all_questions)-1)
+    question = all_questions[r]
+
     new_list = []
     new_list.append(question[0])
     new_list.append((question[1],"correct"))
