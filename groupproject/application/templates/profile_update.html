@@ -1,13 +1,14 @@
-{% block title %}Customer Page{% endblock %}
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% block title %}Edit profile page{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="row my-4">
     <div class="col-md-4"></div>
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header bg-info text-white">
-                Customer Detail Page
-            </div>
             <div class="row p-3">
                 <div class="col-md-8">
                     <form method="POST" enctype="multipart/form-data">
