@@ -56,6 +56,7 @@ Authors: James Gower -->
             <li class="liNB"><a href="{% url 'leaderboard' %}">Leaderboard</a></li> 
             {% if user.is_authenticated %}
             <li class="liNB" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'change_password' %}">Change password</a></li>
             <li class="liNB" style="float:right"><a href="{% url 'profile_update' %}">Edit profile</a></li>
             <li class="liNB" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
             <li class="liNB"><a href="{% url 'scan' %}">QR scanner</a></li>

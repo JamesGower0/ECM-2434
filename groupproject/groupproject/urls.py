@@ -38,6 +38,7 @@ urlpatterns = [
     path("", views.navBar, name="navBar"),
     path("profile/", views.profile, name='profile'),
     path("profile_update/", views.profile_update, name='profile_update'),
+    path("change_password/", views.change_password, name='change_password'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name = 'login'),
     path('logout/', views.logout_view, name = 'logout'),
     path("leaderboard/", views.leaderboard, name="leaderboard"),
