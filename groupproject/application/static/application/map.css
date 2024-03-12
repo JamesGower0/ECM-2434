@@ -1,0 +1,115 @@
+#map {
+  height: 90%;
+  width:90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: url("pages-background.png") no-repeat center center fixed;
+	background-size: cover;
+	font-family: 'Lato', sans-serif;
+	margin: 0;
+	color: #003c3c;
+}
+
+/* HTML marker styles */
+.name-tag {
+  background-color: #4285F4;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 14px;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.name-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 0);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #4285F4;
+}
+
+.top {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	/*background: -webkit-linear-gradient(top,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0) 100%);  Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(0, 0, 0, 0.6) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.top h1{
+	font-family: 'Verdana', serif;
+	font-weight: 300;
+	font-size: 3.2em;
+	color: white;
+	text-shadow: 0 0 10px rgba(0,0,0,0.8);
+	margin: 0 auto;
+	padding-top: 10%;
+	max-width: 70%;
+	text-align: center;
+	position: relative;
+}
+ 
+#location-box {
+	top: 0%;
+}
+
+.btn{
+	margin-top: 0px;
+	border: 0;
+	border-radius: 2px;
+	color: white;
+	padding: 2%;
+	text-transform: uppercase;
+	font-weight: 400;
+	font-size: 0.7em;
+	letter-spacing: 1px;
+	background-color: #003c3c;
+	cursor:pointer;
+	outline: none;
+}
+
+.btn:hover{
+	opacity: 0.7;
+	transition: 0.5s;
+}
+
+#message-container{
+	font-size: 150%;
+    font-weight: 300;
+	text-align: center;
+	color:#003c3c;
+	margin-bottom: 20px;
+}
+
+
+.custom-map-control-button {
+	background-color: #fff;
+	border: 0;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+	margin: 10px;
+	padding: 0 0.5em;
+	font: 400 18px Roboto, Arial, sans-serif;
+	overflow: hidden;
+	height: 40px;
+	cursor: pointer;
+  }
+  .custom-map-control-button:hover {
+	background: rgb(235, 235, 235);
+  }
