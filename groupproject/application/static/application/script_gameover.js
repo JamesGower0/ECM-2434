@@ -7,6 +7,6 @@ bestScore === null  ? 0 : document.getElementById('best-score').textContent = lo
 const restartGame = () => {
     // Clear stored scores and redirect back to the main game page
     localStorage.removeItem('currentScore');
-    window.location.href = 'index.html';
+    window.location.href = backtohomepage;
 };
 
