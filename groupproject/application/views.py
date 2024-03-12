@@ -156,3 +156,9 @@ def cookiescript(request):
 
 def cookiepage(request):
     return render(request, "cookiepage.html")
+
+def index(request):
+    return render(request,"index.html")
+
+def gameover(request):
+    return render(request,"gameover.html")
