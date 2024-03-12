@@ -31,7 +31,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile' #show how we want it to be displayed
 
-# Will be used to identify the various different quizes
+# Will be used to identify the various different quizzes
 class Quiz(models.Model):
     title = models.CharField(max_length=100, default='')
 
@@ -69,3 +69,15 @@ def user_is_created(sender, instance, created, **kwargs):
     else:
         instance.profile.save()
 
+class Question(models.Model):
+    type = models.CharField(max_length=256)
+    text = models.CharField(max_length=256)
+    correct = models.CharField(max_length=256)
+    wrong_1 = models.CharField(max_length=256)
+    wrong_2 = models.CharField(max_length=256)
+    wrong_3 = models.CharField(max_length=256)
+    def get_type(self):
+        return self.type
+    def return_values(self):
+        values = (self.text,self.correct,self.wrong_1,self.wrong_2,self.wrong_3)
+        return(values)
