@@ -76,7 +76,7 @@ def user_is_created(sender, instance, created, **kwargs):
 
     if created:
         if instance.is_superuser == 1:
-            Bird.objects.create(user=instance, birdType = instance.avatar_choice)
+            Bird.objects.create(user=instance, birdType = 'robin')
             Profile.objects.create(user=instance)
         else:
             Profile.objects.create(user=instance, avatar_choice=instance.avatar_choice)
