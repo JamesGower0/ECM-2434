@@ -37,7 +37,7 @@ body {
 }
 
 .container {
-  width: 70%;
+  width: 50%;
   border-radius: 7px;
   background: rgba(256, 256, 255, 0.9);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
