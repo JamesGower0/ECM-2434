@@ -121,10 +121,11 @@ def user_is_created(sender, instance, created, **kwargs):
         if instance.is_superuser == 1:
             Bird.objects.create(user=instance, birdType = 'robin')
             profile_instance = Profile.objects.create(user=instance)
+            profile_instance.add_item_to_json_field('birds', 'robin')
         else:
             profile_instance = Profile.objects.create(user=instance, avatar_choice=instance.avatar_choice)
             Bird.objects.create(user=instance, birdType = instance.avatar_choice)
-        profile_instance.add_item_to_json_field('birds', instance.avatar_choice)
+            profile_instance.add_item_to_json_field('birds', instance.avatar_choice)
     else:
         instance.profile.save()
         instance.bird.save()
