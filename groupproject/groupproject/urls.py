@@ -48,4 +48,5 @@ urlpatterns = [
     path("qr/questions2/", views.questions2, name="questions2"),
     path("qr/correct/",views.correct_answer,name = "correct"),
     path("qr/wrong/",views.wrong_answer,name="wrong"),
+    path("shop/", views.shop, name="shop"),
 ]

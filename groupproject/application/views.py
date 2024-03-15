@@ -11,7 +11,7 @@ from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 #from .models import Score, Quiz
-from .models import Quiz, Profile, User, Bird
+from .models import Quiz, Profile, User, Bird, Shop
 import cv2
 import random
 import csv
@@ -160,6 +160,10 @@ def wrong_answer(request):
 
 def map(request):
     return render(request, "map.html")
+
+def shop(request):
+    shop = Shop.objects.first()
+    return render(request, "shop.html", {'shop': shop})
 
 def cookiescript(request):
     return render(request, "cookiescript.html")

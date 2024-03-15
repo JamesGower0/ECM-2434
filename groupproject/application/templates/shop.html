@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %} 
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+		<title>Shop</title>
+        <style>
+            .form-inside{
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(3, 1fr);  
+                max-width: 800px; /* Adjust the max-width as needed */
+                margin-top: 20px;
+                margin-bottom: 40px;
+                border-radius: 5px;        
+            }
+
+            .item img{  
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid  #003c3c;
+                box-sizing: border-box;
+                padding: 5px;
+                background: linear-gradient(to bottom, #fff 0%, #cdd4ee 100%);
+                transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            }
+
+            .item:hover {
+                background-color: rgb(255, 255, 255, 0.9);
+                box-shadow: 0 5px 60px rgba(0, 0, 0, 0.6);
+                transform: scale(1.02); 
+            }
+
+        </style>
+    </head>
+    {% block content %}
+    <body>
+        <div class="top">
+			<h1>Shop items</h1>
+		</div>
+
+        <div class="form-inside" style="padding: 0;">
+            {% for item, value in shop.accessories.items %}
+                {% if item != 'birds'%}
+                    {% for val in value %}
+                        <div class="item item{{forloop.counter}}"><img src="{% static 'accessories/' %}{{ val }}" alt="{{ item }}"></div>
+                    {% endfor %}
+                {% else %}
+                    {% for val in value %}
+                        <div class="item item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}" alt="{{ item }}"></div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </body>
+    {% endblock content %}
+</html>

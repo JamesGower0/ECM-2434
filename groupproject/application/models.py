@@ -18,6 +18,14 @@ def default_json():
         'birds': [],
     }
 
+def default_json_shop():
+    return {
+        'hats': ['hat1.png','hat2.png'],
+        'bows': ['bow1.png', 'bow2.png'],
+        'shoes': ['shoes1.png', 'shoes2.png'],
+        'birds': ['robin.png', 'seagull.png', 'wren.png'],
+    }
+
 
 def default_json_bird():
     return {
@@ -102,6 +110,24 @@ class Bird(models.Model):
 
     def __str__(self):
         return f'{self.birdType} Bird'
+    
+
+class SingletonShopManager(models.Manager):
+    def get_or_create_singleton(self):
+        obj, created = self.get_or_create(pk=1)
+        return obj
+
+class Shop(models.Model):
+    accessories = models.JSONField(default=default_json_shop)
+
+    objects = SingletonShopManager()
+
+    def __str__(self):
+        return f'Shop'
+
+    class Meta:
+        verbose_name = 'Shop'
+        verbose_name_plural = 'Shop'
 
 
 @receiver(post_save, sender = User)
