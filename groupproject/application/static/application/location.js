@@ -19,11 +19,16 @@ function checkLocation(){
             ]
 
             let questionURL;
+            console.log(pos);
             for (let i = 0; i < quizLocaitons.length; i++){
                 if (isInRadius(pos, quizLocaitons[i])){
                     questionURL = "../qr/?QNum=" + (i+1); 
                     location.href = questionURL;
                 }
+            }
+            if (isInRadius(pos, [50.73390427287853, -3.5302293230091273])){ //mini game (location needs to be changed)
+                questionURL =  "../minigame";
+                location.href = questionURL;
             }
         },
 

@@ -218,3 +218,9 @@ def location(request):
     }'''
 
     return render(request, "location.html")
+
+def minigame(request):
+    return render(request,"minigame.html")
+
+def gameover(request):
+    return render(request,"gameover.html")
