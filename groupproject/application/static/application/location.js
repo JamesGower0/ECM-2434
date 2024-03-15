@@ -18,13 +18,14 @@ function checkLocation(){
                 [50.73764355152051, -3.527791142400209] //East Park
             ]
 
+            let questionURL;
             for (let i = 0; i < quizLocaitons.length; i++){
                 if (isInRadius(pos, quizLocaitons[i])){
-                    let questionURL = "../qr/questions" + (i + 1);
-                    window.open(questionURL);
+                    //questionURL = "../" + (i + 1) + "/qr";
+                    questionURL = "../qr/?QNum=" + (i+1); 
+                    location.href = questionURL;
                 }
             }
-
         },
 
         );
