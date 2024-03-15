@@ -21,7 +21,6 @@ function checkLocation(){
             let questionURL;
             for (let i = 0; i < quizLocaitons.length; i++){
                 if (isInRadius(pos, quizLocaitons[i])){
-                    //questionURL = "../" + (i + 1) + "/qr";
                     questionURL = "../qr/?QNum=" + (i+1); 
                     location.href = questionURL;
                 }
