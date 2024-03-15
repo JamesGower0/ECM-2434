@@ -14,7 +14,7 @@
             .form-inside{
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(3, 1fr);  
+                grid-template-rows: repeat(2, 1fr);  
                 max-width: 800px; /* Adjust the max-width as needed */
                 margin-top: 20px;
                 margin-bottom: 40px;
@@ -28,7 +28,7 @@
             }
 
             .item{
-                display: flex;
+                display: none;
                 align-items: center;
                 justify-content: center;
                 border: 1px solid  #003c3c;
@@ -44,6 +44,41 @@
                 transform: scale(1.02); 
             }
 
+            .holder, .navigation-buttons{
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .change-page {
+                border-top: 100px solid transparent;
+                border-bottom: 100px solid transparent;
+                cursor: pointer;
+                outline: none;
+            }
+
+            .change-page-left {
+                border-right: 100px solid;
+                border-left: none;
+                margin-right: 20px;
+                border-right-color: #003c3c;
+                &:hover {
+                    opacity: 0.7;
+                    transition: 0.5s;
+                }
+            }
+
+            .change-page-right {
+                margin-left: 20px;
+                border-left: 100px solid;
+                border-right: none;
+                border-left-color: #003c3c;
+                &:hover {
+                    opacity: 0.7;
+                    transition: 0.5s;
+                }
+            }
+
         </style>
     </head>
     {% block content %}
@@ -52,19 +87,75 @@
 			<h1>Shop items</h1>
 		</div>
 
-        <div class="form-inside" style="padding: 0;">
-            {% for item, value in shop.accessories.items %}
-                {% if item != 'birds'%}
-                    {% for val in value %}
-                        <div class="item item{{forloop.counter}}"><img src="{% static 'accessories/' %}{{ val }}" alt="{{ item }}"></div>
-                    {% endfor %}
-                {% else %}
-                    {% for val in value %}
-                        <div class="item item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}" alt="{{ item }}"></div>
-                    {% endfor %}
-                {% endif %}
-            {% endfor %}
+        <div class="holder">
+            <div style="margin: auto;"><div class="change-page change-page-left" onclick="previousPage()"></div></div>
+
+            <div class="form-inside" style="padding: 0;">
+                {% for item, value in shop.accessories.items %}
+                    {% if item != 'birds'%}
+                        {% for val in value %}
+                            <div class="item item{{forloop.counter}}">
+                                <img src="{% static 'accessories/' %}{{ val }}" alt="{{ item }}">
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% for val in value %}
+                            <div class="item item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}" alt="{{ item }}"></div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div style="margin: auto;"><div class="change-page change-page-right" onclick="nextPage()"></div></div>
         </div>
+
+        
+
+        <!--
+            <div class="navigation-buttons">
+                <div class="change-page change-page-left" onclick="previousPage()"></div>
+                <div class="change-page change-page-right" onclick="nextPage()"></div>
+            </div>
+        -->
+
+        <script>
+            let currentPage = 0;
+            // Change to the number of items you want to display per page
+            const itemsPerPage = 9;
+            const items = document.querySelectorAll('.item');
+
+            function showItems(startIndex, endIndex) {
+                items.forEach((item, index) => {
+                    if (index >= startIndex && index < endIndex) {
+                        item.classList.add('active');
+                        item.style.display = "grid";
+                    } else {
+                        item.classList.remove('active');
+                        item.style.display = "none";
+                    }
+                });
+            }
+
+            function nextPage() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                currentPage = (currentPage + 1) % totalPages;
+                const startIndex = currentPage * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+                showItems(startIndex, endIndex);
+            }
+
+            function previousPage() {
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                currentPage = (currentPage - 1 + totalPages) % totalPages;
+                const startIndex = currentPage * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+                showItems(startIndex, endIndex);
+            }
+
+            // Initially show the first page of items
+            showItems(currentPage, itemsPerPage);
+        </script>
+        
     </body>
     {% endblock content %}
 </html>
