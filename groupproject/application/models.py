@@ -97,7 +97,7 @@ class Bird(models.Model):
     mood = models.IntegerField(default=10)
     # Depends on the correctness of the answers; Can be increased by correct answers
     health = models.IntegerField(default=100)
-    # Accessories on the bird
+    # Accessories ON the bird
     accessories = models.JSONField(default=default_json_bird) 
 
     def __str__(self):

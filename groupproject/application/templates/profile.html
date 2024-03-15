@@ -24,7 +24,23 @@
                 margin-bottom: 40px;        
             }
 
-            .item{
+            #metrics{
+                grid-row: span 3;
+                grid-column: span 2;
+            }
+
+            /*.inv-item1 .inv-item2, .inv-item3, .inv-item4, .inv-item5, .inv-item6{
+                grid-row: 2 / span 1;
+                grid-column: 5/ span 1;
+            }*/
+
+            .inv-item img{  
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .item, .inv-item{
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -43,7 +59,7 @@
                 grid-column: span 4;
             }
 
-            .item3 {
+            .item3{
                 grid-row: span 1;
                 grid-column: span 2;
             }
@@ -79,7 +95,18 @@
                 position: absolute;
                 top: 0;
             }
+
+            .buttons{
+                text-align: center;
+            }
+
+            .btn{
+                width: 15%;
+                margin: 5%;
+            }
         </style>
+
+        <script src="../static/application/profile.js"></script>
 	</head>
     {% block content %}
     <body>
@@ -88,36 +115,80 @@
 		</div>
 
         <div class="form-inside profile-box" style="padding: 0;">
+
             <div class="form-header item item1" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
 				<h2>{{ user.username }}</h2>
 			</div>
+
             <div id="avatar-preview" class="item item2">
                 <!-- Debug: {{ user.avatar_choice }} -->
                 <img id="selected-avatar-preview" src="..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
             </div>
 
-            <div class="item item3">
-                <p style="padding-right: 5px;">Health</p>
-                <div class="status-bar health-bar">
-                    <div class="fill fill-health" style="width: {{ bird.health }}%;"></div>
+            <!-- Metrics -->
+            <div id="metrics" style="display: none;">
+                <div class="item item3">
+                    <p style="padding-right: 5px;">Health</p>
+                    <div class="status-bar health-bar">
+                        <div class="fill fill-health" style="width: {{ bird.health }}%;"></div>
+                    </div>
+                    <p style="padding-left: 5px;">{{ bird.health }}</p>
                 </div>
-                <p style="padding-left: 5px;">{{ bird.health }}</p>
-            </div>
-
-            <div class="item item4">
-                <p style="padding-right: 5px;">Mood</p>
-                <div class="status-bar mood-bar">
-                    <div class="fill fill-mood" style="width: {{ mood_width }}%;"></div>
+    
+                <div class="item item4">
+                    <p style="padding-right: 5px;">Mood</p>
+                    <div class="status-bar mood-bar">
+                        <div class="fill fill-mood" style="width: {{ mood_width }}%;"></div>
+                    </div>
+                    <p style="padding-left: 5px;">{{ bird.mood }}</p>
                 </div>
-                <p style="padding-left: 5px;">{{ bird.mood }}</p>
-            </div>
-
-            <div class="item item5" style="padding-right: 5px;">
-                <p> Score: {{ user.profile.score }}</p>
+    
+                <div class="item item5" style="padding-right: 5px;">
+                    <p> Score: {{ user.profile.score }}</p>
+                </div>
             </div>
             
+
+            <!-- Inventory -->
+            <div id="inventory" style="display: none;">
+                {% if user.profile.inventory.items %}
+                    {% for item, value in user.profile.inventory.items %}
+                        {% if item != 'birds'%}
+
+                            {% if value %}
+                                {% for val in value %}
+                                    <div class="inv-item inv-item{{forloop.counter}}"><img src="{% static 'application/accessories/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                {% endfor %}
+                            {% endif %}
+
+                        {% else %}
+                            {% if value %}
+                                {% for val in value %}
+                                    <div class="inv-item inv-item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>No items yet</p>
+                {% endif %}
+            </div>
+    
+        </div>
+
+        <div class="buttons">
+            <button class="btn" id="inv-btn">Inventory</button>
+            <button class="btn" id="met-btn">Metrics</button>
+            <button class="btn" id="shop-btn">Shop</button>
         </div>
        
+        <script>
+            document.getElementById("shop-btn").addEventListener("click", function() {
+                // Change to shop page
+                window.location.href = "../map";
+            });
+        </script>
+
     </body>
     {% endblock content %}
 </html>
