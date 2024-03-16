@@ -58,7 +58,11 @@ class Profile(models.Model):
     avatar_choice = models.CharField(max_length=20, default='robin', choices=[('robin', 'Avatar 1'), ('seagull', 'Avatar 2'), ('wren', 'Avatar 3')])
 
     # Stores all the items purchased by the user
-    inventory = models.JSONField(default=default_json) 
+    inventory = models.JSONField(default=default_json)
+
+    def change_avatar_choice(self, value):
+        self.avatar_choice = value
+        self.save()
 
     def add_item_to_json_field(self, key, value):
         """

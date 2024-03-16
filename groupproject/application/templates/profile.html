@@ -107,6 +107,19 @@
         </style>
 
         <script src="../static/application/profile.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            function changeAvatar(avatar) {
+                $.get('changepic/',
+                    {'avatar': avatar},
+                    function (data) {
+                        alert("avatar changed");
+                        $('#avatar-preview').html('<img src="..\static/avatars/{{ user.profile.avatar_choice }}.png?"' + Date.now() + '/>');
+                    },
+                )
+            };
+            
+        </script>
 	</head>
     {% block content %}
     <body>
@@ -164,7 +177,7 @@
                         {% else %}
                             {% if value %}
                                 {% for val in value %}
-                                    <div class="inv-item inv-item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                    <div class="inv-item inv-item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}.png" alt="{{ item }}" onclick="changeAvatar('{{ val }}')"></div>
                                 {% endfor %}
                             {% endif %}
                         {% endif %}

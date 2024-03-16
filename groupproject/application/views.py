@@ -19,6 +19,22 @@ import csv
 # Create your views here.
 
 @login_required
+def addpic(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    profile.add_item_to_json_field('birds', 'wren')
+    return render(request, 'addpic.html')
+
+@login_required
+def changepic(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    new_avatar = request.GET.get('avatar')
+    print(new_avatar)
+    profile.avatar_choice = new_avatar
+    print(profile.avatar_choice)
+    profile.change_avatar_choice(new_avatar)
+    return HttpResponse(200)
+
+@login_required
 def profile(request):
     bird = Bird.objects.filter(user=request.user).first()
     mood_multiplier = 10
