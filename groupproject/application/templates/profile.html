@@ -173,6 +173,7 @@
                             if (response.success) {
                                 // Avatar changed successfully, update UI if needed
                                 console.log('Avatar changed successfully');
+				location.reload();
                             } else {
                                 // Handle error if necessary
                                 console.log('Avatar change failed');
@@ -183,7 +184,6 @@
                             console.error('Error:', error);
                         }
                     });
-                    location.reload();
                 });
             });
 
