@@ -6,7 +6,7 @@ Authors: Maryia Fralova, Ashley Card, James Gower, Aidan Daniel, Tom Evans
 
 """
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -21,7 +21,7 @@ import csv
 @login_required
 def addpic(request):
     profile = Profile.objects.filter(user=request.user).first()
-    profile.add_item_to_json_field('birds', 'wren')
+    profile.add_item_to_json_field('birds', 'robin')
     return render(request, 'addpic.html')
 
 @login_required
@@ -29,9 +29,9 @@ def changepic(request):
     profile = Profile.objects.filter(user=request.user).first()
     new_avatar = request.GET.get('avatar')
     print(new_avatar)
-    profile.avatar_choice = new_avatar
-    print(profile.avatar_choice)
-    profile.change_avatar_choice(new_avatar)
+    request.user.avatar_choice = new_avatar
+    print(request.user.avatar_choice)
+    request.user.change_avatar_choice(new_avatar)
     return HttpResponse(200)
 
 @login_required
@@ -45,6 +45,21 @@ def profile(request):
 def logout_view(request):
     logout(request)
     return render(request, 'home.html')
+
+
+@login_required
+def change_avatar(request):
+    if request.method == 'POST':
+        new_avatar = request.POST.get('new_avatar')
+        if new_avatar:
+            # Assuming you have authenticated user
+            profile = request.user.profile
+            profile.avatar_choice = new_avatar
+            profile.save()
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+
 
 def qr(request):
     

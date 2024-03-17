@@ -24,23 +24,12 @@
                 margin-bottom: 40px;        
             }
 
-            #metrics{
+            #metrics, #inventory{
                 grid-row: span 3;
                 grid-column: span 2;
             }
 
-            /*.inv-item1 .inv-item2, .inv-item3, .inv-item4, .inv-item5, .inv-item6{
-                grid-row: 2 / span 1;
-                grid-column: 5/ span 1;
-            }*/
-
-            .inv-item img{  
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            .item, .inv-item{
+            .item{
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -59,20 +48,34 @@
                 grid-column: span 4;
             }
 
-            .item3{
+            .item3, .item4, .item5{
                 grid-row: span 1;
                 grid-column: span 2;
             }
 
-            .item4 {
-                grid-row: span 1;
-                grid-column: span 2;
+            .inv-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* Two columns */
+                grid-gap: 10px; /* Adjust gap as needed */
             }
 
-            .item5 {
-                grid-row: span 1;
-                grid-column: span 2;
+            .inv-item {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #003c3c;
+                box-sizing: border-box;
+                padding: 5px;
             }
+
+            .inv-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
 
             .status-bar {
                 width: 80%;
@@ -108,17 +111,45 @@
 
         <script src="../static/application/profile.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <script>
-            function changeAvatar(avatar) {
-                $.get('changepic/',
-                    {'avatar': avatar},
-                    function (data) {
-                        alert("avatar changed");
-                        $('#avatar-preview').html('<img src="..\static/avatars/{{ user.profile.avatar_choice }}.png?"' + Date.now() + '/>');
-                    },
-                )
-            };
+            var csrftoken = '{{ csrf_token }}';
             
+            // Handles avatar change when selected from inventory
+            $(document).ready(function() {
+                $('.avatar-choice').click(function() {
+                    var newAvatar = $(this).data('avatar');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/change-avatar/',
+                        data: {
+                            'new_avatar': newAvatar,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'  // Ensure CSRF token is included
+                        },
+                        dataType: 'json',  // Specify data type expected from server
+                        success: function(response) {
+                            if (response.success) {
+                                // Avatar changed successfully, update UI if needed
+                                console.log('Avatar changed successfully');
+                            } else {
+                                // Handle error if necessary
+                                console.log('Avatar change failed');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.error('Error:', error);
+                        }
+                    });
+                    location.reload();
+                });
+            });
+
+            // Adds accessory to the avatar
+            
+
+
         </script>
 	</head>
     {% block content %}
@@ -164,27 +195,33 @@
 
             <!-- Inventory -->
             <div id="inventory" style="display: none;">
-                {% if user.profile.inventory.items %}
-                    {% for item, value in user.profile.inventory.items %}
-                        {% if item != 'birds'%}
+                <div class="inv-container">
 
-                            {% if value %}
-                                {% for val in value %}
-                                    <div class="inv-item inv-item{{forloop.counter}}"><img src="{% static 'application/accessories/' %}{{ val }}.png" alt="{{ item }}"></div>
-                                {% endfor %}
-                            {% endif %}
+                    {% if user.profile.inventory.items %}
+                        {% for item, value in user.profile.inventory.items %}
+                            {% if item != 'birds'%}
 
-                        {% else %}
-                            {% if value %}
-                                {% for val in value %}
-                                    <div class="inv-item inv-item{{forloop.counter}}"><img src="{% static 'avatars/' %}{{ val }}.png" alt="{{ item }}" onclick="changeAvatar('{{ val }}')"></div>
-                                {% endfor %}
+                                {% if value %}
+                                    {% for val in value %}
+                                        <div class="inv-item inv-item{{forloop.counter}} accessory-choice" data-actype='{{item}}' data-accessory='{{val}}'><img src="{% static 'application/accessories/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% else %}
+                                {% if value %}
+                                    {% for val in value %}
+                                    {% csrf_token %}
+                                        <div class="inv-item inv-item{{forloop.counter}} avatar-choice" data-avatar='{{val}}'><img src="{% static 'avatars/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <p>No items yet</p>
-                {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>No items yet</p>
+                    {% endif %}
+
+                </div>
+                
             </div>
     
         </div>
