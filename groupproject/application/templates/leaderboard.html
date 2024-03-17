@@ -6,16 +6,15 @@
 <!DOCTYPE html>
 
 <!-- Includes the navigation bar into the leaderboard -->
-{% block navBar%}
-{% include 'navBar.html' %}
-{% endblock %}
 
 {% load static %}
 <html>
 <head>
+    <script src="../static/application/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+    <script type="text/javascript" src="../static/application/navBar.js"></script>
 </head>
-<body>
+<body data-nav-url="{% url 'navBar' %}">
     <!-- Building the leaderboard table -->
     <table id="table" class="display" style="width: 100%;">
         <thead>

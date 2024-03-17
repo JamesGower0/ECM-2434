@@ -6,9 +6,7 @@
 
 <!doctype html>
 
-{% block navBar%}
-{% include 'navBar.html' %}
-{% endblock %}
+
 
 {% load static %}
 
@@ -18,11 +16,13 @@
     <title>Location checker</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script type="module" src="../static/application/location.js"></script>
+    <script src="../static/application/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../static/application/navBar.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/application/stylesheet.css" />
 
   </head>
 
-  <body>
+  <body data-nav-url="{% url 'navBar' %}">
     <div class="top">
         <h1>
             Looks like you're not near a quiz location

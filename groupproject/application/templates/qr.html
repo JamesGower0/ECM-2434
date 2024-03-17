@@ -2,12 +2,12 @@
 
 Author: Tom Evans -->
 
-{% block navBar%}
-<!-- including navigation bar to page -->
-{% include 'navBar.html' %}
-{% endblock %}
-
-{% if valid %}
+<head>
+    <script src="../static/application/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../static/application/navBar.js"></script>
+</head>
+<body data-nav-url="{% url 'navBar' %}">
+    {% if valid %}
     <ul>
 
     <li><a href="/qr/{{ question_page_number }}/">Link to questions for this site</a></li>
@@ -16,3 +16,4 @@ Author: Tom Evans -->
 {% else %}
     <p>No valid qr code detected.</p>
 {% endif %}
+</body>

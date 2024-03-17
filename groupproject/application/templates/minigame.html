@@ -2,9 +2,7 @@
 
 {% load static %}
 <html lang="en" dir="ltr">
-{% block navBar%}
-{% include 'navBar.html' %}
-{% endblock %}
+
 
 <head>
     <meta charset="utf-8">
@@ -14,12 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../static/application/words.js" defer></script>
     <script src="../static/application//minigame.js" defer></script>
+    <script src="../static/application/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../static/application/navBar.js"></script>
     <script>
         var gameoverURL = "{% url 'gameover' %}";
     </script>
 </head>
 
-<body>
+<body data-nav-url="{% url 'navBar' %}">
     <div class="banner">
         <h2>Welcome to the Exeter-Nest sustainability Mini-game</h2>
     </div>

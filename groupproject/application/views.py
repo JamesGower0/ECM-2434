@@ -6,7 +6,7 @@ Authors: Maryia Fralova, Ashley Card, James Gower, Aidan Daniel, Tom Evans
 
 """
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -76,6 +76,7 @@ def qr(request):
 
 def navBar(request):
     return render(request, 'navBar.html')
+    
 
 def home(request):
     template = "home.html"
@@ -224,3 +225,10 @@ def minigame(request):
 
 def gameover(request):
     return render(request,"gameover.html")
+
+def get_screen_width(request):
+    if request.method == 'POST' and request.is_ajax():
+        screen_width = request.POST.get('screen_width')
+        return JsonResponse({'screen_width': screen_width})
+    else:
+        return JsonResponse({'error': 'Invalid request'})
