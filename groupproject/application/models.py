@@ -73,12 +73,15 @@ class Profile(models.Model):
         # Ensure the key exists in the JSON data
         if key not in json_data:
             json_data[key] = []
+        else:
+            json_data[key].append(value)
 
         # If the key is 'birds', set the avatar_choice value
-        if key == 'birds':
-            json_data['birds'].append(value)
+        #if key == 'birds':
+        #    json_data['birds'].append(value)
 
         self.inventory = json_data
+
         self.save()
 
     def __str__(self):

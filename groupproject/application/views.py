@@ -60,6 +60,27 @@ def change_avatar(request):
     return JsonResponse({'success': False})
 
 
+@login_required
+def add_accessory(request):
+    if request.method == 'POST':
+        # Need to change the accessories on the Bird
+        new_accessory = request.POST.get('new_accessory')
+        new_accessory_type = request.POST.get('new_accessory_type')
+        if new_accessory and new_accessory_type:
+            # Assuming you have authenticated user
+            bird = request.user.bird
+            bird.accessories[new_accessory_type] = new_accessory
+            bird.save()
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+"""
+def addpic(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    profile.add_item_to_json_field('hats', 'hat1')
+    profile.add_item_to_json_field('shoes', 'shoes1')
+    return render(request, 'addpic.html')
+"""
 
 def qr(request):
     

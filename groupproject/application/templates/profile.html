@@ -15,98 +15,7 @@
 		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
 		<title>Sign up</title>
         <style>
-            .profile-box{
-                display: grid;
-                grid-template-columns: repeat(6, 1fr);
-                grid-template-rows: repeat(4, 1fr);  
-                max-width: 800px; /* Adjust the max-width as needed */
-                margin-top: 20px;
-                margin-bottom: 40px;        
-            }
-
-            #metrics, #inventory{
-                grid-row: span 3;
-                grid-column: span 2;
-            }
-
-            .item{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid  #003c3c;
-                box-sizing: border-box;
-                padding: 5px;
-            }
-
-            .item1 {
-                grid-row: 1;
-                grid-column: span 6;
-            }
-
-            .item2 {
-                grid-row: span 3;
-                grid-column: span 4;
-            }
-
-            .item3, .item4, .item5{
-                grid-row: span 1;
-                grid-column: span 2;
-            }
-
-            .inv-container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr); /* Two columns */
-                grid-gap: 10px; /* Adjust gap as needed */
-            }
-
-            .inv-item {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid #003c3c;
-                box-sizing: border-box;
-                padding: 5px;
-            }
-
-            .inv-item img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-
-            .status-bar {
-                width: 80%;
-                height: 20px;
-                border: 1px solid #000;
-                position: relative;
-                margin: auto;
-            }
-
-            .fill-health {
-                background-color: #00ff00;  /* Green */
-            }
-
-            .fill-mood {
-                background-color: #0000ff;  /* Blue */
-            }
-
-            .fill {
-                height: 100%;
-                position: absolute;
-                top: 0;
-            }
-
-            .buttons{
-                text-align: center;
-            }
-
-            .btn{
-                width: 15%;
-                margin: 5%;
-            }
+            
         </style>
 
         <script src="../static/application/profile.js"></script>
@@ -147,7 +56,51 @@
             });
 
             // Adds accessory to the avatar
-            
+            $(document).ready(function() {
+                $('.accessory-choice').click(function() {
+                    var newAccessory = $(this).data('accessory');
+                    var newAccessoryType = $(this).data('actype');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add-accessory/',
+                        data: {
+                            'new_accessory': newAccessory,
+                            'new_accessory_type': newAccessoryType,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        dataType: 'json',  // Specify data type expected from server
+                        success: function(response) {
+                            if (response.success) {
+                                // Avatar changed successfully, update UI if needed
+                                console.log('Acessory changed successfully');
+                            } else {
+                                // Handle error if necessary
+                                console.log('Accessory change failed');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.error('Error:', error);
+                        }
+                    });
+                    location.reload();
+                });
+            });
+
+
+            $(document).ready(function() {
+                $('#inventory').scroll(function() {
+                    var scrollPos = $('#inventory').scrollTop();
+                    $('.inv-item').each(function() {
+                        var offsetTop = $(this).offset().top - $('#inventory').offset().top;
+                        if (offsetTop >= 0 && offsetTop < $('#inventory').height()) {
+                            $(this).fadeIn(); // Show item if it's within the visible area
+                        } else {
+                            $(this).fadeOut(); // Hide item if it's outside the visible area
+                        }
+                    });
+                });
+            });
 
 
         </script>
@@ -165,8 +118,14 @@
 			</div>
 
             <div id="avatar-preview" class="item item2">
-                <!-- Debug: {{ user.avatar_choice }} -->
                 <img id="selected-avatar-preview" src="..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
+                <!-- Displaying all the accessories that are on the bird at the moment -->
+                {% for item, value in user.bird.accessories.items %}
+                    {% if value %}
+                        <img class="bird-item bird-{{item}}" src="{% static 'accessories/' %}{{ value }}.png" alt="{{ item }}">
+                    {% endif %}
+                {% endfor %}
+
             </div>
 
             <!-- Metrics -->
@@ -203,7 +162,7 @@
 
                                 {% if value %}
                                     {% for val in value %}
-                                        <div class="inv-item inv-item{{forloop.counter}} accessory-choice" data-actype='{{item}}' data-accessory='{{val}}'><img src="{% static 'application/accessories/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                        <div class="inv-item inv-item{{forloop.counter}} accessory-choice" data-actype='{{item}}' data-accessory='{{val}}'><img src="{% static 'accessories/' %}{{ val }}.png" alt="{{ item }}"></div>
                                     {% endfor %}
                                 {% endif %}
 
@@ -226,10 +185,10 @@
     
         </div>
 
-        <div class="buttons">
-            <button class="btn" id="inv-btn">Inventory</button>
-            <button class="btn" id="met-btn">Metrics</button>
-            <button class="btn" id="shop-btn">Shop</button>
+        <div class="prof-buttons">
+            <button class="prof-btn btn" id="inv-btn">Inventory</button>
+            <button class="prof-btn btn" id="met-btn">Metrics</button>
+            <button class="prof-btn btn" id="shop-btn">Shop</button>
         </div>
        
         <script>
