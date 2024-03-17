@@ -43,4 +43,5 @@ urlpatterns = [
     path("qr/", views.qr, name="qr"),
     path("minigame/",views.minigame,name="minigame"),
     path("minigame/gameover/",views.gameover,name="gameover"),
+    path('get-screen-width/', views.get_screen_width, name='get_screen_width')
 ]
