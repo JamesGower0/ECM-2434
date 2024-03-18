@@ -4,304 +4,315 @@
 {% endblock %}
 
 {% load static %}
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
-		<title>Shop</title>
-        <style>
-            /* shop stuff button idk */
+
+<head>
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+
+    <title>Shop</title>
+    <style>
+        /* shop stuff button idk */
         :root {
-        --modal-duration: 1s;
+            --modal-duration: 1s;
         }
 
         * {
-        box-sizing: border-box;
+            box-sizing: border-box;
         }
 
         body {
-        font-family: sans-serif;
-        margin: 0;
-        transition: transform 0.3s ease;
+            font-family: sans-serif;
+            margin: 0;
+            transition: transform 0.3s ease;
         }
 
         header {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url(https://images.unsplash.com/photo-1438786657495-640937046d18?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url(https://images.unsplash.com/photo-1438786657495-640937046d18?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .content-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .content-container h1 {
-        font-size: 4rem;
-        color: #fff;
+            font-size: 4rem;
+            color: #fff;
         }
 
         .content-container p {
-        width: 600px;
-        text-align: center;
-        margin-bottom: 40px;
-        color: #fff;
-        line-height: 24px;
+            width: 600px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fff;
+            line-height: 24px;
         }
 
         .cta-btn {
-        padding: 12px 30px;
-        font-size: 1.2rem;
-        outline: none;
-        border: none;
-        background-color: crimson;
-        color: #fff;
-        cursor: pointer;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            outline: none;
+            border: none;
+            background-color: crimson;
+            color: #fff;
+            cursor: pointer;
         }
 
         .modal-container {
-        background-color: rgba(0, 0, 0, 0.6);
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         .modal {
-        background: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        position: absolute;
-        overflow: hidden;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        max-width: 100%;
-        width: 400px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            width: 400px;
         }
 
         .modal-content {
-        padding: 20px;
+            padding: 20px;
         }
 
         .modal-form div {
-        margin: 20px 0;
+            margin: 20px 0;
         }
 
         .modal-form label {
-        display: block;
-        margin-bottom: 6px;
+            display: block;
+            margin-bottom: 6px;
         }
 
         .modal-form .form-input {
-        padding: 8px;
-        width: 100%;
+            padding: 8px;
+            width: 100%;
         }
 
         .close-btn {
-        background: transparent;
-        border: none;
-        font-size: 25px;
-        position: absolute;
-        top: 5px;
-        right: 12px;
-        cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 25px;
+            position: absolute;
+            top: 5px;
+            right: 12px;
+            cursor: pointer;
         }
 
         .modal-container .submit-btn {
-        padding: 10px 30px;
-        font-weight: bold;
-        background: crimson;
-        border: none;
-        color: #fff;
-        cursor: pointer;
+            padding: 10px 30px;
+            font-weight: bold;
+            background: crimson;
+            border: none;
+            color: #fff;
+            cursor: pointer;
         }
 
         /* JavaScript */
         .modal-container.show-modal {
-        display: block;
+            display: block;
         }
 
 
 
 
-            .form-inside{
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(2, 1fr);  
-                max-width: 800px; /* Adjust the max-width as needed */
-                margin-top: 20px;
-                margin-bottom: 40px;
-                border-radius: 5px;        
+        .form-inside {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            max-width: 800px;
+            /* Adjust the max-width as needed */
+            margin-top: 20px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+        }
+
+        .item-shop img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-shop {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #003c3c;
+            box-sizing: border-box;
+            padding: 5px;
+            background: linear-gradient(to bottom, #fff 0%, #cdd4ee 100%);
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+
+        .item-shop:hover {
+            background-color: rgb(255, 255, 255, 0.9);
+            box-shadow: 0 5px 60px rgba(0, 0, 0, 0.6);
+            transform: scale(1.02);
+        }
+
+        .holder,
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .change-page {
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .change-page-left {
+            border-right: 100px solid;
+            border-left: none;
+            margin-right: 20px;
+            border-right-color: #003c3c;
+
+            &:hover {
+                opacity: 0.7;
+                transition: 0.5s;
             }
+        }
 
-            .item-shop img{  
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
+        .change-page-right {
+            margin-left: 20px;
+            border-left: 100px solid;
+            border-right: none;
+            border-left-color: #003c3c;
+
+            &:hover {
+                opacity: 0.7;
+                transition: 0.5s;
             }
+        }
+    </style>
+    <script src="../static/application/shop.js"></script>
+</head>
+{% block content %}
 
-            .item-shop{
-                display: none;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid  #003c3c;
-                box-sizing: border-box;
-                padding: 5px;
-                background: linear-gradient(to bottom, #fff 0%, #cdd4ee 100%);
-                transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
-            }
+<body>
+    <div class="top">
+        <h1>Shop items</h1>
+    </div>
 
-            .item-shop:hover {
-                background-color: rgb(255, 255, 255, 0.9);
-                box-shadow: 0 5px 60px rgba(0, 0, 0, 0.6);
-                transform: scale(1.02); 
-            }
-
-            .holder, .navigation-buttons{
-                display: flex;
-                justify-content: center;
-                margin-bottom: 20px;
-            }
-
-            .change-page {
-                border-top: 100px solid transparent;
-                border-bottom: 100px solid transparent;
-                cursor: pointer;
-                outline: none;
-            }
-
-            .change-page-left {
-                border-right: 100px solid;
-                border-left: none;
-                margin-right: 20px;
-                border-right-color: #003c3c;
-                &:hover {
-                    opacity: 0.7;
-                    transition: 0.5s;
-                }
-            }
-
-            .change-page-right {
-                margin-left: 20px;
-                border-left: 100px solid;
-                border-right: none;
-                border-left-color: #003c3c;
-                &:hover {
-                    opacity: 0.7;
-                    transition: 0.5s;
-                }
-            }
-
-        </style>
-    </head>
-    {% block content %}
-    <body>
-        <div class="top">
-			<h1>Shop items</h1>
-		</div>
-
-        <div class="holder">
-            <div style="margin: auto;"><div class="change-page change-page-left" onclick="previousPage()"></div></div>
-
-            <div class="form-inside" style="padding: 0;">
-                {% for item, value in shop.accessories.items %}
-                    {% if item != 'birds'%}
-                        {% for val in value %}
-                            <div class="item-shop item{{forloop.counter}}-shop">
-                                <img src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ item }}">
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        {% for val in value %}
-                            <div class="item-shop item{{forloop.counter}}-shop"><img src="{% static 'avatars/' %}{{ val.0 }}" alt="{{ item }}"></div>
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            <div style="margin: auto;"><div class="change-page change-page-right" onclick="nextPage()"></div></div>
+    <div class="holder">
+        <div style="margin: auto;">
+            <div class="change-page change-page-left" onclick="previousPage()"></div>
         </div>
 
+        <div class="form-inside" style="padding: 0;">
+            {% for item, value in shop.accessories.items %}
+            {% if item != 'birds'%}
+            {% for val in value %}
+            <div class="item-shop item{{forloop.counter}}-shop">
+                <img src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ item }}">
+            </div>
+            {% endfor %}
+            {% else %}
+            {% for val in value %}
+            <div class="item-shop item{{forloop.counter}}-shop"><img src="{% static 'avatars/' %}{{ val.0 }}"
+                    alt="{{ item }}"></div>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div style="margin: auto;">
+            <div class="change-page change-page-right" onclick="nextPage()"></div>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal">
         <button class="cta-btn" id="open">Sign Up</button>
 
-        <section class="modal-container" id="modal">
+        <section>
             <section class="modal">
-              <button class="close-btn" id="close">x</button>
-              <div class="modal-content">
-                <h1>Sign Up</h1>
-                <form class="modal-form">
-                  <div>
-                    <label for="name">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      placeholder="Enter Name"
-                      class="form-input"
-                    />
-                  </div>
-                  <input type="submit" value="Submit" class="submit-btn" />
-                </form>
-              </div>
+                <button class="close-btn" id="close">x</button>
+                <div class="modal-content">
+                    <h1>Sign Up</h1>
+                    <form class="modal-form">
+                        <div>
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="Enter Name" class="form-input" />
+                        </div>
+                        <input type="submit" value="Submit" class="submit-btn" />
+                    </form>
+                </div>
             </section>
-          </section>
-          <script src="../static/application/shop.js"></script>
+        </section>
+    </div>
 
-        
 
-        <!--
+
+
+
+    <!--
             <div class="navigation-buttons">
                 <div class="change-page change-page-left" onclick="previousPage()"></div>
                 <div class="change-page change-page-right" onclick="nextPage()"></div>
             </div>
         -->
 
-        <script>
-            let currentPage = 0;
-            // Change to the number of items you want to display per page
-            const itemsPerPage = 9;
-            const items = document.querySelectorAll('.item-shop');
+    <script>
+        let currentPage = 0;
+        // Change to the number of items you want to display per page
+        const itemsPerPage = 9;
+        const items = document.querySelectorAll('.item-shop');
 
-            function showItems(startIndex, endIndex) {
-                items.forEach((item, index) => {
-                    if (index >= startIndex && index < endIndex) {
-                        item.classList.add('active');
-                        item.style.display = "grid";
-                    } else {
-                        item.classList.remove('active');
-                        item.style.display = "none";
-                    }
-                });
-            }
+        function showItems(startIndex, endIndex) {
+            items.forEach((item, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    item.classList.add('active');
+                    item.style.display = "grid";
+                } else {
+                    item.classList.remove('active');
+                    item.style.display = "none";
+                }
+            });
+        }
 
-            function nextPage() {
-                const totalPages = Math.ceil(items.length / itemsPerPage);
-                currentPage = (currentPage + 1) % totalPages;
-                const startIndex = currentPage * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
-                showItems(startIndex, endIndex);
-            }
+        function nextPage() {
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+            currentPage = (currentPage + 1) % totalPages;
+            const startIndex = currentPage * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+            showItems(startIndex, endIndex);
+        }
 
-            function previousPage() {
-                const totalPages = Math.ceil(items.length / itemsPerPage);
-                currentPage = (currentPage - 1 + totalPages) % totalPages;
-                const startIndex = currentPage * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, items.length);
-                showItems(startIndex, endIndex);
-            }
+        function previousPage() {
+            const totalPages = Math.ceil(items.length / itemsPerPage);
+            currentPage = (currentPage - 1 + totalPages) % totalPages;
+            const startIndex = currentPage * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+            showItems(startIndex, endIndex);
+        }
 
-            // Initially show the first page of items
-            showItems(currentPage, itemsPerPage);
-        </script>
-        
-    </body>
-    {% endblock content %}
+        // Initially show the first page of items
+        showItems(currentPage, itemsPerPage);
+    </script>
+
+</body>
+{% endblock content %}
+
 </html>
