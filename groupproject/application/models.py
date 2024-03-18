@@ -20,10 +20,10 @@ def default_json():
 
 def default_json_shop():
     return {
-        'hats': ['hat1.png','hat2.png'],
-        'bows': ['bow1.png', 'bow2.png'],
-        'shoes': ['shoes1.png', 'shoes2.png'],
-        'birds': ['robin.png', 'seagull.png', 'wren.png'],
+        'hats':  [['hat1.png', 5],['hat2.png', 10]],
+        'bows':  [['bow1.png', 5], ['bow2.png', 10]],
+        'shoes': [['shoes1.png', 5], ['shoes2.png', 10]],
+        'birds': [['robin.png', 10], ['seagull.png', 10], ['wren.png', 10]],
     }
 
 
@@ -32,6 +32,7 @@ def default_json_bird():
         'hats': '',
         'bows': '',
         'shoes': '',
+        'item_left': '',
     }
 
 

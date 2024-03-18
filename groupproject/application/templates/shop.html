@@ -95,12 +95,12 @@
                     {% if item != 'birds'%}
                         {% for val in value %}
                             <div class="item-shop item{{forloop.counter}}-shop">
-                                <img src="{% static 'accessories/' %}{{ val }}" alt="{{ item }}">
+                                <img src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ item }}">
                             </div>
                         {% endfor %}
                     {% else %}
                         {% for val in value %}
-                            <div class="item-shop item{{forloop.counter}}-shop"><img src="{% static 'avatars/' %}{{ val }}" alt="{{ item }}"></div>
+                            <div class="item-shop item{{forloop.counter}}-shop"><img src="{% static 'avatars/' %}{{ val.0 }}" alt="{{ item }}"></div>
                         {% endfor %}
                     {% endif %}
                 {% endfor %}

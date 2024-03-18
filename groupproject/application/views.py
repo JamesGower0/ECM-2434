@@ -19,6 +19,23 @@ import csv
 # Create your views here.
 
 @login_required
+def buy_item(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    item_price = request.GET.get('item')
+    if profile.points < item_price:
+        print("show user they cant afford?")
+        return render(request, 'profile.html')
+    #item and itemprice in same array
+    #item type is the key in the dict for it
+    item = request.GET.get('item')
+    item_type = request.GET.get('item_type')
+    profile.points -= item_price
+    profile.add_item_to_json_field(item_type, item)
+
+    # or return http respone if ajax
+    return render(request, 'profile.html')
+
+@login_required
 def addpic(request):
     profile = Profile.objects.filter(user=request.user).first()
     profile.add_item_to_json_field('birds', 'robin')
