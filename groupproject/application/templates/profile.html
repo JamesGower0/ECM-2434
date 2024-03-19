@@ -148,6 +148,22 @@
                 width: 15%;
                 margin: 5%;
             }
+
+            .x-button img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .x-button {
+                width: calc(50% - 10px); /* Set width for two items per row */
+                margin: 5px; /* Add some margin between items */
+                flex-grow: 0; /* Prevent items from growing */
+                flex-shrink: 0; /* Prevent items from shrinking */
+                box-sizing: border-box;
+                border: 1px solid #003c3c;
+                padding: 5px;
+            }
         </style>
 
         <script src="../static/application/profile.js"></script>
