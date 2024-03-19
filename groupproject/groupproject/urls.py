@@ -54,5 +54,5 @@ urlpatterns = [
     path('add-accessory/', views.add_accessory, name='add_accessory'),
     path("empty_accessories/", views.empty_accessories, name='empty_accessories'),
     path("buy_item/", views.buy_item, name='buy_item'),
-    path('<str:username>/', views.user_page, name='user_page'),
+    path('profile/<str:username>/', views.user_page, name='user_page'),
 ]
