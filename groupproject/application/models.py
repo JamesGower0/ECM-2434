@@ -14,7 +14,7 @@ def default_json():
     return {
         'hats': [],
         'bows': [],
-        'shoes': [],
+        'item_left': [],
         'birds': [],
     }
 
@@ -31,7 +31,6 @@ def default_json_bird():
     return {
         'hats': '',
         'bows': '',
-        'shoes': '',
         'item_left': '',
     }
 
