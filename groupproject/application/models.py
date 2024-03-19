@@ -65,8 +65,8 @@ class Profile(models.Model):
         self.avatar_choice = value
         self.save()
 
-    def add_points(self, value):
-        self.points += value
+    def remove_points(self, value):
+        self.points -= value
         self.save()
         
     def add_item_to_json_field(self, key, value):
@@ -113,8 +113,6 @@ class Bird(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) # Delete profile when user is deleted
     # Should be created when the user is registered (add to user_is_created function below) 
     birdType = models.CharField(max_length=20, default='robin')
-    # Changes if no quizzes are solved; Once reaches 0 - health starts to go down
-    mood = models.IntegerField(default=10)
     # Depends on the correctness of the answers; Can be increased by correct answers
     health = models.IntegerField(default=100)
     # Accessories ON the bird

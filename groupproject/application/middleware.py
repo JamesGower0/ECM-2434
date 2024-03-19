@@ -1,6 +1,6 @@
 # middleware.py
 from datetime import datetime, timedelta
-from .models import Bird
+from .models import Bird, Profile, User
 
 class BirdMetricsMiddleware:
     def __init__(self, get_response):
@@ -24,17 +24,24 @@ class BirdMetricsMiddleware:
         now = datetime.now()
         for bird in birds:
             if bird.health > 0:
-                if 6 <= now.hour < 12:  # Morning
+                if 8 <= now.hour < 16:  # From 8am until 4pm the health is changed
                     if self.last_update_time != None:
                         time_difference = datetime.now() - self.last_update_time
                         bird.health -= int(time_difference.total_seconds() / 3600)
                     else:
                         bird.health -= 1
-                elif 12 <= now.hour < 18:  # Afternoon
-                    bird.health -= 1
-                else:  # Night
-                    bird.health -= 1
+            if bird.health == 0:
+                user = User.objects.get(id=bird.user_id)
+                profile = Profile.objects.get(user_id = user.id)
+                if 8 <= now.hour < 20:
+                    if profile.points > 0:
+                        if self.last_update_time != None:
+                            time_difference = datetime.now() - self.last_update_time
+                            profile.points -= int(time_difference.total_seconds() / 3600)
+                    
+
+
         
         # Need to add function that decreases mood based on the number of questions answered
-
+            profile.save()
             bird.save()

@@ -255,3 +255,12 @@ body {
 	box-shadow: 0 5px 60px rgba(0, 0, 0, 0.6);
 	transform: scale(1.02); 
  }
+
+ .prof-buttons{
+	text-align: center;
+}
+
+.prof-btn{
+	width: 15%;
+	margin: 5%;
+}
