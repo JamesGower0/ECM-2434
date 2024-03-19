@@ -97,6 +97,14 @@ def empty_accessories(request):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
+def user_page(request, username):
+    user = User.objects.get(username=username)
+    context = {
+        'user': user,
+        # Other context data if any
+    }
+    return render(request, 'user_page.html', context)
+
 def qr(request):
     
     #reads the qr code
