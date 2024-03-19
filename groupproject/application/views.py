@@ -86,7 +86,10 @@ def add_accessory(request):
         if new_accessory and new_accessory_type:
             # Assuming you have authenticated user
             bird = request.user.bird
-            bird.accessories[new_accessory_type] = new_accessory
+            if bird.accessories[new_accessory_type] == new_accessory:
+                bird.accessories[new_accessory_type] = ''
+            else:
+                bird.accessories[new_accessory_type] = new_accessory
             bird.save()
             return JsonResponse({'success': True})
     return JsonResponse({'success': False})
