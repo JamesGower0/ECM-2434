@@ -292,6 +292,11 @@
         </div>
     </div>
 
+    <div class="prof-buttons">
+        <button class="prof-btn btn" id="met-btn">Profile</button>
+        <button class="prof-btn btn" id="shop-btn">Shop</button>
+    </div>
+
     <div class="modal-container" id="modal">
         <!--<button class="cta-btn" id="open">Sign Up</button>
         <section>
@@ -377,6 +382,11 @@
 
         // Initially show the first page of items
         showItems(currentPage, itemsPerPage);
+
+        document.getElementById("met-btn").addEventListener("click", function() {
+            // Change to shop page
+            window.location.href = "../profile";
+        });
     </script>
 
 </body>

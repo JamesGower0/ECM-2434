@@ -26,7 +26,7 @@ def buy_item(request):
         item_price = int(request.POST.get('item_price'))
         item_type = request.POST.get('item_type')
         item_value = request.POST.get('item_value')[:-4]
-        profile.add_points(item_price)
+        profile.add_points(-item_price)
         profile.add_item_to_json_field(item_type, item_value)
 
         profile.save()
