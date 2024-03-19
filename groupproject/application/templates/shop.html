@@ -175,13 +175,17 @@
                     },
                     dataType: 'json',  // Specify data type expected from server
                     success: function(response) {
-                        if (response.success) {
+                        if (response.success[0]) {
                             // Avatar changed successfully, update UI if needed
-                            console.log('Acessory changed successfully');
                             location.reload();
                         } else {
-                            // Handle error if necessary
-                            console.log('Accessory change failed');
+                            // Checking why the purchase was unsuccessful
+                            if (response.success[1] == 1){
+                                alert("Not enough NestPoints!");
+                            }  else {
+                                alert("Oops! Seems like you already purchased this item!")
+                            }
+                                
                         }
                     },
                     error: function(xhr, status, error) {

@@ -25,12 +25,18 @@ def buy_item(request):
         item_price = int(request.POST.get('item_price'))
         item_type = request.POST.get('item_type')
         item_value = request.POST.get('item_value')[:-4]
-        profile.remove_points(item_price)
-        profile.add_item_to_json_field(item_type, item_value)
-
-        profile.save()
-        # or return http respone if ajax
-        return JsonResponse({'success': True})
+        # Checking if the user has enough points to buy an item
+        if profile.points >= item_price:
+            # Checking if the user has already bought this item
+            if item_value in profile.inventory[item_type]:
+                return JsonResponse({'success': [False, 0]})
+            profile.remove_points(item_price)
+            profile.add_item_to_json_field(item_type, item_value)
+            profile.save()
+            # or return http respone if ajax
+            return JsonResponse({'success': [True]})
+        else:
+            return JsonResponse({'success': [False, 1]})
 
 @login_required
 def changepic(request):
