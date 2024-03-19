@@ -67,6 +67,10 @@
             cursor: pointer;
         }
 
+        h1{
+            text-align: center;
+        }
+
         .modal-container {
             background-color: rgba(0, 0, 0, 0.6);
             display: none;
@@ -121,10 +125,16 @@
         .modal-container .submit-btn {
             padding: 10px 30px;
             font-weight: bold;
-            background: crimson;
+            background: #003c3c;
             border: none;
             color: #fff;
             cursor: pointer;
+        }
+
+        #modal-item-img{
+            width: 70%;
+            display: inline-block;
+            margin: 0 auto;
         }
 
         /* JavaScript */
@@ -223,18 +233,19 @@
 
         <div class="form-inside" style="padding: 0;">
             {% for item, value in shop.accessories.items %}
-            {% if item != 'birds'%}
-            {% for val in value %}
-            <div class="item-shop item{{forloop.counter}}-shop">
-                <img class="shop-img" src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ val.0 }}">
-            </div>
-            {% endfor %}
-            {% else %}
-            {% for val in value %}
-            <div class="item-shop item{{forloop.counter}}-shop">
-                <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" alt="{{ item }}"></div>
-            {% endfor %}
-            {% endif %}
+                {% if item != 'birds'%}
+                    {% for val in value %}
+                        <div class="item-shop item{{forloop.counter}}-shop">
+                            <img class="shop-img" src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ val.1 }}">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for val in value %}
+                        <div class="item-shop item{{forloop.counter}}-shop">
+                            <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" alt="{{ item }}">
+                        </div>
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
         </div>
 
@@ -244,8 +255,7 @@
     </div>
 
     <div class="modal-container" id="modal">
-        <button class="cta-btn" id="open">Sign Up</button>
-
+        <!--<button class="cta-btn" id="open">Sign Up</button>
         <section>
             <section class="modal">
                 <button class="close-btn" id="close">x</button>
@@ -260,7 +270,26 @@
                     </form>
                 </div>
             </section>
+        </section>-->
+        <section class="modal">
+            <button class="close-btn" id="close">x</button>
+            <div class="modal-content">
+                <h1>Buy</h1>
+                <form class="modal-form">
+                    <div style="text-align: center;">
+                        <!-- Image clicked -->
+                        <img id="modal-item-img">
+                        <!-- Item's price -->
+                        <p id="modal-item-price"></p>
+                    </div>
+                    <div style="text-align: center;">
+                        <button class="btn">Return</button>
+                        <button class="btn">Buy</button>
+                    </div>
+                </form>
+            </div>
         </section>
+       
     </div>
 
 
