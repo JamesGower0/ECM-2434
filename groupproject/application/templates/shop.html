@@ -226,13 +226,13 @@
             {% if item != 'birds'%}
             {% for val in value %}
             <div class="item-shop item{{forloop.counter}}-shop">
-                <img src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ item }}">
+                <img class="shop-img" src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ val.0 }}">
             </div>
             {% endfor %}
             {% else %}
             {% for val in value %}
-            <div class="item-shop item{{forloop.counter}}-shop"><img src="{% static 'avatars/' %}{{ val.0 }}"
-                    alt="{{ item }}"></div>
+            <div class="item-shop item{{forloop.counter}}-shop">
+                <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" alt="{{ item }}"></div>
             {% endfor %}
             {% endif %}
             {% endfor %}
