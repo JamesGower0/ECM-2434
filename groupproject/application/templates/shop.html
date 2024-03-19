@@ -222,7 +222,7 @@
                 {% else %}
                     {% for val in value %}
                         <div class="item-shop item{{forloop.counter}}-shop">
-                            <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" data-item_type="{{ items }}" data-item_value="{{ val.0 }}" alt="{{ val.1 }}">
+                            <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" data-item_type="{{ item }}" data-item_value="{{ val.0 }}" alt="{{ val.1 }}">
                         </div>
                     {% endfor %}
                 {% endif %}
