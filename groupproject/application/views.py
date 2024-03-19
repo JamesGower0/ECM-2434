@@ -21,24 +21,26 @@ import csv
 @login_required
 def buy_item(request):
     profile = Profile.objects.filter(user=request.user).first()
-    item_price = request.GET.get('item')
-    if profile.points < item_price:
-        print("show user they cant afford?")
-        return render(request, 'profile.html')
+    item_price = request.GET.get('item_price')
+    #if profile.points < item_price:
+        #print("show user they cant afford?")
+        #return render(request, 'profile.html')
     #item and itemprice in same array
     #item type is the key in the dict for it
-    item = request.GET.get('item')
     item_type = request.GET.get('item_type')
-    profile.points -= item_price
-    profile.add_item_to_json_field(item_type, item)
-
+    item_value = request.GET.get('item_value')
+    profile.add_points(item_price)
+    profile.points += 100
+    profile.add_item_to_json_field(item_type, item_value)
+    profile.save()
     # or return http respone if ajax
-    return render(request, 'profile.html')
+    return JsonResponse({'success': True})
 
 @login_required
 def addpic(request):
     profile = Profile.objects.filter(user=request.user).first()
     profile.add_item_to_json_field('birds', 'robin')
+    profile.add_points(100)
     return render(request, 'addpic.html')
 
 @login_required

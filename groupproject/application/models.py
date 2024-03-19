@@ -65,6 +65,10 @@ class Profile(models.Model):
         self.avatar_choice = value
         self.save()
 
+    def add_points(self, value):
+        self.points += value
+        self.save()
+        
     def add_item_to_json_field(self, key, value):
         """
         Function to add items to the JSONField later.

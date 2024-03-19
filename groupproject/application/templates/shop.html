@@ -218,6 +218,44 @@
         }
     </style>
     <script src="../static/application/shop.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.buy_button').click(function() {
+                var item_type = $(this).data("item_type");
+                var item_value = $(this).data("item_value");
+                var item_price = $(this).data("item_price");
+                $.ajax({
+                    type: 'POST',
+                    url: '/buy_item/',
+                    data: {
+                        'item_type': item_type,
+                        'item_value': item_value,
+                        'item_price': item_price,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    dataType: 'json',  // Specify data type expected from server
+                    success: function(response) {
+                        if (response.success) {
+                            // Avatar changed successfully, update UI if needed
+                            console.log('Acessory changed successfully');
+                            location.reload();
+                        } else {
+                            // Handle error if necessary
+                            console.log('Accessory change failed');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error('Error:', error);
+                    }
+                });
+                
+        });
+    });
+    </script>
+
 </head>
 {% block content %}
 
@@ -236,13 +274,13 @@
                 {% if item != 'birds'%}
                     {% for val in value %}
                         <div class="item-shop item{{forloop.counter}}-shop">
-                            <img class="shop-img" src="{% static 'accessories/' %}{{ val.0 }}" alt="{{ val.1 }}">
+                            <img class="shop-img" src="{% static 'accessories/' %}{{ val.0 }}" data-item_type="{{ item }}" data-item_value="{{ val.0 }}" alt="{{ val.1 }}">
                         </div>
                     {% endfor %}
                 {% else %}
                     {% for val in value %}
                         <div class="item-shop item{{forloop.counter}}-shop">
-                            <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" alt="{{ item }}">
+                            <img class="shop-img" src="{% static 'avatars/' %}{{ val.0 }}" data-item_type="{{ items }}" data-item_value="{{ val.0 }}" alt="{{ val.1 }}">
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -284,7 +322,7 @@
                     </div>
                     <div style="text-align: center;">
                         <button class="btn">Return</button>
-                        <button class="btn">Buy</button>
+                        <button id="buy_button" data-item_type="" data-item_value="" data-item_price="" class="btn">Buy</button>
                     </div>
                 </form>
             </div>

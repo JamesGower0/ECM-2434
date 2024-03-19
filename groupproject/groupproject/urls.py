@@ -53,5 +53,6 @@ urlpatterns = [
     path("shop/", views.shop, name="shop"),
     path('change-avatar/', views.change_avatar, name='change_avatar'),
     path('add-accessory/', views.add_accessory, name='add_accessory'),
-    path("empty_accessories/", views.empty_accessories, name='empty_accessories')
+    path("empty_accessories/", views.empty_accessories, name='empty_accessories'),
+    path("buy_item/", views.buy_item, name='buy_item')
 ]

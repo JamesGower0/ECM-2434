@@ -17,7 +17,14 @@ document.addEventListener("DOMContentLoaded", function() {
       // Price of the image in pop up
       const priceDisplayedInForm = document.getElementById("modal-item-price");
       priceDisplayedInForm.textContent = alttext + " points";
-      
+
+      const buyButton = document.getElementById("buy_button");
+      buyButton.dataset.item_type = image.dataset.item_type;
+      console.log(buyButton.dataset.item_type);
+      buyButton.dataset.item_value = image.dataset.item_value;
+      console.log(buyButton.dataset.item_value);
+      buyButton.dataset.item_price = image.alt;  
+      console.log(buyButton.dataset.item_price);
       container.classList.add("show-modal");
     });
   });
@@ -27,3 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
+
+
+
