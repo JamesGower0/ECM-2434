@@ -228,6 +228,15 @@ body {
 
 
 /* profile.html */
+.prof-buttons{
+	text-align: center;
+}
+
+.prof-btn{
+	width: 15%;
+	margin: 5%;
+}
+
 .profile-box{
 	background-color: rgb(255, 255, 255, 0.7);
 	border-radius: 5px;
