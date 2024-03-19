@@ -21,24 +21,16 @@ import csv
 @login_required
 def buy_item(request):
     if request.method == 'POST':
-        print('I am in buy item') 
         profile = Profile.objects.filter(user=request.user).first()
         item_price = int(request.POST.get('item_price'))
         item_type = request.POST.get('item_type')
         item_value = request.POST.get('item_value')[:-4]
-        profile.add_points(-item_price)
+        profile.remove_points(item_price)
         profile.add_item_to_json_field(item_type, item_value)
 
         profile.save()
         # or return http respone if ajax
         return JsonResponse({'success': True})
-
-@login_required
-def addpic(request):
-    profile = Profile.objects.filter(user=request.user).first()
-    profile.add_item_to_json_field('birds', 'robin')
-    profile.add_points(100)
-    return render(request, 'addpic.html')
 
 @login_required
 def changepic(request):
@@ -53,15 +45,12 @@ def changepic(request):
 @login_required
 def profile(request):
     bird = Bird.objects.filter(user=request.user).first()
-    mood_multiplier = 10
-    mood_width = bird.mood * mood_multiplier
-    return render(request, 'profile.html', {'bird': bird, 'mood_width': mood_width})
+    return render(request, 'profile.html', {'bird': bird})
 
 @login_required
 def logout_view(request):
     logout(request)
     return render(request, 'home.html')
-
 
 @login_required
 def change_avatar(request):
@@ -101,14 +90,6 @@ def empty_accessories(request):
         bird.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
-
-"""
-def addpic(request):
-    profile = Profile.objects.filter(user=request.user).first()
-    profile.add_item_to_json_field('hats', 'hat1')
-    profile.add_item_to_json_field('shoes', 'shoes1')
-    return render(request, 'addpic.html')
-"""
 
 def qr(request):
     
@@ -227,7 +208,7 @@ def correct_answer(request):
     current_user.profile.score += 1
     # Increase health by 1 if not 100
     if current_user.bird.health < 100:
-        current_user.bird.health += 1
+        current_user.bird.health += 5
     # Increase points by 5
     current_user.profile.points += 5
     
