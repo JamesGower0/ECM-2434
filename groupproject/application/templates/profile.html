@@ -220,6 +220,34 @@
                 });
             });
 
+            $(document).ready(function() {
+                $('.x-button').click(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/empty_accessories/',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        dataType: 'json',  // Specify data type expected from server
+                        success: function(response) {
+                            if (response.success) {
+                                // Avatar changed successfully, update UI if needed
+                                console.log('Acessory changed successfully');
+                                location.reload();
+                            } else {
+                                // Handle error if necessary
+                                console.log('Accessory change failed');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.error('Error:', error);
+                        }
+                    });
+                    
+                });
+            });
+
 
             $(document).ready(function() {
                 $('#inventory').scroll(function() {
@@ -288,6 +316,7 @@
             <!-- Inventory -->
             <div id="inventory" style="display: none;">
                 <div class="inv-container">
+                    <div class="x-button" ><img src="{% static 'application/cross.png' %}" alt="x button"></div>
 
                     {% if user.profile.inventory.items %}
                         {% for item, value in user.profile.inventory.items %}

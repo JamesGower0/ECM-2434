@@ -94,6 +94,15 @@ def add_accessory(request):
             return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
+def empty_accessories(request):
+    if request.method == 'POST':
+        bird = request.user.bird
+        for accessory_type in bird.accessories:
+            bird.accessories[accessory_type] = ''
+        bird.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
 """
 def addpic(request):
     profile = Profile.objects.filter(user=request.user).first()
