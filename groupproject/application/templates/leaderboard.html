@@ -1,48 +1,156 @@
 <!-- Leaderbord page, displays best score of users 
     Have options for reordering based on the question or its type
 
-    Authors: James Gower, Maryia Fralova -->
+    Authors: James Gower, Maryia Fralova, Aidan Daniel -->
 
 <!DOCTYPE html>
 
 <!-- Includes the navigation bar into the leaderboard -->
 
 {% load static %}
-<html>
+<html lang="en">
 <head>
     <script src="../static/application/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
     <script type="text/javascript" src="../static/application/navBar.js"></script>
 </head>
 <body data-nav-url="{% url 'navBar' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+    <style>
+        /* Add some CSS styling for the search bar */
+        label[for="search"] {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #search {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        #search:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <!-- Search Bar -->
+    <label for="search">   </label>
+    <input type="text" id="search" placeholder="Search for user">
+
     <!-- Building the leaderboard table -->
     <table id="table" class="display" style="width: 100%;">
         <thead>
-          <!-- Gives a row for the headers -->
-          <tr>
-            {% for header in headers %}
-            <th>{{ header }}</th>
-            {% endfor %}
-          </tr>
+            <!-- Gives a row for the headers -->
+            <tr>
+                {% for header in headers %}
+                <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
         </thead>
         <tbody style="background-color: rgba(0, 0, 0, 0.3);">
-            {% for user in profiles%}
+            {% for user in profiles %}
             <tr style="color: white">
                 <td class="td-leader">{{ forloop.counter }}</td>
                 <td class="td-leader"><img id="leaderboard-bird" src="..\static/avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview"></td>
                 <td class="td-leader">{{ user.user.username }}</td>
                 <td class="td-leader">{{ user.score }}</td>
-                
             </tr>
             {% endfor %}
-
         </tbody>
-      </table>
+    </table>
+
+    <script>
+        function searchByUsername() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Change the index to match the username column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        document.getElementById("search").addEventListener("input", searchByUsername);
+    </script>
+
+    <style>
+        body {
+            color: white;
+            background-color: #333; /* Setting a background color for better contrast */
+            font-family: Arial, sans-serif; /* Setting a font family for better readability */
+            margin: 20px; /* Adding some margin for better layout */
+        }
+
+        label, th, td {
+            color: white;
+        }
+
+        select, button {
+            color: black; /* Adjust the color for better visibility on select and button elements */
+            background-color: white; /* Setting a background color for better visibility */
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Adding some space between the form and the table */
+        }
+
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #555; /* Setting a background color for the table header */
+        }
+
+        tbody {
+            background-color: #444; /* Setting a background color for the table body */
+        }
+    </style>
+</head>
+<body>
+    <form method="GET">
+        <label for="quiz">Select Quiz:</label>
+        <select name="quiz" id="quiz">
+            <option value="">All Quizzes</option>
+            {% for quiz in quizzes %}
+                <option value="{{ quiz.id }}">{{ quiz.title }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
 </body>
 </html>
 
-
-<!-- OUT OF USE FOR NOW, BUT WILL BE USED IN THE SECOND SPRINT 
+ <!-- OUT OF USE FOR NOW, BUT WILL BE USED IN THE SECOND SPRINT 
 
 <html lang="en">
 <head>
