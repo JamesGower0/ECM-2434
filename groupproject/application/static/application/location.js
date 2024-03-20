@@ -26,7 +26,7 @@ function checkLocation(){
                     location.href = questionURL;
                 }
             }
-            if (isInRadius(pos, [50.73390427287853, -3.5302293230091273])){ //mini game (location needs to be changed)
+            if (isInRadius(pos, [50.73820089970511, -3.5305325934351863])){ //mini game
                 questionURL =  "../minigame";
                 location.href = questionURL;
             }
