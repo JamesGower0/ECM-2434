@@ -21,6 +21,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    path("profile/changepic/", views.changepic, name="changepic"),
     path("home/", views.home, name='home'),
     path("register/", views.register, name="register"),
     #path("application/", include("application.urls")),
@@ -39,6 +40,12 @@ urlpatterns = [
     path("qr/scan/",views.scan,name = "scan"),
     path("qr/correct/",views.correct_answer,name = "correct"),
     path("qr/wrong/",views.wrong_answer,name="wrong"),
+    path("shop/", views.shop, name="shop"),
+    path('change-avatar/', views.change_avatar, name='change_avatar'),
+    path('add-accessory/', views.add_accessory, name='add_accessory'),
+    path("empty_accessories/", views.empty_accessories, name='empty_accessories'),
+    path("buy_item/", views.buy_item, name='buy_item'),
+    path('profile/<str:username>/', views.user_page, name='user_page'),
     path("location/",views.location, name="location"),
     path("qr/", views.qr, name="qr"),
     path("minigame/",views.minigame,name="minigame"),

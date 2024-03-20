@@ -1,0 +1,143 @@
+<!--Profile page, displays user's bird and score
+
+Authors: Ashley Card, Maryia Fralova -->
+
+<!DOCTYPE html>
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %} 
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+        <title>Sign up</title>
+        <style>
+            .profile-box{
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-rows: repeat(4, 1fr);  
+                max-width: 800px; /* Adjust the max-width as needed */
+                margin-top: 20px;
+                margin-bottom: 40px;        
+            }
+
+            #avatar-preview{
+                position: relative;
+            }
+
+            #selected-avatar-preview, .bird-item{
+                position: absolute;
+            }
+
+            .bird-bows{
+                width: 20%;
+                right: 170px;
+            }
+
+            .bird-hats{
+                width:20%;
+                top: 45px;
+                right: 170px;
+            }
+
+            .bird-item_left{
+                width: 40%;
+                bottom: 70px;
+                right: 300px;
+            }
+
+            #metrics{
+                grid-row: span 3;
+                grid-column: span 2;
+            }
+
+            .item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid  #003c3c;
+                box-sizing: border-box;
+                padding: 5px;
+            }
+
+            .item1 {
+                grid-row: 1;
+                grid-column: span 6;
+            }
+
+            .item2 {
+                grid-row: span 3;
+                grid-column: span 4;
+            }
+
+            .item3, .item4, .item5{
+                grid-row: span 1;
+                grid-column: span 2;
+            }
+
+   
+            .prof-buttons{
+                text-align: center;
+            }
+
+            .prof-btn{
+                width: 15%;
+                margin: 5%;
+            }
+
+        </style>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    </head>
+    {% block content %}
+    <body>
+        <div class="top">
+            <h1>Your are viewing {{ user.username }}'s profile</h1>
+        </div>
+
+        <div class="form-inside profile-box" style="padding: 0;">
+
+            <div class="form-header item item1" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                <h2>{{ user.username }}</h2>
+            </div>
+
+            <div id="avatar-preview" class="item item2">
+                <img id="selected-avatar-preview" src="..\..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
+                <!-- Displaying all the accessories that are on the bird at the moment -->
+                {% for item, value in user.bird.accessories.items %}
+                    {% if value %}
+                        <img class="bird-item bird-{{item}}" src="{% static 'accessories/' %}{{ value }}.png" alt="{{ item }}">
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+
+            <!-- Metrics -->
+            <div id="metrics" style="display: grid;">
+                <div class="item item5" style="padding-right: 5px;">
+                    <p> EcoScore: {{ user.profile.score }}</p>
+                </div>
+            </div>
+            
+        </div>
+            
+        <div class="prof-buttons">
+            <button class="prof-btn btn" id="go-back">Go back to your profile</button>
+        </div>
+        
+        <script>
+            document.getElementById("go-back").addEventListener("click", function() {
+                // Change to shop page
+                window.location.href = "../";
+            });
+        </script>
+
+    </body>
+    {% endblock content %}
+</html>
+

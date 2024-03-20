@@ -13,6 +13,269 @@
         <script src="../static/application/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="../static/application/navBar.js"></script>
 		<title>Sign up</title>
+        <style>
+            .profile-box{
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-rows: repeat(4, 1fr);  
+                max-width: 800px; /* Adjust the max-width as needed */
+                margin-top: 20px;
+                margin-bottom: 40px;        
+            }
+
+            #avatar-preview{
+                position: relative;
+            }
+
+            #selected-avatar-preview, .bird-item{
+                position: absolute;
+            }
+
+            .bird-bows{
+                width: 15%;
+                right: 170px;
+            }
+
+            .bird-hats{
+                width:20%;
+                top: 45px;
+                right: 170px;
+            }
+
+            .bird-item_left{
+                width: 40%;
+                bottom: 70px;
+                right: 300px;
+            }
+
+            #metrics, #inventory{
+                grid-row: span 3;
+                grid-column: span 2;
+            }
+
+            #inventory{
+                position: relative;
+            }
+
+            .item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid  #003c3c;
+                box-sizing: border-box;
+                padding: 5px;
+            }
+
+            .item1 {
+                grid-row: 1;
+                grid-column: span 6;
+            }
+
+            .item2 {
+                grid-row: span 3;
+                grid-column: span 4;
+            }
+
+            .item3, .item4, .item5{
+                grid-row: span 1;
+                grid-column: span 2;
+            }
+
+            .inv-container {
+                display: flex;
+                flex-wrap: wrap; /* Allow items to wrap to the next line */
+                justify-content: space-around; /* Distribute items evenly */
+                align-content: flex-start; /* Align items at the start of the container */
+                height: 100%;
+                max-height: 100%;
+                overflow-y: auto;
+                position: absolute;
+            }
+
+            .inv-item {
+                width: calc(50% - 10px); /* Set width for two items per row */
+                margin: 5px; /* Add some margin between items */
+                flex-grow: 0; /* Prevent items from growing */
+                flex-shrink: 0; /* Prevent items from shrinking */
+                box-sizing: border-box;
+                border: 1px solid #003c3c;
+                padding: 5px;
+            }
+
+            .inv-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .inv-container::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            .inv-container::-webkit-scrollbar-thumb {
+                background-color: #888;
+                border-radius: 5px;
+            }
+
+            .status-bar {
+                width: 80%;
+                height: 20px;
+                border: 1px solid #000;
+                position: relative;
+                margin: auto;
+            }
+
+            .fill-health {
+                background-color: #00ff00;  /* Green */
+            }
+
+            .fill {
+                height: 100%;
+                position: absolute;
+                top: 0;
+            }
+
+            .prof-buttons{
+                text-align: center;
+            }
+
+            .prof-btn{
+                width: 15%;
+                margin: 5%;
+            }
+
+            .x-button img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .x-button {
+                width: calc(50% - 10px); /* Set width for two items per row */
+                margin: 5px; /* Add some margin between items */
+                flex-grow: 0; /* Prevent items from growing */
+                flex-shrink: 0; /* Prevent items from shrinking */
+                box-sizing: border-box;
+                border: 1px solid #003c3c;
+                padding: 5px;
+            }
+        </style>
+
+        <script src="../static/application/profile.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script>
+            var csrftoken = '{{ csrf_token }}';
+            
+            // Handles avatar change when selected from inventory
+            $(document).ready(function() {
+                $('.avatar-choice').click(function() {
+                    var newAvatar = $(this).data('avatar');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/change-avatar/',
+                        data: {
+                            'new_avatar': newAvatar,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'  // Ensure CSRF token is included
+                        },
+                        dataType: 'json',  // Specify data type expected from server
+                        success: function(response) {
+                            if (response.success) {
+                                // Avatar changed successfully, update UI if needed
+                                console.log('Avatar changed successfully');
+				                location.reload();
+                            } else {
+                                // Handle error if necessary
+                                console.log('Avatar change failed');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.error('Error:', error);
+                        }
+                    });
+                });
+            });
+
+            // Adds accessory to the avatar
+            $(document).ready(function() {
+                $('.accessory-choice').click(function() {
+                    var newAccessory = $(this).data('accessory');
+                    var newAccessoryType = $(this).data('actype');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add-accessory/',
+                        data: {
+                            'new_accessory': newAccessory,
+                            'new_accessory_type': newAccessoryType,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        dataType: 'json',  // Specify data type expected from server
+                        success: function(response) {
+                            if (response.success) {
+                                // Avatar changed successfully, update UI if needed
+                                console.log('Acessory changed successfully');
+                                location.reload();
+                            } else {
+                                // Handle error if necessary
+                                console.log('Accessory change failed');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.error('Error:', error);
+                        }
+                    });
+                    
+                });
+            });
+
+            $(document).ready(function() {
+                $('.x-button').click(function() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/empty_accessories/',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        dataType: 'json',  // Specify data type expected from server
+                        success: function(response) {
+                            if (response.success) {
+                                // Avatar changed successfully, update UI if needed
+                                console.log('Acessory changed successfully');
+                                location.reload();
+                            } else {
+                                // Handle error if necessary
+                                console.log('Accessory change failed');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error
+                            console.error('Error:', error);
+                        }
+                    });
+                    
+                });
+            });
+
+
+            $(document).ready(function() {
+                $('#inventory').scroll(function() {
+                    var scrollPos = $('#inventory').scrollTop();
+                    $('.inv-item').each(function() {
+                        var offsetTop = $(this).offset().top - $('#inventory').offset().top;
+                        if (offsetTop >= 0 && offsetTop < $('#inventory').height()) {
+                            $(this).fadeIn(); // Show item if it's within the visible area
+                        } else {
+                            $(this).fadeOut(); // Hide item if it's outside the visible area
+                        }
+                    });
+                });
+            });
+
+
+        </script>
 	</head>
     {% block content %}
     <body data-nav-url="{% url 'navBar' %}">
@@ -20,17 +283,90 @@
 			<h1>Your ExeterNest birdie</h1>
 		</div>
 
-        <div class="form-inside">
-            <div class="form-header">
+        <div class="form-inside profile-box" style="padding: 0;">
+
+            <div class="form-header item item1" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
 				<h2>{{ user.username }}</h2>
 			</div>
-            <div id="avatar-preview">
-                <!-- Debug: {{ user.avatar_choice }} -->
+
+            <div id="avatar-preview" class="item item2">
                 <img id="selected-avatar-preview" src="..\static/avatars/{{ user.profile.avatar_choice }}.png" alt="Selected Avatar Preview">
+                <!-- Displaying all the accessories that are on the bird at the moment -->
+                {% for item, value in user.bird.accessories.items %}
+                    {% if value %}
+                        <img class="bird-item bird-{{item}}" src="{% static 'accessories/' %}{{ value }}.png" alt="{{ item }}">
+                    {% endif %}
+                {% endfor %}
+
             </div>
-            <p style="color: black; font-size: 15px;"> Score: {{ user.profile.score }}</p>
+
+            <!-- Metrics -->
+            <div id="metrics" style="display: grid;">
+                <div class="item item3">
+                    <p style="padding-right: 5px;">Mood</p>
+                    <div class="status-bar health-bar">
+                        <div class="fill fill-health" style="width: {{ bird.health }}%;"></div>
+                    </div>
+                    <p style="padding-left: 5px;">{{ bird.health }}</p>
+                </div>
+
+                <div class="item item4" style="padding-right: 5px;">
+                    <p> NestPoints: {{ user.profile.points }}</p>
+                </div>
+    
+                <div class="item item5" style="padding-right: 5px;">
+                    <p> EcoScore: {{ user.profile.score }}</p>
+                </div>
+            </div>
+            
+
+            <!-- Inventory -->
+            <div id="inventory" style="display: none;">
+                <div class="inv-container">
+                    <div class="x-button" ><img src="{% static 'application/cross.png' %}" alt="x button"></div>
+
+                    {% if user.profile.inventory.items %}
+                        {% for item, value in user.profile.inventory.items %}
+                            {% if item != 'birds'%}
+
+                                {% if value %}
+                                    {% for val in value %}
+                                        <div class="inv-item inv-item{{forloop.counter}} accessory-choice" data-actype='{{item}}' data-accessory='{{val}}'><img src="{% static 'accessories/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% else %}
+                                {% if value %}
+                                    {% for val in value %}
+                                    {% csrf_token %}
+                                        <div class="inv-item inv-item{{forloop.counter}} avatar-choice" data-avatar='{{val}}'><img src="{% static 'avatars/' %}{{ val }}.png" alt="{{ item }}"></div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>No items yet</p>
+                    {% endif %}
+
+                </div>
+                
+            </div>
+    
+        </div>
+
+        <div class="prof-buttons">
+            <button class="prof-btn btn" id="inv-btn">Inventory</button>
+            <button class="prof-btn btn" id="met-btn">Metrics</button>
+            <button class="prof-btn btn" id="shop-btn">Shop</button>
         </div>
        
+        <script>
+            document.getElementById("shop-btn").addEventListener("click", function() {
+                // Change to shop page
+                window.location.href = "../shop";
+            });
+        </script>
+
     </body>
     {% endblock content %}
 </html>

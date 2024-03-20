@@ -7,11 +7,12 @@ Authors: Maryia Fralova, Ashley Card, James Gower, Aidan Daniel, Tom Evans
 """
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 #from .models import Score, Quiz
-from .models import Quiz, Profile, User, Question
+from .models import Quiz, Profile, User, Bird, Shop, Question
 import cv2
 import random
 import csv
@@ -21,13 +22,91 @@ from django.conf import settings
 # Create your views here.
 
 @login_required
+def buy_item(request):
+    if request.method == 'POST':
+        profile = Profile.objects.filter(user=request.user).first()
+        item_price = int(request.POST.get('item_price'))
+        item_type = request.POST.get('item_type')
+        item_value = request.POST.get('item_value')[:-4]
+        # Checking if the user has enough points to buy an item
+        if profile.points >= item_price:
+            # Checking if the user has already bought this item
+            if item_value in profile.inventory[item_type]:
+                return JsonResponse({'success': [False, 0]})
+            profile.remove_points(item_price)
+            profile.add_item_to_json_field(item_type, item_value)
+            profile.save()
+            # or return http respone if ajax
+            return JsonResponse({'success': [True]})
+        else:
+            return JsonResponse({'success': [False, 1]})
+
+@login_required
+def changepic(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    new_avatar = request.GET.get('avatar')
+    print(new_avatar)
+    request.user.avatar_choice = new_avatar
+    print(request.user.avatar_choice)
+    request.user.change_avatar_choice(new_avatar)
+    return HttpResponse(200)
+
+@login_required
 def profile(request):
-    return render(request, 'profile.html')
+    bird = Bird.objects.filter(user=request.user).first()
+    return render(request, 'profile.html', {'bird': bird})
 
 @login_required
 def logout_view(request):
     logout(request)
     return render(request, 'home.html')
+
+@login_required
+def change_avatar(request):
+    if request.method == 'POST':
+        new_avatar = request.POST.get('new_avatar')
+        if new_avatar:
+            # Assuming you have authenticated user
+            profile = request.user.profile
+            profile.avatar_choice = new_avatar
+            profile.save()
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+
+@login_required
+def add_accessory(request):
+    if request.method == 'POST':
+        # Need to change the accessories on the Bird
+        new_accessory = request.POST.get('new_accessory')
+        new_accessory_type = request.POST.get('new_accessory_type')
+        if new_accessory and new_accessory_type:
+            # Assuming you have authenticated user
+            bird = request.user.bird
+            if bird.accessories[new_accessory_type] == new_accessory:
+                bird.accessories[new_accessory_type] = ''
+            else:
+                bird.accessories[new_accessory_type] = new_accessory
+            bird.save()
+            return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+def empty_accessories(request):
+    if request.method == 'POST':
+        bird = request.user.bird
+        for accessory_type in bird.accessories:
+            bird.accessories[accessory_type] = ''
+        bird.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+def user_page(request, username):
+    user = User.objects.get(username=username)
+    context = {
+        'user': user,
+        # Other context data if any
+    }
+    return render(request, 'user_page.html', context)
 
 def qr(request):
     
@@ -176,13 +255,24 @@ def correct_answer(request):
 
     # Updating user's score and saving into the database
     current_user = request.user
+    # Change the total number of questions answered
     current_user.profile.score += 1
+    # Increase health by 1 if not 100
+    if current_user.bird.health < 100:
+        current_user.bird.health += 5
+    # Increase points by 5
+    current_user.profile.points += 5
+    
     current_user.save()
     return render(request,"correct_answer.html")
 
 # Getting a question wrong doesnt affect the users score so doesnt edit scores.csv
 def wrong_answer(request):
     return render(request,"wrong_answer.html")
+
+def shop(request):
+    shop = Shop.objects.first()
+    return render(request, "shop.html", {'shop': shop})
 
 def cookiescript(request):
     return render(request, "cookiescript.html")
