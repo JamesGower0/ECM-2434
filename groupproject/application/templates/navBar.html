@@ -83,6 +83,7 @@ Authors: James Gower -->
                     text-align: center;
                     padding: 14px 16px;
                     text-decoration: none;
+                    height: 40px;
                 }
 
                 .liNB a:hover {
@@ -118,7 +119,8 @@ Authors: James Gower -->
             <li class="liNB"><a href="{% url 'leaderboard' %}"><img src="../static/icons/leaderboard.png" alt="Leaderboard"></a></li> 
             {% if user.is_authenticated %}
             <li class="liNB" style="float:right"><a href="{% url 'logout' %}"><img src="../static/icons/exit.png" alt="Logout"></a></li>
-            
+            <li class="liNB" style="float:right"><a href="{% url 'change_password' %}">Change password</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'profile_update' %}">Edit profile</a></li>
             <li class="liNB" style="float:right"><a href="{% url 'profile' %}"><img src="../static/icons/user.png" alt="Profile"></a></li>
             <li class="liNB"><a href="{% url 'scan' %}"><img src="../static/icons/qr.png" alt="QR Scanner"></a></li>
             <li class="liNB"><a href="{% url 'location' %}"><img src="../static/icons/location.png" alt="Play Quiz"></a></li>
@@ -131,14 +133,11 @@ Authors: James Gower -->
         <script>
             // Used for checking the screen width so it's compatible with mobile devices
             var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-            var csrftoken = '{{ csrf_token }}';
         
             $.ajax({
                 url: '{% url "get_screen_width" %}',
                 type: 'POST',
-                data: {
-                    'screen_width': screenWidth,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}' },
+                data: {'screen_width': screenWidth},
                 success: function(response) {
                     console.log('Screen width sent to server:', response.screen_width);
                 },
