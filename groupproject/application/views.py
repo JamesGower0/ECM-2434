@@ -355,7 +355,7 @@ def gameover(request):
     return render(request,"gameover.html")
 
 def get_screen_width(request):
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         screen_width = request.POST.get('screen_width')
         return JsonResponse({'screen_width': screen_width})
     else:
