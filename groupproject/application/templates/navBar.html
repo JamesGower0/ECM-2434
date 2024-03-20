@@ -133,11 +133,15 @@ Authors: James Gower -->
         <script>
             // Used for checking the screen width so it's compatible with mobile devices
             var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var csrftoken = '{{ csrf_token }}';
         
             $.ajax({
                 url: '{% url "get_screen_width" %}',
                 type: 'POST',
-                data: {'screen_width': screenWidth},
+                data: {
+                    'screen_width': screenWidth,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
                 success: function(response) {
                     console.log('Screen width sent to server:', response.screen_width);
                 },
