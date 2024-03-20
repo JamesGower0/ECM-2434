@@ -8,7 +8,7 @@ pip install django-crispy-forms
 
 pip install opencv-python
 
-pip intsall googlemaps
+pip install googlemaps
 
 git clone https://github.com/JamesGower0/ECM-2434/
 in terminal
@@ -20,8 +20,11 @@ To run the tests:
 python manage.py test
 
 
-Scan questions1qrcode.png with a camera on the QR page to access the questions
+Go to a location on the map to enable questions or edit the location to where you are to enable questions
 
 Existing admin account: 
 username : admin
 password : admin
+
+Create a new admin account in terminal in the same location as manage.py
+python3 manage.py createsuperuser
