@@ -81,7 +81,7 @@ async function initMap() {
 
   const MGmarker = new AdvancedMarkerElement({
     map,
-    position: { lat: 50.73390427287853, lng: -3.5302293230091273 },
+    position: { lat: 50.73820089970511, lng: -3.5305325934351863 },
     content: minigameTag,
   });
 
