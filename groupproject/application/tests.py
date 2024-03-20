@@ -5,8 +5,11 @@ Author: Maryia Fralova
 """
 
 from django.test import TestCase
+from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm
 from django.contrib.auth.models import User
+from django.test.client import Client
+from .models import Profile, Bird
 
 
 # Create your tests here.
@@ -36,11 +39,13 @@ class RegisterFormTest(TestCase):
         """
         Checks that two users cant be created with the same username
         """
-        user = User.objects.create_user(username='testUser', email='testEmail@email.com', password='exeternest###1234a')
+        user = User.objects.create_user(username='testUser', email="testEmail@email.com", password="exeternest###1234a", is_superuser=1)
         
         form2 = RegisterForm(data={"username":'testUser', "email":"testEmail@email.com",
                                  "password1":"exeternest###1234a", "password2":"exeternest###1234a",
                                  "avatar_choice": 'robin'})
+        
+        # Assert that the usernames are the same
         self.assertFalse(form2.is_valid())
 
     def testEmptyUsernameField(self):
@@ -68,6 +73,36 @@ class RegisterFormTest(TestCase):
                                 "password1":"", "password2":"", "avatar_choice": 'robin'})
         self.assertFalse(form.is_valid())
 
+# THIS BIT DOESN'T WORK
+class BirdAccessoriesTest(TestCase):
+    """
+    Test how the accesseries are put onto the bird
+    """
+    def testBirdCreation(self):
+        # Simulate registration form data
+        registration_data = {
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'password1': 'password123!Pass!',
+            'password2': 'password123!Pass!',
+            'avatar_choice': 'seagull'  # Specify avatar_choice
+        }
+
+        # Create a registration form instance with the provided data
+        form = RegisterForm(data=registration_data)
+
+        # Check if the form is valid
+        self.assertTrue(form.is_valid())
+
+        # Create a user using the registration form data
+        user = form.save()
+
+        # Check if the user was created successfully
+        self.assertIsNotNone(user)
+
+        # Check if the user has a corresponding profile
+        profile = Profile.objects.get(user=user)
+        self.assertIsNotNone(profile)
 
 class ResponseTest(TestCase):
     """
@@ -112,5 +147,48 @@ class ResponseTest(TestCase):
         Test the home view
         """
         response = self.client.get('/home/')
+        self.assertEqual(response.status_code,200)
+
+
+    def testWrongAnswerView(self):
+        """
+        Test the display for a wrong answer
+        """
+        response = self.client.get('/application/qr/wrong/')
+        self.assertEqual(response.status_code,200) 
+    
+    def testCookiePageView(self):
+        """
+        Test the cookie page view
+        """
+        response = self.client.get('/cookiepage/')
+        self.assertEqual(response.status_code,200) 
+
+    def testShopView(self):
+        """
+        Test the shop view
+        """
+        response = self.client.get('/shop/')
+        self.assertEqual(response.status_code,200) 
+    
+    def testLocationView(self):
+        """
+        Test the location view
+        """
+        response = self.client.get('/location/')
+        self.assertEqual(response.status_code,200) 
+
+    def testMinigameView(self):
+        """
+        Test the minigame view
+        """
+        response = self.client.get('/minigame/')
+        self.assertEqual(response.status_code,200) 
+    
+    def testMinigameGameoverView(self):
+        """
+        Test the minigame gameover view
+        """
+        response = self.client.get('/minigame/gameover/')
         self.assertEqual(response.status_code,200)
         
