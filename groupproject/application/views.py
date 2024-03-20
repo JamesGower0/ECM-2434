@@ -296,7 +296,7 @@ def correct_answer(request):
     # Change the total number of questions answered
     current_user.profile.score += 1
     # Increase health by 1 if not 100
-    if current_user.bird.health < 100:
+    if current_user.bird.health < 95:
         current_user.bird.health += 5
     # Increase points by 5
     current_user.profile.points += 5
@@ -360,3 +360,4 @@ def get_screen_width(request):
         return JsonResponse({'screen_width': screen_width})
     else:
         return JsonResponse({'error': 'Invalid request'})
+
