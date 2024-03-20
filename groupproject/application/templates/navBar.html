@@ -8,61 +8,154 @@ Authors: James Gower -->
         an external stylesheet so that it loading propperly when included on
         other pages -->
         <style> 
-        body {
-            margin-top: 10px;
-            margin-right: 0;
-            margin-left: 0;
-            font-family: sans-serif;
-        }
+            @media only screen and (max-width: 1300px) {
 
-        .ulNB {
-            list-style-type: none;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-        }
-        
-        .liNB {
-            float: left;
-        }
+                .bodyNB {
+                    min-height: 100vh;
+                    font-family: sans-serif;
+                }
 
-        .liNB a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        
-        .liNB a:hover {
-            background-color: #111;
-        }
+                .ulNB {
+                    position: fixed;
+                    margin-bottom: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: auto;
+                    list-style-type: none;
+                    padding: 0;
+                    background-color: #8d8c8c;
+                }
+                
+                .liNB {
+                    width: 65px;
+                    float: left;
+                }
 
-        .active {
-            background-color: #4CAF50;
-        }
+                .liNB a {
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
+                
+                .liNB a:hover {
+                    background-color: #333;
+                }
+
+                .active {
+                    background-color: #4CAF50;
+                }
+
+                .liNB img {
+                    width: 100%; 
+                    height: auto;
+                    vertical-align: middle;
+                    margin-right: 5px;
+                }
+
+            }
+
+            @media (min-width: 1301px){
+
+                .bodyNB {
+                    margin-right: 0;
+                    margin-left: 0;
+                    font-family: sans-serif;
+                }
+
+                .ulNB {        
+                    padding-left: 0;
+                    margin-top: 0;            
+                    list-style-type: none;
+                    padding: 0;
+                    overflow: hidden;
+                    background-color: #8d8c8c;
+                }
+
+                .liNB {
+                    float: left;
+                }
+
+                .liNB a {
+                    display: block;
+                    color: white;
+                    text-align: center;
+                    padding: 14px 16px;
+                    text-decoration: none;
+                }
+
+                .liNB a:hover {
+                    background-color: #333;
+                }
+
+                .active {
+                    background-color: #4CAF50;
+                }
+
+                .liNB img {
+                    width: 40px; 
+                    height: auto;
+                    vertical-align: middle;
+                    margin-right: 5px;
+                }
+
+            }
+
+            
         </style>
     </head>
 
-    <body>
+    <body class="bodyNB">
         <!-- adding each of the tabs within the navBar, using conditional statements to determine which
         tabs are available (depending on if the user is logged in or not -->
         <ul class="ulNB">
             {% if user.is_superuser %}
-            <li class="liNB" style="float:right"><a href="{% url 'admin:login' %}">Admin view</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'admin:login' %}"><img src="../static/icons/setting.png" alt="Admin View"></a></li>
             {% endif %}
-            <li class="liNB"><a class="active" href="{% url 'home' %}">Home</a></li>
-            <li class="liNB"><a href="{% url 'map' %}">Map</a></li> 
-            <li class="liNB"><a href="{% url 'leaderboard' %}">Leaderboard</a></li> 
+            <li class="liNB"><a href="{% url 'home' %}"><img src="../static/icons/home.png" alt="Home"></a></li>
+            <li class="liNB"><a href="{% url 'map' %}"><img src="../static/icons/map.png" alt="Map"></a></li> 
+            <li class="liNB"><a href="{% url 'leaderboard' %}"><img src="../static/icons/leaderboard.png" alt="Leaderboard"></a></li> 
             {% if user.is_authenticated %}
-            <li class="liNB" style="float:right"><a href="{% url 'logout' %}">Logout</a></li>
-            <li class="liNB" style="float:right"><a href="{% url 'profile' %}">Profile</a></li>
-            <li class="liNB"><a href="{% url 'scan' %}">QR scanner</a></li>
-            <li class="liNB"><a href="{% url 'location' %}">Play Quiz</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'logout' %}"><img src="../static/icons/exit.png" alt="Logout"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'profile' %}"><img src="../static/icons/user.png" alt="Profile"></a></li>
+            <li class="liNB"><a href="{% url 'scan' %}"><img src="../static/icons/qr.png" alt="QR Scanner"></a></li>
+            <li class="liNB"><a href="{% url 'location' %}"><img src="../static/icons/location.png" alt="Play Quiz"></a></li>
             {% else %}
-            <li class="liNB" style="float:right"><a href="{% url 'login' %}">Login</a></li>
-            <li class="liNB" style="float:right"><a href="{% url 'register' %}">Register</a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'register' %}"><img src="../static/icons/sign-up.png" alt="Register"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'login' %}"><img src="../static/icons/log-in.png" alt="Log in"></a></li>
             {% endif %}
         </ul>
+
+        <script>
+            // Used for checking the screen width so it's compatible with mobile devices
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        
+            $.ajax({
+                url: '{% url "get_screen_width" %}',
+                type: 'POST',
+                data: {'screen_width': screenWidth},
+                success: function(response) {
+                    console.log('Screen width sent to server:', response.screen_width);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error sending screen width:', error);
+                }
+            });
+
+        </script>
+        
+        <script>
+            // Checks the current page and gives it the active class
+            var currentPageUrl = window.location.href;
+            var navbarLinks = document.querySelectorAll('.liNB a');
+        
+            navbarLinks.forEach(function(navbarLink) {
+                if (navbarLink.href === currentPageUrl) {
+                    navbarLink.parentElement.classList.add('active');
+                }
+            });
+        </script>
+        
     </body>
 </html>

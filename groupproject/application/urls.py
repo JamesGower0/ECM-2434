@@ -24,5 +24,5 @@ urlpatterns = [
     path("cookiescript/", views.cookiescript, name="cookiescript"),
     path("cookiepage/",views.cookiepage, name="cookiepage"),
     path("location/",views.location, name="location"),
-
+    path("gameover/",views.gameover,name="gameover"),
 ]

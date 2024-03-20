@@ -4,19 +4,19 @@
 	Authors: Ashley Card, Maryia Fralova -->
 
 <!DOCTYPE html>
-{% block navBar%}
-{% include 'navBar.html' %}
-{% endblock %}
+
 
 {% load static %}
 <html lang="en">
 <!--{% block title %}Create an Account{% endblock %}-->
 	<head>
 		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+		<script src="../static/application/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript" src="../static/application/navBar.js"></script>
 		<title>Sign up</title>
 	</head>
 	{% load crispy_forms_tags %}
-	<body>
+	<body data-nav-url="{% url 'navBar' %}">
 	{% block content %}
 		<div class="top">
 			<h1>ExeterNest</h1>

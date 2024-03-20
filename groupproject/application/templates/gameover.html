@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% block navBar %}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Game Over - Exeter-Nest Mini-game</title>
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+    <link rel="stylesheet" href="{% static '/application/style.css' %}">
+    <script>
+        var backtohomepage = "{% url 'minigame' %}";
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Game Over</h2>
+        <h3> Results for this round</h3>
+        <p>Your Score: <span id="current-score">0</span></p>
+        <p>Best Score: <span id="best-score">0</span></p>
+        <button class="restart-game" onclick="restartGame()">Restart Game</button>
+    </div>
+</body>
+
+<script src="/static/application/script_gameover.js"></script>
+
+</html>

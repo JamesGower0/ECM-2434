@@ -74,6 +74,17 @@ async function initMap() {
     content: EastParkTag,
   });
 
+  const minigameTag = document.createElement("div");
+
+  minigameTag.className = "name-tag";
+  minigameTag.textContent = "Challenge (LOCATION NEEDS CHANGING)";
+
+  const MGmarker = new AdvancedMarkerElement({
+    map,
+    position: { lat: 50.73390427287853, lng: -3.5302293230091273 },
+    content: minigameTag,
+  });
+
 
 infoWindow = new google.maps.InfoWindow();
 

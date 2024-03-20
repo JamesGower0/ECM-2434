@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en" dir="ltr">
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Welcome to the Exeter-Nest Mini-game</title>
+    <link rel="stylesheet" href="../static/application/style.css">
+    <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../static/application/words.js" defer></script>
+    <script src="../static/application//minigame.js" defer></script>
+    <script src="../static/application/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../static/application/navBar.js"></script>
+    <script>
+        var gameoverURL = "{% url 'gameover' %}";
+    </script>
+</head>
+
+<body data-nav-url="{% url 'navBar' %}">
+    <div class="banner">
+        <h2>Welcome to the Exeter-Nest sustainability Mini-game</h2>
+    </div>
+    <div class="container">
+        <p class="game-description">
+            Test your knowledge of key-words and terms based of Exeter University's sustainability initiatives. <br> Unscramble the anagram, to find the correct word!
+            Enter the correct word and see how many you can get right in 30 seconds!<br>
+        </p>
+        <div class="content">
+            <p class="word"></p>
+            <div id="details" class="invisible details">
+                <p class="hint"><b>Hint: </b> <span></span></p>
+                <p class="time">Time Left: <span><b>30</b>s</span></p>
+            </div>
+            <input id="input-word" class="invisible" type="text" spellcheck="false" placeholder="Have a guess!">
+            <div class="buttons">
+                <button type="button" id="check-word" class="invisible check-word">Check Word</button>
+                <button type="button" id="start-game" class="refresh-word">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Redirect Button -->
+    <a href="{% url 'gameover' %}" id="game-over-link" style="display: none;">Go to Game Over</a>
+</body>
+
+</html>
+
