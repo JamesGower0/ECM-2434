@@ -4,9 +4,6 @@ Authors: Ashley Card -->
 
 
 <!DOCTYPE html>
-{% block navBar%}
-{% include 'navBar.html' %}
-{% endblock %}
 
 {% load static %}
 {% load crispy_forms_tags %} 
@@ -15,10 +12,12 @@ Authors: Ashley Card -->
 
   <head>
 		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+    <script src="../static/application/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../static/application/navBar.js"></script>
 		<title>Project</title>
 	</head>
 
-  <body>
+  <body data-nav-url="{% url 'navBar' %}">
 
     <div class="top">
 			<h1>ExeterNest</h1>
