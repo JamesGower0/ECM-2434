@@ -30,3 +30,12 @@ class RegisterForm(UserCreationForm):
         for fieldname in ['username', 'email', 'password2', 'avatar_choice']:
             self.fields[fieldname].help_text = None 
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model  = User
+        fields = ['username', 'email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model  = Profile
+        fields = ['avatar_choice']

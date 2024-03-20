@@ -1,0 +1,63 @@
+<!-- profile update page, for registered users to update their profile
+
+Authors: Ashley Card, Aidan Daniel -->
+
+
+{% block navBar%}
+{% include 'navBar.html' %}
+{% endblock %}
+
+{% load static %}
+<html lang="en">
+<!--{% block title %}Update Profile{% endblock %}-->
+	<head>
+		<link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
+		<title>Update Profile</title>
+	</head>
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row my-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="row p-3">
+                <div class="col-md-8">
+				<h2> Edit Profile </h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ user_form|crispy }}
+                        {{ profile_form|crispy }}
+                        <!-- Displaying avatar choice -->
+                        <div id="avatar-preview">
+                            <img id="selected-avatar-preview" src="{% static 'avatars/robin.png' %}" alt="Selected Avatar Preview">
+                            <!--<img id="selected-avatar-preview" src="" alt="Selected Avatar Preview">-->
+                        </div>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Script for displaying the avatar selection -->
+<script>
+    // Function to update the avatar preview
+    function updateAvatarPreview() {
+        const select = document.getElementById('id_avatar_choice');
+        const selectedOption = select.options[select.selectedIndex].value;
+        const selectedAvatarPreview = document.getElementById('selected-avatar-preview');
+        const staticPath = "{% static 'avatars/' %}";
+
+        // Update the image source based on the selected option
+        selectedAvatarPreview.src = `${staticPath}${selectedOption}.png`;
+    }
+
+    // Add event listener to update the avatar preview when dropdown selection changes
+    document.getElementById('id_avatar_choice').addEventListener('change', updateAvatarPreview);
+    
+    // Call updateAvatarPreview initially to display the default avatar
+    updateAvatarPreview();
+</script>
+
+{% endblock %}
+</html>

@@ -10,16 +10,54 @@ from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponse, JsonResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, update_session_auth_hash
 #from .models import Score, Quiz
 from .models import Quiz, Profile, User, Bird, Shop, Question
 import cv2
 import random
 import csv
+from .forms import UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 import googlemaps
 from django.conf import settings
 
 # Create your views here.
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Successfully updated')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'error')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {
+        'form': form
+        })
+@login_required
+def profile_update(request):
+    if request.method=='POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+
+    }
+    return render(request, 'profile_update.html', context)
 
 @login_required
 def buy_item(request):
