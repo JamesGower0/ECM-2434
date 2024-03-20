@@ -84,6 +84,7 @@ Authors: James Gower -->
                     text-align: center;
                     padding: 14px 16px;
                     text-decoration: none;
+                    height: 40px;
                 }
 
                 .liNB a:hover {
@@ -132,14 +133,11 @@ Authors: James Gower -->
         <script>
             // Used for checking the screen width so it's compatible with mobile devices
             var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-            var csrftoken = '{{ csrf_token }}';
         
             $.ajax({
                 url: '{% url "get_screen_width" %}',
                 type: 'POST',
-                data: {
-                    'screen_width': screenWidth,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}' },
+                data: {'screen_width': screenWidth},
                 success: function(response) {
                     console.log('Screen width sent to server:', response.screen_width);
                 },
