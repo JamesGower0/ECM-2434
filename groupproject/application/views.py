@@ -6,18 +6,20 @@ Authors: Maryia Fralova, Ashley Card, James Gower, Aidan Daniel, Tom Evans
 
 """
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, update_session_auth_hash
 #from .models import Score, Quiz
-from .models import Quiz, Profile, User
+from .models import Quiz, Profile, User, Question
 import cv2
 import random
 import csv
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+import googlemaps
+from django.conf import settings
 
 # Create your views here.
 @login_required
@@ -70,26 +72,49 @@ def qr(request):
     #reads the qr code
 
     
-    cap = cv2.VideoCapture(0)
-    detector = cv2.QRCodeDetector()
-    while True:
-        _, img = cap.read()
-        data, bbox, _ = detector.detectAndDecode(img)
-        if bbox is not None:
-            if data:
-                break   
-        cv2.waitKey(1) 
-    cap.release()
-    cv2.destroyAllWindows()
+    #cap = cv2.VideoCapture(0)
+    #detector = cv2.QRCodeDetector()
+    #while True:
+     #   _, img = cap.read()
+      #  data, bbox, _ = detector.detectAndDecode(img)
+       # if bbox is not None:
+        #    if data:
+         #       break   
+        #cv2.waitKey(1) 
+    #cap.release()
+    #cv2.destroyAllWindows()
     
     #doesn't load page until it gets a qr code; should be accessed from scan page
 
-    valid_sites = ["questions1","questions2","questions3","questions4","questions5"]
-    context = {"question_page_number":data,"valid":data in valid_sites}
-    return render(request, "qr.html",context)
+    #the above code is for the qr functionality; the data variable is what should be used to access different questions
+    QNum = request.GET.get('QNum')
+    data = "questions" + QNum
+
+    #   !COMBINE WITH QUESTION VIEW!
+    file_name=None
+    if data == "questions1":
+        file_name = 'Biodiversity questions.csv'
+    elif data == "questions2":
+        file_name = 'Construction questions.csv'
+    elif data == "questions3":
+        file_name = 'Exercise questions.csv'
+    elif data == "questions4":
+        file_name = 'Personal impact questions.csv'
+    elif data == "questions5":
+        file_name = 'Research questions.csv'
+    else:
+        return HttpResponse("not a valid qr code")
+    context = open_file(file_name)
+    return render(request,"question_format.html",context)
+
+
+    #note that the 'qr', 'questions1' and 'questions2' templates are also obsolete and should be deleted
+
+
 
 def navBar(request):
     return render(request, 'navBar.html')
+    
 
 def home(request):
     template = "home.html"
@@ -136,41 +161,52 @@ def scan(request):
     return render(request,"scan.html")
 
 def open_file(name):
-    file = open('application/'+name,'r')
-    file = file.readlines()
+
+    # !! will be replaced by database model 
+    #file = open('application/'+name,'r')
+    #file = file.readlines()
     #pick a random question from the file
-    r = random.randint(0,(len(file)-1))
-    question = file[r]
-    question = question.split(',')
-    context = {"question":question[0],"correct_answer":question[1],"wrong_1":question[2],"wrong_2":question[3],"wrong_3":question[4],}
+    #r = random.randint(0,(len(file)-1))
+    #question = file[r]
+    #question = question.split(',')
+    #!!
+
+    all_question_objects = Question.objects.all()
+    all_questions = []
+
+    for i in range(0,len(all_question_objects)):
+        c_question_object = all_question_objects[i]
+        c_question = c_question_object.return_values()
+        if c_question_object.get_type() == name:
+            all_questions.append(c_question)
+
+    r = random.randint(0,len(all_questions)-1)
+    question = all_questions[r]
+
+    new_list = []
+    new_list.append(question[0])
+    new_list.append((question[1],"correct"))
+    new_list.append((question[2],"wrong"))
+    new_list.append((question[3],"wrong"))
+    new_list.append((question[4],"wrong"))
+
+    r2 = random.randint(1,4)
+    temp_c = new_list[r2]
+    new_list[r2] = new_list[1]
+    new_list[1] = temp_c
+
+    context = {"question":new_list[0],
+               "answer_1":new_list[1][0],
+               "link_1":new_list[1][1],
+               "answer_2":new_list[2][0],
+               "link_2":new_list[2][1],
+               "answer_3":new_list[3][0],
+               "link_3":new_list[3][1],
+               "answer_4":new_list[4][0],
+               "link_4":new_list[4][1],}
+
+    #context = {"question":question[0],"correct_answer":question[1],"wrong_1":question[2],"wrong_2":question[3],"wrong_3":question[4],}
     return context
-
-def questions1(request):
-    #each of these views should correspond to a different file of questions
-    #in the format of example_questions.csv
-    file_name = 'Biodiversity questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions2(request):
-    file_name = 'Construction questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions3(request):
-    file_name = 'Exercise questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions4(request):
-    file_name = 'Personal impact questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
-
-def questions5(request):
-    file_name = 'Research questions.csv'
-    context = open_file(file_name)
-    return render(request,"question_format.html",context)
 
 # Writes the players scores to scores.csv
 def correct_answer(request):
@@ -186,11 +222,51 @@ def correct_answer(request):
 def wrong_answer(request):
     return render(request,"wrong_answer.html")
 
-def map(request):
-    return render(request, "map.html")
-
 def cookiescript(request):
     return render(request, "cookiescript.html")
 
 def cookiepage(request):
     return render(request, "cookiepage.html")
+
+def map(request): 
+    Key = settings.GOOGLE_MAPS_API_KEY    
+    context ={
+        'key':Key
+    }
+
+    return render(request, "map.html", context)
+
+def location(request):
+    '''
+    Will be used to force a location when testing and demonstrating
+
+    Key = settings.GOOGLE_MAPS_API_KEY
+    gmaps = googlemaps.Client(key = Key)
+    result = gmaps.geocode('Stocker Rd, Exeter EX4 4PY')[0]
+
+    # when testing you can hard code latitude and longditude values by commenting the follwoing two lines and manually
+    # defining lat and lng (to show what it would do at specific coords)
+    lat = result.get("geometry", {}).get("location", {}).get("lat", None)
+    lng = result.get("geometry", {}).get("location", {}).get("lng", None)
+
+    context ={
+        'result':result,
+        'lat':lat,
+        'lng':lng,
+        'key':Key
+    }'''
+
+    return render(request, "location.html")
+
+def minigame(request):
+    return render(request,"minigame.html")
+
+def gameover(request):
+    return render(request,"gameover.html")
+
+def get_screen_width(request):
+    if request.method == 'POST' and request.is_ajax():
+        screen_width = request.POST.get('screen_width')
+        return JsonResponse({'screen_width': screen_width})
+    else:
+        return JsonResponse({'error': 'Invalid request'})

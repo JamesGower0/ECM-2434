@@ -8,6 +8,8 @@ pip install django-crispy-forms
 
 pip install opencv-python
 
+pip intsall googlemaps
+
 git clone https://github.com/JamesGower0/ECM-2434/
 in terminal
 
