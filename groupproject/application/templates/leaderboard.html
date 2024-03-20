@@ -37,6 +37,15 @@
             outline: none;
             border-color: #3498db;
         }
+
+       td a{
+            color: white;
+            text-decoration: none;
+        }
+
+        td a:hover{
+            color: #3498db;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +68,7 @@
             <tr style="color: white">
                 <td class="td-leader">{{ forloop.counter }}</td>
                 <td class="td-leader"><img id="leaderboard-bird" src="..\static/avatars/{{ user.avatar_choice }}.png" alt="Selected Avatar Preview"></td>
-                <td class="td-leader">{{ user.user.username }}</td>
+                <td class="td-leader"><a href="../profile/{{ user.user.username }}">{{ user.user.username }}</a></td>
                 <td class="td-leader">{{ user.score }}</td>
             </tr>
             {% endfor %}

@@ -4,6 +4,7 @@ Authors: James Gower -->
 
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- Adding the css to the navBar, done using style tags rather than
         an external stylesheet so that it loading propperly when included on
         other pages -->
@@ -105,26 +106,26 @@ Authors: James Gower -->
             
         </style>
     </head>
-
+    {% load static %}
     <body class="bodyNB">
         <!-- adding each of the tabs within the navBar, using conditional statements to determine which
         tabs are available (depending on if the user is logged in or not -->
         <ul class="ulNB">
             {% if user.is_superuser %}
-            <li class="liNB" style="float:right"><a href="{% url 'admin:login' %}"><img src="../static/icons/setting.png" alt="Admin View"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'admin:login' %}"><img src="{% static 'icons/setting.png' %}" alt="Admin View"></a></li>
             {% endif %}
-            <li class="liNB"><a href="{% url 'home' %}"><img src="../static/icons/home.png" alt="Home"></a></li>
-            <li class="liNB"><a href="{% url 'map' %}"><img src="../static/icons/map.png" alt="Map"></a></li> 
-            <li class="liNB"><a href="{% url 'leaderboard' %}"><img src="../static/icons/leaderboard.png" alt="Leaderboard"></a></li> 
+            <li class="liNB"><a href="{% url 'home' %}"><img src="{% static 'icons/home.png' %}" alt="Home"></a></li>
+            <li class="liNB"><a href="{% url 'map' %}"><img src="{% static 'icons/map.png' %}" alt="Map"></a></li> 
+            <li class="liNB"><a href="{% url 'leaderboard' %}"><img src="{% static 'icons/leaderboard.png' %}" alt="Leaderboard"></a></li> 
             {% if user.is_authenticated %}
-            <li class="liNB" style="float:right"><a href="{% url 'logout' %}"><img src="../static/icons/exit.png" alt="Logout"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'logout' %}"><img src="{% static 'icons/exit.png' %}" alt="Logout"></a></li>
             
-            <li class="liNB" style="float:right"><a href="{% url 'profile' %}"><img src="../static/icons/user.png" alt="Profile"></a></li>
-            <li class="liNB"><a href="{% url 'scan' %}"><img src="../static/icons/qr.png" alt="QR Scanner"></a></li>
-            <li class="liNB"><a href="{% url 'location' %}"><img src="../static/icons/location.png" alt="Play Quiz"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'profile' %}"><img src="{% static 'icons/user.png' %}" alt="Profile"></a></li>
+            <li class="liNB"><a href="{% url 'scan' %}"><img src="{% static 'icons/qr.png' %}" alt="QR Scanner"></a></li>
+            <li class="liNB"><a href="{% url 'location' %}"><img src="{% static 'icons/location.png' %}" alt="Play Quiz"></a></li>
             {% else %}
-            <li class="liNB" style="float:right"><a href="{% url 'register' %}"><img src="../static/icons/sign-up.png" alt="Register"></a></li>
-            <li class="liNB" style="float:right"><a href="{% url 'login' %}"><img src="../static/icons/log-in.png" alt="Log in"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'register' %}"><img src="{% static 'icons/sign-up.png' %}" alt="Register"></a></li>
+            <li class="liNB" style="float:right"><a href="{% url 'login' %}"><img src="{% static 'icons/log-in.png' %}" alt="Log in"></a></li>
             {% endif %}
         </ul>
 
