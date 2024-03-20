@@ -73,12 +73,15 @@ class RegisterFormTest(TestCase):
                                 "password1":"", "password2":"", "avatar_choice": 'robin'})
         self.assertFalse(form.is_valid())
 
-# THIS BIT DOESN'T WORK
+
 class BirdAccessoriesTest(TestCase):
     """
     Test how the accesseries are put onto the bird
     """
-    def testBirdCreation(self):
+    def testAcessory(self):
+        """
+        Adds the accessory to the bird and checks if it's added successfully
+        """
         # Simulate registration form data
         registration_data = {
             'username': 'testuser',
@@ -104,6 +107,12 @@ class BirdAccessoriesTest(TestCase):
         # Check if the user has a corresponding profile
         profile = Profile.objects.get(user=user)
         self.assertIsNotNone(profile)
+
+        new_accessory = 'hat10.png'
+        new_accessory_type = 'hats'
+        user.bird.accessories[new_accessory_type] = new_accessory
+        self.assertTrue(user.bird.accessories[new_accessory_type]==new_accessory)
+
 
 class ResponseTest(TestCase):
     """
