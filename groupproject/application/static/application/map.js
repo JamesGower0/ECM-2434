@@ -77,7 +77,7 @@ async function initMap() {
   const minigameTag = document.createElement("div");
 
   minigameTag.className = "name-tag";
-  minigameTag.textContent = "Challenge (LOCATION NEEDS CHANGING)";
+  minigameTag.textContent = "Challenge";
 
   const MGmarker = new AdvancedMarkerElement({
     map,
