@@ -26,5 +26,6 @@ Existing admin account:
 username : admin
 password : admin
 
-Create a new admin account in terminal in the same location as manage.py
+Create a new admin account in terminal in the same location as manage.py 
+
 python3 manage.py createsuperuser
