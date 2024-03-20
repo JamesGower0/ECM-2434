@@ -38,10 +38,6 @@ class BirdMetricsMiddleware:
                         if self.last_update_time != None:
                             time_difference = datetime.now() - self.last_update_time
                             profile.points -= int(time_difference.total_seconds() / 3600)
-                    
 
-
-        
-        # Need to add function that decreases mood based on the number of questions answered
-            profile.save()
+                            profile.save()
             bird.save()
