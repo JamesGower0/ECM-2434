@@ -90,12 +90,13 @@ class BirdAccessoriesTest(TestCase):
 
         # Create a registration form instance with the provided data
         form = RegisterForm(data=registration_data)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.avatar_choice = form.cleaned_data["avatar_choice"]
+            user.save()
 
         # Check if the form is valid
         self.assertTrue(form.is_valid())
-
-        # Create a user using the registration form data
-        user = form.save()
 
         # Check if the user was created successfully
         self.assertIsNotNone(user)
