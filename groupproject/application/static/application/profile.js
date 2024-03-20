@@ -1,3 +1,6 @@
+// Author: Maryia Fralova
+// Displays either inventory or metrics in profile.html
+
 
 // Displaying inventory or metrics
 document.addEventListener("DOMContentLoaded", function() {

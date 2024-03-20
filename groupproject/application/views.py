@@ -25,6 +25,20 @@ from django.conf import settings
 # Create your views here.
 @login_required
 def change_password(request):
+    """
+    Allows the users to change their passwords if they are logged in.
+
+    Args:
+        request (HttpRequest): Will either be a POST or GET request,
+                                POST - The password needs to be changed
+                                GET  - Load change password form
+    Returns:
+        render() : When a new user is trying to change the password,
+                   change_password.html will load, if they have changed 
+                   the password their info will be processed, and redirected
+                   to back to change_password.html. If the passwords don't match,
+                   the error will be displayed
+    """
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -39,8 +53,22 @@ def change_password(request):
     return render(request, 'change_password.html', {
         'form': form
         })
+
 @login_required
 def profile_update(request):
+    """
+    Allows the users to update their profile information if they are logged in.
+
+    Args:
+        request (HttpRequest): Will either be a POST or GET request,
+                                POST - The profile information needs to be changed
+                                GET  - Load update profile form
+    Returns:
+        render() : When a new user is trying to edit their profile,
+                   profile_update.html will load, if they have changed profile
+                   info they will get redirected to profile.html. If the 
+                   format of the form is invalid, the error will be displayed
+    """
     if request.method=='POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
@@ -61,6 +89,20 @@ def profile_update(request):
 
 @login_required
 def buy_item(request):
+    """
+    Checks if the purchase of an item from the shop is valid and
+    allows users to add it to their inventory if so.
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        JsonResponse(): Item price, type, value are fetched from the POST request.
+                  If the user has enough profiles and they have not already 
+                  purchased this item, JsonResponse with success[True] is returned.
+                  If the user doesn't have enough points, JsonResponse with 
+                  success[False, 1]  is returned. If the user has already purchased
+                  the item before, JsonResponse with success[False, 0]  is returned. 
+    """
     if request.method == 'POST':
         profile = Profile.objects.filter(user=request.user).first()
         item_price = int(request.POST.get('item_price'))
@@ -81,26 +123,58 @@ def buy_item(request):
 
 @login_required
 def changepic(request):
+    """
+    First version. Changes the user's avatar
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        HttpResponse(200) : Returns success for the avatar change
+    """
     profile = Profile.objects.filter(user=request.user).first()
     new_avatar = request.GET.get('avatar')
-    print(new_avatar)
     request.user.avatar_choice = new_avatar
-    print(request.user.avatar_choice)
     request.user.change_avatar_choice(new_avatar)
     return HttpResponse(200)
 
 @login_required
 def profile(request):
+    """
+    Displays the user's profile page with their Bird avatar
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : Profile page with the user's bird
+    """
     bird = Bird.objects.filter(user=request.user).first()
     return render(request, 'profile.html', {'bird': bird})
 
 @login_required
 def logout_view(request):
+    """
+    Logs user out of account and redirects to home page
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : Home page
+    """
     logout(request)
     return render(request, 'home.html')
 
 @login_required
 def change_avatar(request):
+    """
+    Second version. Changes the user's avatar when clicked in inventory
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        JsonResponse() : Returns JsonResponse({'success': True}) for successful
+                         avatar change, return JsonResponse({'success': False})
+                         if there is an error in the avatar change
+    """
     if request.method == 'POST':
         new_avatar = request.POST.get('new_avatar')
         if new_avatar:
@@ -114,6 +188,17 @@ def change_avatar(request):
 
 @login_required
 def add_accessory(request):
+    """
+    Puts the accessory onto the bird. Gets the POST values for the type of
+    accessory and its value. Updates the bird inventory accordingly.
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        JsonResponse() : Returns JsonResponse({'success': True}) for successful
+                         accessory change, return JsonResponse({'success': False})
+                         if there is an error in the accessory change
+    """
     if request.method == 'POST':
         # Need to change the accessories on the Bird
         new_accessory = request.POST.get('new_accessory')
@@ -130,6 +215,16 @@ def add_accessory(request):
     return JsonResponse({'success': False})
 
 def empty_accessories(request):
+    """
+    Takes all the bird's accessories off when at POST request is sent.
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        JsonResponse() : Returns JsonResponse({'success': True}) for successful
+                         accessory change, return JsonResponse({'success': False})
+                         if there is an error in the accessory change
+    """
     if request.method == 'POST':
         bird = request.user.bird
         for accessory_type in bird.accessories:
@@ -139,32 +234,33 @@ def empty_accessories(request):
     return JsonResponse({'success': False})
 
 def user_page(request, username):
+    """
+    Displays the user's profile page with their Bird avatar and score
+    for another user (the one who is not logged in)
+
+    Args:
+        request (HttpRequest)
+        username: Username of the user whose profile to display
+    Returns:
+        render() : user_page.html with the user's bird and score. Passes the user to be displayed
+    """
     user = User.objects.get(username=username)
     context = {
         'user': user,
-        # Other context data if any
     }
     return render(request, 'user_page.html', context)
 
 def qr(request):
-    
-    #reads the qr code
+    """
+    Analyses the scanned qr code to display the corresponding question type
 
-    
-    #cap = cv2.VideoCapture(0)
-    #detector = cv2.QRCodeDetector()
-    #while True:
-     #   _, img = cap.read()
-      #  data, bbox, _ = detector.detectAndDecode(img)
-       # if bbox is not None:
-        #    if data:
-         #       break   
-        #cv2.waitKey(1) 
-    #cap.release()
-    #cv2.destroyAllWindows()
-    
-    #doesn't load page until it gets a qr code; should be accessed from scan page
-
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : question_format.html that displays a corresponding file with the corresponding
+                   question type. If unsuccesssful, HttpResponse with the message that the qr code
+                   is invalid.
+    """
     #the above code is for the qr functionality; the data variable is what should be used to access different questions
     QNum = request.GET.get('QNum')
     data = "questions" + QNum
@@ -186,21 +282,46 @@ def qr(request):
     context = open_file(file_name)
     return render(request,"question_format.html",context)
 
-
-    #note that the 'qr', 'questions1' and 'questions2' templates are also obsolete and should be deleted
-
-
-
 def navBar(request):
+    """
+    Navigation bar with the links to different pages.
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : Navigation bar page
+    """
     return render(request, 'navBar.html')
-    
 
 def home(request):
+    """
+    Home page of our application, displays the information about the game and
+    rules
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : Home page
+    """
     template = "home.html"
     context = {}
     return render(request, "home.html", context)
 
 def register(response):
+    """
+    Displays user registration form for new users, manages POST requests when
+    user creates a new account.
+
+    Args:
+        request (HttpRequest): Will either be a POST or GET request,
+                                POST - User account needs to be created
+                                GET  - Load registration form
+    Returns:
+        render() : When a new user is trying to register an account,
+                   register.html will load, if they are creating an
+                   account their info will be processed, and redirected
+                   to login.html
+    """
     if response.method == "POST":
         form = forms.RegisterForm(response.POST)
         if form.is_valid():
@@ -235,21 +356,36 @@ def leaderboard(request):
     return render(request, 'leaderboard.html', {'users': users, 'headers': headers, 'profiles': profiles})
 
 def scan(request):
-    #This should be the first page of the qr functionality; the one linked to from elsewhere
-    #has a link to the qr page and ask to scan a qr code
+    """
+    Page that displays a link to the qr code scanner
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : Scanning page
+    """
     return render(request,"scan.html")
 
 def open_file(name):
+    """
+    Open a file and retrieve a random question of a specified type.
 
-    # !! will be replaced by database model 
-    #file = open('application/'+name,'r')
-    #file = file.readlines()
-    #pick a random question from the file
-    #r = random.randint(0,(len(file)-1))
-    #question = file[r]
-    #question = question.split(',')
-    #!!
+    Args:
+        name (str): The type of question to retrieve.
 
+    Returns:
+        dict: A dictionary containing the question and answer choices.
+            The dictionary has the following keys:
+                - 'question': The text of the question.
+                - 'answer_1': The text of the first answer choice.
+                - 'link_1': The type of the first answer choice ('correct' or 'wrong').
+                - 'answer_2': The text of the second answer choice.
+                - 'link_2': The type of the second answer choice ('correct' or 'wrong').
+                - 'answer_3': The text of the third answer choice.
+                - 'link_3': The type of the third answer choice ('correct' or 'wrong').
+                - 'answer_4': The text of the fourth answer choice.
+                - 'link_4': The type of the fourth answer choice ('correct' or 'wrong').
+    """
     all_question_objects = Question.objects.all()
     all_questions = []
 
@@ -284,13 +420,28 @@ def open_file(name):
                "answer_4":new_list[4][0],
                "link_4":new_list[4][1],}
 
-    #context = {"question":question[0],"correct_answer":question[1],"wrong_1":question[2],"wrong_2":question[3],"wrong_3":question[4],}
     return context
 
-# Writes the players scores to scores.csv
 def correct_answer(request):
-    username = request.user.get_username()
+    """
+    View function to handle correct answers submitted by the user.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: A rendered HTML response for the 'correct_answer' page.
+
+    Behaviour:
+        - Retrieves the username of the authenticated user from the request.
+        - Updates the user's score, health, and points in the database:
+            - Increases the total number of questions answered by 1.
+            - Increases the bird's health by 5 if it's less than 95.
+            - Increases the user's points by 5.
+        - Saves the updated user information in the database.
+        - Renders the 'correct_answer.html' template to display the success message.
+    """
+    username = request.user.get_username()
     # Updating user's score and saving into the database
     current_user = request.user
     # Change the total number of questions answered
@@ -306,19 +457,71 @@ def correct_answer(request):
 
 # Getting a question wrong doesnt affect the users score so doesnt edit scores.csv
 def wrong_answer(request):
+    """
+    Page that is displayed when the user's answer was incorrect.
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : Wrong answer page
+    """
     return render(request,"wrong_answer.html")
 
 def shop(request):
+    """
+    View function for displaying the shop page.
+    Retrieves the first Shop object from the database and renders the 'shop.html' template
+    with the shop data passed as context.
+
+    Args:
+        request (HttpRequest): The HTTP request object sent by the client.
+
+    Returns:
+        HttpResponse: The HTTP response containing the rendered HTML content of the 'shop.html' template.
+            The context includes the 'shop' variable containing the retrieved Shop object.
+    """
     shop = Shop.objects.first()
     return render(request, "shop.html", {'shop': shop})
 
 def cookiescript(request):
+    """
+    Render the 'cookiescript.html' template.
+    This view renders the 'cookiescript.html' template, which contains JavaScript code
+    related to handling cookies.
+
+    Args:
+        request (HttpRequest): The request object generated by Django.
+
+    Returns:
+        HttpResponse: A response object that renders the 'cookiescript.html' template.
+    """
     return render(request, "cookiescript.html")
 
 def cookiepage(request):
+    """
+    Render the 'cookiepage.html' template.
+    This view renders the 'cookiepage.html' template, which is a page containing information
+    about cookies and their usage.
+
+    Args:
+        request (HttpRequest): The request object generated by Django.
+
+    Returns:
+        HttpResponse: A response object that renders the 'cookiepage.html' template.
+    """
     return render(request, "cookiepage.html")
 
 def map(request): 
+    """
+    Page containing the map, which the user can use to navigate across campus
+    to find quiz and minigame locations. Google Maps API is used for that.
+    If allow location to be detected, current location will be displayed.
+
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : map.html, passes in the key to Google Maps API
+    """
     Key = settings.GOOGLE_MAPS_API_KEY    
     context ={
         'key':Key
@@ -327,6 +530,20 @@ def map(request):
     return render(request, "map.html", context)
 
 def location(request):
+    """
+    View function for rendering a location-based page.
+    This view function retrieves location information using the Google Maps Geocoding API
+    and renders a template ('location.html') displaying the retrieved location details.
+
+    Note: This view is currently commented out and not in use. It was intended to force a
+    specific location for testing and demonstration purposes. You can uncomment and use this
+    view by providing your Google Maps API key ('settings.GOOGLE_MAPS_API_KEY').
+
+    Returns:
+        HttpResponse: A response object that renders the 'location.html' template with
+        location details.
+    """
+
     '''
     Will be used to force a location when testing and demonstrating
 
@@ -349,12 +566,50 @@ def location(request):
     return render(request, "location.html")
 
 def minigame(request):
+    """
+    Render the 'minigame.html' template.
+    This view renders the 'minigame.html' template, which contains the interface
+    and logic for a mini-game within the web application.
+
+    Args:
+        request (HttpRequest): The request object generated by Django.
+
+    Returns:
+        HttpResponse: A response object that renders the 'minigame.html' template.
+    """
     return render(request,"minigame.html")
 
 def gameover(request):
+    """
+    Render the 'gameover.html' template.
+    This view renders the 'gameover.html' template, which is displayed to the user
+    when the game is over or when a specific game condition is met.
+
+    Args:
+        request (HttpRequest): The request object generated by Django.
+
+    Returns:
+        HttpResponse: A response object that renders the 'gameover.html' template.
+    """
     return render(request,"gameover.html")
 
 def get_screen_width(request):
+    """
+    Retrieve the screen width from a POST request and return it as JSON response.
+    This view handles a POST request containing the screen width data. It retrieves
+    the screen width value from the request parameters and returns it as a JSON response.
+
+    Args:
+        request (HttpRequest): The request object generated by Django.
+
+    Returns:
+        JsonResponse: A JSON response containing the screen width if the request is valid,
+        otherwise returns a JSON response with an error message.
+
+    Note:
+        This view expects a POST request containing the 'screen_width' parameter.
+        If the request method is not POST, it returns a JSON response with an error message.
+    """
     if request.method == 'POST':
         screen_width = request.POST.get('screen_width')
         return JsonResponse({'screen_width': screen_width})

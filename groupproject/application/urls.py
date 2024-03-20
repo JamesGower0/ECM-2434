@@ -1,7 +1,7 @@
 """
 Defines URL patterns for the application
 
-Author: 
+Author: Maryia Fralova, Ashley Card, James Gower
 """
 from django.urls import path
 from . import views

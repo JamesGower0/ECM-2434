@@ -1,3 +1,5 @@
+// Author: Theo Smith
+// Minigame played by users in minigame.html
 
 // Selecting html elements and assign them variables
 // Const keyword for wordText variable so value cannot be reassigned

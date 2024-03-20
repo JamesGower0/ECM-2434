@@ -1,4 +1,9 @@
-# middleware.py
+"""
+Dynamically updates the bird health every hours from 8am until 4pm
+
+Author: Maryia Fralova
+"""
+
 from datetime import datetime, timedelta
 from .models import Bird, Profile, User
 

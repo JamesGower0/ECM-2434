@@ -93,6 +93,16 @@ class Profile(models.Model):
 
 # Will be used to identify the various different quizes
 class Quiz(models.Model):
+    """
+    Single quiz type for the quiz game
+
+    Args:
+        models.Model : Used to define each field
+    Attributes:
+        title (CharField) : The type of the quiz
+    Returns:
+        String : Displays title of quiz question on admin site
+    """
     title = models.CharField(max_length=100, default='')
 
     def __str__(self):
@@ -109,6 +119,19 @@ class Quiz(models.Model):
 
 
 class Bird(models.Model):
+    """
+    Bird avatar of the user with its features
+
+    Args:
+        models.Model : Used to define each field
+    Attributes:
+        user (OneToOneField) : Links Bird to User model
+        birdType (CharField) : Type of the bird/image
+        health (IntegerField): Mood of the bird (max 100)
+        accessories (JSONField): Accessories that the bird 'wears' at the moment
+    Returns:
+        String : Displays name of user on admin site
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE) # Delete profile when user is deleted
     # Should be created when the user is registered (add to user_is_created function below) 
     birdType = models.CharField(max_length=20, default='robin')
@@ -122,11 +145,30 @@ class Bird(models.Model):
     
 
 class SingletonShopManager(models.Manager):
+    """
+    Makes sure that there is only one shop in the database
+
+    Args:
+        models.Model : Used to define each field
+    Returns:
+        String : Singleton Object
+    """
     def get_or_create_singleton(self):
         obj, created = self.get_or_create(pk=1)
         return obj
 
 class Shop(models.Model):
+    """
+    Shop with all the items that the user can buy
+
+    Args:
+        models.Model : Used to define each field
+    Attributes:
+        accessories (JSONField) : All the items stored in the shop, in the format [item_type] = {[item_name, item_price],...}
+        objects (SingletonShopManager): The Singleton object (Shop instance)
+    Returns:
+        String : Displays Shop name
+    """
     accessories = models.JSONField(default=default_json_shop)
 
     objects = SingletonShopManager()
@@ -166,6 +208,21 @@ def user_is_created(sender, instance, created, **kwargs):
         instance.bird.save()
 
 class Question(models.Model):
+    """
+    Each individual question in the quiz game
+
+    Args:
+        models.Model : Used to define each field
+    Attributes:
+        type (CharField): Quiz type
+        text (CharField): Content of the question
+        correct (CharField): The correct answer to the question
+        wrong_1 (CharField): First wrong answer to the question
+        wrong_2 (CharField): Second wrong answer to the question
+        wrong_3 (CharField): Third wrong answer to the question
+    Returns:
+        String : Displays Shop name
+    """
     type = models.CharField(max_length=256)
     text = models.CharField(max_length=256)
     correct = models.CharField(max_length=256)

@@ -1,3 +1,6 @@
+// Author: Maryia Fralova
+// Script for home.html
+
 var words = ["Welcome to the ExeterNest Homepage"],
     part,
     i = 0,

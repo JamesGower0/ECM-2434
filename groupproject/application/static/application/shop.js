@@ -1,3 +1,6 @@
+// Authors: Maryia Fralova and Ashley Card
+// Helps display a pop-up window when an item in the shop is clicked
+
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Hellow");
   const closeWindow = document.getElementById("close");

@@ -1,3 +1,6 @@
+// Author: Theo Smith
+// Page with minigame tasks for minigame.html
+
 let words = [
   {
     word: "carbon neutrality",
