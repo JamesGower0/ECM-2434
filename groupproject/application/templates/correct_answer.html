@@ -43,6 +43,15 @@
         .next-question-button:hover {
             background-color: #005687;
         }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+
+        a:hover{
+            color: #008CBA;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
     <div class="correct-answer-container">
@@ -50,8 +59,8 @@
         <p>Congratulations on selecting the right answer.</p>
 
         <!-- Add a button for the next question -->
-        <a >
-            Next Question
+        <a href="..\..\..\profile">
+            Go back to Profile
         </a>
     </div>
 {% endblock%}

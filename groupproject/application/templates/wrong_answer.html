@@ -43,6 +43,15 @@
         .back-to-previous-button:hover {
             background-color: #5C0000; /* Darker red on hover */
         }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+
+        a:hover{
+            color: #008CBA;
+        }
     </style>
     <link rel="stylesheet" href="{% static 'application/stylesheet.css' %}">
     
@@ -51,8 +60,8 @@
         <p>Try again or go back to the previous question.</p>
 
         <!-- Add a button to go back to the previous question -->
-        <a>
-            Select a new question
+        <a href="..\..\..\location">
+            Try another question
         </a>
     </div>
 {% endblock%}
