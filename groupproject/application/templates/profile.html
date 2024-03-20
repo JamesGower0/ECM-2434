@@ -159,6 +159,31 @@
                 border: 1px solid #003c3c;
                 padding: 5px;
             }
+
+            .edit-buttons{
+                margin-top: 0;
+                text-align: center;
+            }
+            
+            .edit-btn{
+                margin-top: 0px;
+                border: 0;
+                border-radius: 2px;
+                color: white;
+                padding: 0.5%;
+                text-transform: uppercase;
+                font-weight: 300;
+                font-size: 0.7em;
+                background-color: #4CAF50;
+                cursor:pointer;
+                outline: none;
+            }
+
+            .edit-btn:hover{
+                opacity: 0.7;
+                transition: 0.5s;
+            }
+            
         </style>
 
         <script src="../static/application/profile.js"></script>
@@ -283,7 +308,7 @@
 			<h1>Your ExeterNest birdie</h1>
 		</div>
 
-        <div class="form-inside profile-box" style="padding: 0;">
+        <div class="form-inside profile-box" style="padding: 0; margin-bottom: 0;">
 
             <div class="form-header item item1" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
 				<h2>{{ user.username }}</h2>
@@ -351,7 +376,11 @@
                 </div>
                 
             </div>
-    
+            
+        </div>
+        <div class="edit-buttons">
+            <button class="edit-btn" id="change-pass">Change password</button>
+            <button class="edit-btn" id="edit-prof">Edit profile</button>
         </div>
 
         <div class="prof-buttons">
@@ -361,9 +390,20 @@
         </div>
        
         <script>
+            // Redirecting to the shop page
             document.getElementById("shop-btn").addEventListener("click", function() {
                 // Change to shop page
                 window.location.href = "../shop";
+            });
+            // Redirecting to the change password page
+            document.getElementById("change-pass").addEventListener("click", function() {
+                // Change to shop page
+                window.location.href = "../change_password";
+            });
+            // Redirecting to the edit profile page
+            document.getElementById("edit-prof").addEventListener("click", function() {
+                // Change to shop page
+                window.location.href = "../profile_update";
             });
         </script>
 

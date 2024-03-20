@@ -92,10 +92,12 @@ Authors: Ashley Card, Maryia Fralova -->
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="../static/application/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="../static/application/navBar.js"></script>
 
     </head>
     {% block content %}
-    <body>
+    <body data-nav-url="{% url 'navBar' %}">
         <div class="top">
             <h1>Your are viewing {{ user.username }}'s profile</h1>
         </div>

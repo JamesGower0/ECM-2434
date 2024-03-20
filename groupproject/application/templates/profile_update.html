@@ -1,6 +1,6 @@
 <!-- profile update page, for registered users to update their profile
 
-Authors: Ashley Card, Aidan Daniel -->
+Authors: Ashley Card, Maryia Fralova -->
 
 
 {% block navBar%}
@@ -16,29 +16,29 @@ Authors: Ashley Card, Aidan Daniel -->
 	</head>
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="row my-4">
-    <div class="col-md-4"></div>
-    <div class="col-md-8">
-        <div class="card">
-            <div class="row p-3">
-                <div class="col-md-8">
-				<h2> Edit Profile </h2>
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ user_form|crispy }}
-                        {{ profile_form|crispy }}
-                        <!-- Displaying avatar choice -->
-                        <div id="avatar-preview">
-                            <img id="selected-avatar-preview" src="{% static 'avatars/robin.png' %}" alt="Selected Avatar Preview">
-                            <!--<img id="selected-avatar-preview" src="" alt="Selected Avatar Preview">-->
-                        </div>
-                        <button type="submit" class="btn btn-info">Update</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+<div class="top">
+    <h1>Edit Profile</h1>
 </div>
+
+<div class="form-inside">
+    <div class="form-header">
+        <h2>Edit</h2>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form|crispy }}
+        {{ profile_form|crispy }}
+        <!-- Displaying avatar choice -->
+        <div id="avatar-preview">
+            <img id="selected-avatar-preview" src="{% static 'avatars/robin.png' %}" alt="Selected Avatar Preview">
+            <!--<img id="selected-avatar-preview" src="" alt="Selected Avatar Preview">-->
+        </div>
+        <button type="submit" class="btn btn-info">Update</button>
+    </form>
+</div>
+			
 <!-- Script for displaying the avatar selection -->
 <script>
     // Function to update the avatar preview
