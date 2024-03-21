@@ -6,18 +6,12 @@ pip install crispy-bootstrap4
 
 pip install django-crispy-forms  
 
-pip install opencv-python
-
 pip install googlemaps
 
 git clone https://github.com/JamesGower0/ECM-2434/
 in terminal
 
-To run the site:
-python manage.py runserver
-
-To run the tests:
-python manage.py test
+site run on azure web server
 
 
 Go to a location on the map to enable questions or edit the location to where you are to enable questions
