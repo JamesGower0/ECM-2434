@@ -11,7 +11,7 @@ pip install googlemaps
 git clone https://github.com/JamesGower0/ECM-2434/
 in terminal
 
-site run on azure web server
+site run on azure web server (url: https://exeternest.azurewebsites.net/)
 
 
 Go to a location on the map to enable questions or edit the location to where you are to enable questions
