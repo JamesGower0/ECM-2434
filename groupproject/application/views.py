@@ -13,7 +13,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, update_session_auth_hash
 #from .models import Score, Quiz
 from .models import Quiz, Profile, User, Bird, Shop, Question
-import cv2
+"""
+cv2 import removed
+"""
 import random
 import csv
 from .forms import UserUpdateForm, ProfileUpdateForm
