@@ -252,7 +252,8 @@ def user_page(request, username):
 
 def qr(request):
     """
-    Analyses the scanned qr code to display the corresponding question type
+    Originally analysed the scanned qr code to display the corresponding question type,
+    now used to load the correct set of questions based on location
 
     Args:
         request (HttpRequest)
@@ -261,7 +262,6 @@ def qr(request):
                    question type. If unsuccesssful, HttpResponse with the message that the qr code
                    is invalid.
     """
-    #the above code is for the qr functionality; the data variable is what should be used to access different questions
     QNum = request.GET.get('QNum')
     data = "questions" + QNum
 
@@ -335,20 +335,15 @@ def register(response):
     return render(response, "register.html", {"form":form})
 
 def leaderboard(request):
-    # THE FOLLOWING CODE WILL BE USED FOR THE SECOND SPRINT, DONT DELETE
-    """quizzes = Quiz.objects.all()
-    selected_quiz_id = request.GET.get('quiz')
-    if selected_quiz_id:
-        scores = Score.objects.filter(quiz_id=selected_quiz_id).order_by('-score')[:10]
-    else:
-        scores = Score.objects.all().order_by('-score')[:10]
+    """
+    Displays the leaderboard page containing the players and their scores
 
-    context = {
-        'quizzes': quizzes,
-        'scores': scores,
-    }
-    return render(request, 'leaderboard.html', context)"""
-
+    Args:
+        request (HttpRequest)
+    Returns:
+        render() : returns the leaderboard page, collecting the user data from the database
+    """
+    
     users = User.objects.all()
     headers = ["Place", "Bird name", "Username", "Score"]
     profiles = Profile.objects.order_by('-score')[0:10]
